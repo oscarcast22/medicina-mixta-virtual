@@ -1,0 +1,22 @@
+---
+import '../styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+	title?: string | undefined;
+	description?: string | undefined;
+}
+
+const {
+	title = 'Medicina Mixta Virtual',
+	description = 'Sitio Principal de Medicina Mixta Virtual UAD',
+} = Astro.props;
+---
+
+<meta charset="UTF-8" />
+<meta name="description" property="og:description" content={description} />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>{title}</title>
+<ViewTransitions />
