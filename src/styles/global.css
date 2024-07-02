@@ -1,7 +1,7 @@
 :root {
   /* Colores */
-  --blue: #29A9E0;
-  --blue-100: #1b95c9;
+  --primary: #29A9E0;
+  --blue-100: #1a87b6;
   --gray-400: #333333;
   --gray-500: #7F7F7F;
   --gray-600: #999999;
@@ -21,10 +21,21 @@
   --text-3xl: 2.441rem;
   --text-4xl: 3.75rem;
   --text-5xl: 4.5rem;
+
+  /* Pesos de fuentes */
+  --font-weight-thin: 100;
+  --font-weight-extra-light: 200;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+  --font-weight-black: 900;
 }
 
 body {
-	font-family: sans-serif;
+	font-family: 'DM Sans Variable', sans-serif;
   background: var(--gray-950);
 	margin: 0;
 	padding: 0;
@@ -32,7 +43,6 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	font-size: var(--text-base);
-	line-height: 1.7;
 }
 main {
 	max-width: 1280px;
@@ -73,7 +83,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-	color: var(--black-100);
+	color: var(--blue-100);
 }
 textarea {
 	width: 100%;
@@ -82,11 +92,38 @@ textarea {
 input {
 	font-size: var(--text-base);
 }
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+.thin {
+  font-weight: var(--font-weight-thin);
+}
+
+.extra-light {
+  font-weight: var(--font-weight-extra-light);
+}
+
+.light {
+  font-weight: var(--font-weight-light);
+}
+
+.regular {
+  font-weight: var(--font-weight-regular);
+}
+
+.medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.semi-bold {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.bold {
+  font-weight: var(--font-weight-bold);
 }
 
 /* normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -101,7 +138,6 @@ input {
     html {
       line-height: 1.15; /* 1 */
       -webkit-text-size-adjust: 100%; /* 2 */
-      text-size-adjust: 100%;
     }
     
     /* Sections
