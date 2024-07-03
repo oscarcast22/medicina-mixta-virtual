@@ -2,11 +2,41 @@
 import BaseLayout from "../layouts/BaseLayout.astro"
 import Hero from "../sections/Hero.astro"
 import Nav from "../sections/Nav.astro"
+import OfferCard from "../components/OfferCard.astro"
 ---
 <BaseLayout>
 	<Nav />
 	<Hero />
-	<main>
-		<h1>Hola desde Medicina Mixta Virtual</h1>
+	<main class="main">
+		<section class="content">
+			<div class="welcome">
+				<h1>Bienvenidos</h1>
+				<p>
+					Les damos la mas cordial bienvenida, este espacio esta diseñado para ti, aquí conocerás la experiencia, retos y responsabilidades que tiene esta institución, la cual tiene como misión formar a los mejores médicos , con ética, calidad humana y espíritu de competencia que persevera la salud y calidad de vida.
+				</p>
+				<h5 class="extra-light">
+					“LA EXPERIENCIA DE SER MÉDICO ES ÚNICA, SER MÉDICO NO ES UN TRABAJO, ES UN ESTILO DE VIDA”
+				</h5>
+			</div>
+			<OfferCard />
+		</section>
 	</main>
 </BaseLayout>
+
+<style>
+	.welcome {
+		text-align: center;
+	}
+	.welcome h1 {
+		text-transform: uppercase;
+		color: var(--gray-400);
+	}
+	.welcome p {
+		color: var(--gray-500);
+		margin: 30px 0 60px;
+	}
+	.welcome h5 {
+		color: var(--primary);
+	}
+
+</style>
