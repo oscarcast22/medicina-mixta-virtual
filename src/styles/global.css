@@ -121,12 +121,3 @@ input {
 	font-weight: var(--font-weight-bold);
 }
 
-.main {
-	padding: 80px 20px;
-	background: var(--gray-950);
-}
-
-.content {
-	max-width: 1080px;
-	margin: auto;
-}

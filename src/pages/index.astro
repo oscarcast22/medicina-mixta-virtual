@@ -3,12 +3,13 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 import Hero from "../sections/Hero.astro"
 import Nav from "../sections/Nav.astro"
 import OfferCard from "../components/OfferCard.astro"
+import Ovid from "../sections/Ovid.astro"
 ---
 <BaseLayout>
 	<Nav />
 	<Hero />
-	<main class="main">
-		<section class="content">
+	<section class="welcome-section">
+		<div class="content">
 			<div class="welcome">
 				<h1>Bienvenidos</h1>
 				<p>
@@ -19,11 +20,23 @@ import OfferCard from "../components/OfferCard.astro"
 				</h5>
 			</div>
 			<OfferCard />
-		</section>
-	</main>
+		</div>
+	</section>
+	<Ovid/>
+
 </BaseLayout>
 
 <style>
+	.welcome-section {
+		padding: 80px 20px;
+		background: var(--gray-950);
+	}
+
+	.content {
+		max-width: 1080px;
+		margin: auto;
+	}
+
 	.welcome {
 		text-align: center;
 	}
