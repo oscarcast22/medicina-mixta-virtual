@@ -1,5 +1,5 @@
 ---
-import MedicinaSVG from "../icons/medicina.astro"
+import LogoEscuelaMedicina from "../icons/logo_escuela_medicina.astro"
 ---
 <section class="hero" id="hero">
     <div class="video-container">
@@ -7,20 +7,10 @@ import MedicinaSVG from "../icons/medicina.astro"
             Tu navegador no admite el elemento <code>video</code>.
         </video>
     </div>
-    <div class="title">
-        <MedicinaSVG 
-            width="105px"
+    <div class="logo">
+        <LogoEscuelaMedicina
+            width="750px"
         />
-        <h1>
-            Medicina general
-        </h1>
-        <h2 class="thin">
-            Modalidad Mixta-Virtual
-        </h2>
-        <p class="thin">
-            Acuerdo RVOE 1205/2020
-        </p>
-        <a href="/">&#9660;</a>
     </div>
 </section>
 
@@ -61,33 +51,13 @@ import MedicinaSVG from "../icons/medicina.astro"
         background: rgba(0, 0, 0, 0.30);
     }
 
-    .title {
+    .logo {
         z-index: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-    }
-
-    .title h1 {
-        text-transform: uppercase;
-        color: var(--white);
-        margin: 1.1rem 0 0
-    }
-
-    .title h2 {
-        color: var(--white);
-        margin: 0;
-    }
-
-    .title p {
-        color: var(--white);
-        margin: 2px;
-        font-size: 1.3rem;
-        background-color: var(--black);
-        padding: 3px 10px;
-        border-radius: 30px;
     }
 </style>
 

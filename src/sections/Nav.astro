@@ -17,14 +17,14 @@ import EmailSend from "../icons/email_send.astro"
         </label>
         <nav>
             <ul class="links">
-                <li class="dropdown">
-                    <button>Oferta Educativa</button>
-                    <ul class="dropdown-content">
+                <li class="dropdown" id="dropdown" onmouseover="handleOfferHover(true)" onmouseleave="handleOfferHover(false)">
+                    <button onclick="handleClick()">Oferta Educativa</button>
+                    <ul class="dropdown-content" id="content">
                         <li><a href="/medicina">Medicina</a></li>
                         <li><a href="/enfermeria">Enfermería</a></li>
                     </ul>
                 </li>
-                <li><a class="pv-button" href="#">Plataforma Virtual</a></li>
+                <li><a class="pv-button" href="https://medicinavirtual.uad.mx/" target="_blank">Plataforma Virtual</a></li>
                 <li>
                     <a 
                         href="/contacto"
@@ -48,12 +48,45 @@ import EmailSend from "../icons/email_send.astro"
         width: 100vw;
     }
 
+    header::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 90.73px;
+        top: 0;
+        left: 0;
+        background: linear-gradient(180deg, rgba(22,22,23,0.9) 0%, rgba(22,22,23,0.5) 63%, rgba(22,22,23,0.042) 100%);
+        backdrop-filter: blur(0px);
+        transition: height 0.5s ease, backdrop-filter 0.4s ease;
+        z-index: -1;
+        overflow: hidden;
+    }
+
+    header.scrolled::before {
+        backdrop-filter: blur(20px);
+    }
+
+    header.hover::before {
+        height: 150px;
+        backdrop-filter: blur(20px);
+    }
+
+    header.clicked::before {
+        height: 150px;
+        backdrop-filter: blur(20px);
+    }
+
+    .dropdown-content.clicked {
+        height: 75px;
+    }
+
     .nav-menu {
         display: flex;
+        width: 100%;
         justify-content: space-between;
         align-items: center;
         margin: auto;
-        padding: 15px 20px;
+        padding: 12px 17px;
         max-width: 1280px;
     }
 
@@ -77,7 +110,7 @@ import EmailSend from "../icons/email_send.astro"
       display: flex;
       align-items: center;
       padding: 0;
-      gap: 20px;
+      gap: 15px;
     }
 
     nav ul li {
@@ -111,16 +144,11 @@ import EmailSend from "../icons/email_send.astro"
 
     .dropdown-content {
         height: 0;
-        opacity: 0;
+        overflow: hidden;
         position: absolute;
         z-index: 1;
         padding: 0 12px 0;
-        transition: opacity .4s ease;
-    }
-
-    nav ul li.dropdown:hover .dropdown-content {
-        height: auto;
-        opacity: 1;
+        transition: height .5s ease;
     }
 
     .dropdown-content li {
@@ -149,7 +177,31 @@ import EmailSend from "../icons/email_send.astro"
       background-color: var(--blue-100);
     }
 
-    @media (max-width: 1175px) {
+    @media (min-width: 900px) {
+        nav ul li.dropdown:hover .dropdown-content {
+            height: 75px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        nav {
+            position: absolute;
+            align-items: center;
+            overflow-y: auto;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            gap: 1.5rem;
+            align-items: center;
+            height: 0;
+            transition: height .5s ease;
+            overflow: hidden;
+        }
+
+        nav .links {
+            flex-direction: column;
+        }
+
         #hamburger {
             width: 40px;
             height: 25px;
@@ -160,7 +212,7 @@ import EmailSend from "../icons/email_send.astro"
         #hamburger div {
             width: 100%;
             height: 4px;
-            background: var(--gray-900);
+            background: var(--white);
             position: absolute;
             transform: translateY(-50%);
             border-radius: 99px;
@@ -203,5 +255,75 @@ import EmailSend from "../icons/email_send.astro"
             transform: scale(0);
             opacity: 0;
         }
+
+        .dropdown {
+            height: 35px;
+            background: #00000054;
+            border-radius: 10px;
+            transition: height .4s ease;
+        }
+
+        .dropdown-content {
+            width: 100%;
+            text-align: center;
+        }
+
+        .dropdown-content li {
+            width: 100%;
+        }
+
+        .dropdown.clicked {
+            height: 120px;
+        }
+
+
+
     }
 </style>
+
+<script>
+    window.addEventListener('scroll', function() {
+        const nav = document.querySelector('header');
+        if (nav) {
+            if (window.scrollY > 0) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        }
+    });
+
+    function handleOfferHover(isHover: boolean) {
+        if (window.innerWidth < 900) {
+            return;
+        }
+        const header = document.querySelector('header');
+        if (header) {
+            if (isHover) {
+                header.classList.add('hover');
+            } else {
+                header.classList.remove('hover');
+            }
+        }
+    }
+
+    function HandleClick() {
+        const dropdown = document.getElementById("dropdown");
+        const content = document.getElementById("content");
+        const header = document.querySelector('header');
+
+        if (dropdown) {
+            if (window.innerWidth < 900) {
+                dropdown.classList.toggle("clicked");
+                content?.classList.toggle("clicked");
+            } else {
+                header?.classList.toggle("clicked");
+                content?.classList.toggle("clicked");
+            }
+        } 
+    }
+
+    window.handleOfferHover = handleOfferHover;
+    window.handleClick = HandleClick;
+
+</script>
