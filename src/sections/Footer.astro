@@ -1,0 +1,50 @@
+---
+import LogoMixtaVirtual from "../icons/logo-mixta-virtual.astro"
+import SocialMediaIcons from "../icons/SocialMediaIcons.astro"
+---
+<footer>
+    <div class="content">
+        <LogoMixtaVirtual 
+            width="220px"
+        />
+        <SocialMediaIcons 
+            width="32px"
+        />
+        <div class="direction">
+            <p>
+                Avenida Universidad Autónoma de Durango #300
+            </p>
+            <p>
+                Colonia Jardines de Durango. Durango, Durango, México.    
+            </p>
+            <p>
+                Teléfono(s): (618) 129 5901 Ext. 275 a 285
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer {
+        background: var(--black);
+        padding: 70px 20px 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 60px;
+    }
+
+    .direction p {
+        color: var(--white);
+        margin: 2px 0;
+        font-size: var(--text-xs);
+        font-weight: var(--font-weight-extra-light);
+    }
+</style>
