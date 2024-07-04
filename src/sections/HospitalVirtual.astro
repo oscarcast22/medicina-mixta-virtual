@@ -111,7 +111,6 @@ import LogoHospitalVirtual from "../icons/logo_hospital_virtual.astro"
         height: 100%;
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.9);
-        display: flex;
         justify-content: center;
         align-items: center;
     }
@@ -186,7 +185,7 @@ import LogoHospitalVirtual from "../icons/logo_hospital_virtual.astro"
     });
 
     function openModal() {
-        modal.style.display = "block";
+        modal.style.display = "flex";
         modalImg.src = images[currentIndex].src;
     }
 
