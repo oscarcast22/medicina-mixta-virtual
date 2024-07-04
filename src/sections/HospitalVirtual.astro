@@ -41,11 +41,13 @@ import LogoHospitalVirtual from "../icons/logo_hospital_virtual.astro"
     </div>
 </section>
 <div id="modal" class="modal">
-    <span class="close" id="modal-close">&times;</span>
-    <img class="modal-content" id="modal-img">
-    <div class="modal-nav">
-        <span class="prev" id="modal-prev">&#10094;</span>
-        <span class="next" id="modal-next">&#10095;</span>
+    <div class="modal-content">
+        <span class="close" id="modal-close">&times;</span>
+        <div class="image-container">
+            <span class="prev" id="modal-prev">&#10094;</span>
+            <img id="modal-img">
+            <span class="next" id="modal-next">&#10095;</span>
+        </div>
     </div>
 </div>
 
@@ -86,25 +88,49 @@ import LogoHospitalVirtual from "../icons/logo_hospital_virtual.astro"
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center;
-        transition: object-position 0.45s ease-in-out;
+        object-position: 50% 10%;
+        transition: object-position 0.4s ease-in-out;
         cursor: pointer;
     }
 
     .img-container:hover img {
-        object-position: bottom;
+        object-position: 50% 40%;
     }
 
     @media (max-width: 768px) {
         .gallery {
             grid-template-columns: 1fr;
         }
+
+        .image-container {
+            flex-direction: column;
+            align-content: center;
+        }
+
+        #modal-img {
+            width: 98% !important;
+            align-self: center;
+            margin: 20px 0;
+        }
+
+        .close {
+            font-size: 7vw !important;
+            position: absolute;
+            margin: 0 !important;
+            right: 7px;
+            top: -20px;
+        }
+
+        .prev,
+        .next {
+            font-size: 5vw !important;
+        }
     }
 
     .modal {
         display: none;
         position: fixed;
-        z-index: 1;
+        z-index: 99;
         left: 0;
         top: 0;
         width: 100%;
@@ -113,26 +139,54 @@ import LogoHospitalVirtual from "../icons/logo_hospital_virtual.astro"
         background-color: rgba(0, 0, 0, 0.9);
         justify-content: center;
         align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .modal.show {
+        display: flex;
+        opacity: 1;
     }
 
     .modal-content {
         position: absolute;
+        display: flex;
+        flex-direction: column;
         top: 50%;
         right: 50%;
         transform: translateY(-50%) translateX(50%);
-        display: block;
-        width: 85%;
+        width: 98%;
+        max-width: 1550px;
+    }
+
+    .image-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    #modal-img {
+        width: 90%;
         max-width: 1440px;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+    }
+
+    #modal-img.show {
+        opacity: 1;
+    }
+
+    #modal-img.transition-out {
+        opacity: 0;
     }
 
     .close {
-        position: absolute;
-        top: 190px;
-        right: 50px;
         color: #fff;
         font-size: 40px;
         font-weight: bold;
         transition: 0.3s;
+        align-self: flex-end;
+        margin: 0 40px 10px 0;
     }
 
     .close:hover,
@@ -140,16 +194,6 @@ import LogoHospitalVirtual from "../icons/logo_hospital_virtual.astro"
         color: #bbb;
         text-decoration: none;
         cursor: pointer;
-    }
-
-    .modal-nav {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        transform: translateY(-50%);
     }
 
     .prev,
@@ -160,6 +204,7 @@ import LogoHospitalVirtual from "../icons/logo_hospital_virtual.astro"
         font-weight: bold;
         transition: 0.3s;
         user-select: none;
+        align-self: center;
     }
 
     .prev:hover,
@@ -169,48 +214,76 @@ import LogoHospitalVirtual from "../icons/logo_hospital_virtual.astro"
 </style>
 
 <script>
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modal-img");
-    const images = document.querySelectorAll(".img-container img");
-    const closeBtn = document.getElementById("modal-close");
-    const prevBtn = document.getElementById("modal-prev");
-    const nextBtn = document.getElementById("modal-next");
-    let currentIndex = 0;
+    const modal = document.getElementById("modal") as HTMLElement;
 
-    images.forEach((img, index) => {
-        img.addEventListener("click", () => {
-            currentIndex = index;
-            openModal();
+    if (modal) {
+        const modalImg = document.getElementById("modal-img") as HTMLImageElement;
+        const images = document.querySelectorAll(".img-container img") as NodeListOf<HTMLImageElement>;
+        const closeBtn = document.getElementById("modal-close") as HTMLElement;
+        const prevBtn = document.getElementById("modal-prev") as HTMLElement;
+        const nextBtn = document.getElementById("modal-next") as HTMLElement;
+        let currentIndex = 0;
+
+        images.forEach((img, index) => {
+            img.addEventListener("click", () => {
+                currentIndex = index;
+                openModal();
+            });
         });
-    });
 
-    function openModal() {
-        modal.style.display = "flex";
-        modalImg.src = images[currentIndex].src;
-    }
+        function openModal() {
+            modal.classList.add("show");
+            modal.style.display = "flex";
+            setTimeout(() => {
+                modal.style.opacity = "1";
+            }, 100);
 
-    function closeModal() {
-        modal.style.display = "none";
-    }
-
-    function showPrev() {
-        currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
-        modalImg.src = images[currentIndex].src;
-    }
-
-    function showNext() {
-        currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
-        modalImg.src = images[currentIndex].src;
-    }
-
-    closeBtn.addEventListener("click", closeModal);
-    prevBtn.addEventListener("click", showPrev);
-    nextBtn.addEventListener("click", showNext);
-
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            closeModal();
+            setTimeout(() => {
+                modalImg.classList.add("show");
+                modalImg.src = images[currentIndex].src;
+            }, 100);
         }
-    });
-</script>
 
+        function closeModal() {
+            modalImg.classList.remove("show");
+            modal.style.opacity = "0";
+
+            setTimeout(() => {
+                modal.classList.remove("show");
+                modal.style.display = "none";
+            }, 300);
+        }
+
+        function changeImage(newIndex: number) {
+            modalImg.classList.remove("show");
+            modalImg.classList.add("transition-out");
+            setTimeout(() => {
+                modalImg.src = images[newIndex].src;
+                modalImg.classList.remove("transition-out");
+                modalImg.classList.add("show");
+                currentIndex = newIndex;
+            }, 250);
+        }
+
+        function showPrev() {
+            const newIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+            changeImage(newIndex);
+        }
+
+        function showNext() {
+            const newIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+            changeImage(newIndex);
+        }
+
+        closeBtn.addEventListener("click", closeModal);
+        prevBtn.addEventListener("click", showPrev);
+        nextBtn.addEventListener("click", showNext);
+
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    }
+
+</script>
