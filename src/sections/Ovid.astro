@@ -9,25 +9,33 @@
                 Contiene una lista creciente de más de 40.000 documentos de texto completo, incluyendo actas de congresos, informes y textoscomplejos de todo el mundo que son difíciles de encontrar. El repositorio contiene PDF de texto completo, incluyendo artículos de revistas en idiomas distintos del inglés; actas de la conferencia con frecuencia ofrecen papeles importantes meses antes de la publicación del artículo de investigación completado; capítulos de libros, monografías, informes gubernamentales y más. Los resúmenes de la CAB, Full Text Select, ofrecen registros desde 2003 hasta la fecha, con aproximadamente 10.000 nuevos registros agregados cada año.
             </p>
         </div>
-        <iframe 
-            class="video"
-            width="560" 
-            height="315" 
-            src="https://www.youtube.com/embed/yS4D-K0mbOU?si=fGcQYJR8d8AMMaYZ" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen
-        >
-        </iframe>
+        <div class="video-container">
+            <iframe 
+                width="560" 
+                height="315" 
+                src="https://www.youtube.com/embed/yS4D-K0mbOU?si=fGcQYJR8d8AMMaYZ" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen
+            >
+            </iframe>
+        </div>
+        <a href="https://access.ovid.com/custom/uad/" target="_blank">Acceso a Ovid aquí</a>
+        <p class="extra-light" style="color: #76B545; margin-top: 5px; text-align: center;">
+            ACLAND, BATE, 5 MINUTE, HL, OVID Español (Libros), OVIDMD (Colección de revistas).
+        </p>
     </div>
 </section>
 
 <style>
     .ovid-section{
-        padding: 120px 20px;
+        margin-top: -50px;
+        padding: 80px 20px 100px;
         background: var(--white);
+        border-radius: 50px;
+        box-shadow: rgba(0,0,0,0.2) -5px 6px 8px 0px;
     }
 
     .content {
@@ -40,6 +48,7 @@
 
     .content img {
         width: 250px;
+        margin-bottom: 10px
     }
 
     .description {
@@ -50,5 +59,25 @@
     .description p {
         color: var(--gray-400);
         margin: 30px 0;
+    }
+    
+    .video-container {
+        position: relative;
+        padding-bottom: 56.6%; /* 16:9 */
+        height: 0;
+        overflow: hidden;
+        width: 100%;
+        max-width: 900px;
+        background: var(--gray-200);
+        margin: 20px 0;
+        border-radius: 10px;
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 </style>
