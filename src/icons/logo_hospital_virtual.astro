@@ -8,7 +8,10 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 ---
 
 <svg
+	id="logo-h"
+	stroke={color}
     style={`fill: ${color}; width: ${width}; max-width: 90%;`}
+
 	viewBox="0 0 1302.7 331" 
 >
 	<path class="st0" d="M217.2,70.7c1.1-10.4-6.5-19.7-16.9-20.8c-0.9-0.1-1.8-0.1-2.7-0.1c-4.9,9.2-1.3,20.7,7.9,25.6
@@ -95,3 +98,51 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 		L1220.8,122.8z M1225.8,87.5l-3.6,26.5h7.1L1225.8,87.5z"/>
 	<path class="st0" d="M1285.5,75.8h2.3v46.5h14.1v9.2h-24.6V75.8H1285.5L1285.5,75.8z"/>
 </svg>
+
+<style>
+	#logo-h {
+		fill-opacity: 0;
+		stroke-dasharray: 1300;
+		stroke-dashoffset: 1300;
+	}
+
+	@keyframes dash {
+		70% {
+			fill-opacity: 0;
+		}
+
+		100% {
+			fill-opacity: 100%;
+			stroke-dashoffset: 0;
+			stroke-width: 1;
+		}
+	}
+</style>
+
+<script>
+	document.addEventListener('astro:page-load', function() {
+		const logo = document.getElementById('logo-h');
+	
+		const observerOptions = {
+			root: null, // viewport
+			rootMargin: '0px',
+			threshold: 0.1 // 10% visible
+		};
+	
+		function handleIntersection(entries, observer) {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					logo.style.animation = 'dash 1.5s ease-in forwards';
+					observer.unobserve(logo); // Deja de observar una vez que la animación ha empezado
+				}
+			});
+		}
+	
+		const observer = new IntersectionObserver(handleIntersection, observerOptions);
+	
+		if (logo) {
+			observer.observe(logo);
+		}
+	});
+	</script>
+	
