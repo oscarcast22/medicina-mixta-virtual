@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"
+import Nav from "../sections/Nav.astro"
+import LicenciaturaHero from "../sections/LicenciaturaHero.astro"
+import Medicina from "../icons/medicina.astro"
+---
+<BaseLayout title="Medicina Mixta Virtual" description="Sitio principal de Medicina Mixta Virtual UAD">
+    <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug="medicina_mixta_virtual"/>
+    <LicenciaturaHero 
+        image="/images/portada_plan_estudios.jpg" 
+        title="Medicina General" 
+        rvoe="1205/2020" 
+    >
+        <Medicina width="102px" />
+    </LicenciaturaHero>
+
+</BaseLayout>
+

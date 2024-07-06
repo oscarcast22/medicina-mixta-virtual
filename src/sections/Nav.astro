@@ -1,6 +1,13 @@
 ---
 import LogoMixtaVirtual from "../icons/logo-mixta-virtual.astro"
 import EmailSend from "../icons/email_send.astro"
+
+interface Props {
+    LicenciaturaTitle?: string | undefined;
+    LicenciaturaSlug?: string | undefined;
+}
+
+const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
 ---
 <input type="checkbox" id="menu">
 <header>
@@ -17,11 +24,27 @@ import EmailSend from "../icons/email_send.astro"
         </label>
         <nav>
             <ul class="links">
-                <li class="dropdown" id="dropdown" onmouseover="handleOfferHover(true)" onmouseleave="handleOfferHover(false)">
-                    <button onclick="handleClick()">Oferta Educativa</button>
-                    <ul class="dropdown-content" id="content">
-                        <li><a href="/medicina">Medicina Mixta Virtual</a></li>
+                {LicenciaturaSlug && (
+                    <li class="dropdown" id="dropdown-1" onmouseover="handleOfferHover(1, true)" onmouseleave="handleOfferHover(1, false)">
+                        <button onclick="handleClick(1)">Estructura Académica</button>
+                        <ul class="dropdown-content" id="content-1">
+                            <li><a href={`${LicenciaturaSlug}/perfil_de_ingreso_y_egreso`}>Perfil de Ingreso y Egreso</a></li>
+                        </ul>
+                    </li>
+                )}
+                <li class="dropdown" id="dropdown-2" onmouseover="handleOfferHover(2, true)" onmouseleave="handleOfferHover(2, false)">
+                    <button onclick="handleClick(2)">Oferta Educativa</button>
+                    <ul class="dropdown-content" id="content-2">
+                        <li><a href="/medicina-mixta-virtual">Medicina Mixta Virtual</a></li>
                         <li><a href="/enfermeria">Enfermería Mixta Virtual</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" id="dropdown-3" onmouseover="handleOfferHover(3, true)" onmouseleave="handleOfferHover(3, false)">
+                    <button onclick="handleClick(3)">{LicenciaturaTitle} Mixta-Virtual</button>
+                    <ul class="dropdown-content" id="content-3">
+                        <li><a href="/campus1">Campus 1</a></li>
+                        <li><a href="/campus2">Campus 2</a></li>
+                        <li><a href="/campus3">Campus 3</a></li>
                     </ul>
                 </li>
                 <li><a class="pv-button" href="https://medicinavirtual.uad.mx/" target="_blank">Plataforma Virtual</a></li>
@@ -66,18 +89,49 @@ import EmailSend from "../icons/email_send.astro"
         backdrop-filter: blur(20px);
     }
 
-    header.hover::before {
+
+    header.hover-1::before {
         height: 150px;
         backdrop-filter: blur(20px);
     }
 
-    header.clicked::before {
+    header.hover-2::before {
+        height: 180px;
+        backdrop-filter: blur(20px);
+    }
+
+    header.hover-3::before {
+        height: 200px;
+        backdrop-filter: blur(20px);
+    }
+
+    header.clicked-1::before {
         height: 150px;
         backdrop-filter: blur(20px);
     }
 
-    .dropdown-content.clicked {
+    header.clicked-2::before {
+        height: 180px;
+        backdrop-filter: blur(20px);
+    }
+
+    header.clicked-3::before {
+        height: 200px;
+        backdrop-filter: blur(20px);
+    }
+
+    .dropdown-content.clicked-1, .dropdown-content.hover-1 {
         height: 75px;
+        width: 260px;
+    }
+
+    .dropdown-content.clicked-2, .dropdown-content.hover-2 {
+        height: 115px;
+        width: 260px;
+    }
+
+    .dropdown-content.clicked-3, .dropdown-content.hover-3 {
+        height: 115px;
         width: 260px;
     }
 
@@ -178,9 +232,14 @@ import EmailSend from "../icons/email_send.astro"
       background-color: var(--blue-100);
     }
 
+
     @media (min-width: 900px) {
-        nav ul li.dropdown:hover .dropdown-content {
+        .dropdown.hover-1 .dropdown-content {
             height: 75px;
+        }
+
+        .dropdown.hover-2 .dropdown-content {
+            height: 115px;
         }
     }
 
@@ -278,11 +337,20 @@ import EmailSend from "../icons/email_send.astro"
             width: 100%;
         }
 
-        .dropdown.clicked {
+        .dropdown.clicked-1 {
             height: 120px;
             width: 260px;
         }
 
+        .dropdown.clicked-2 {
+            height: 170px;
+            width: 260px;
+        }
+
+        .dropdown.clicked-3 {
+            height: 170px;
+            width: 260px;
+        }
 
 
     }
@@ -290,7 +358,7 @@ import EmailSend from "../icons/email_send.astro"
 
 <script>
     window.addEventListener('scroll', function() {
-        const nav = document.querySelector('header');
+        const nav = document.querySelector('header') as HTMLElement;
         if (nav) {
             if (window.scrollY > 0) {
                 nav.classList.add('scrolled');
@@ -300,43 +368,90 @@ import EmailSend from "../icons/email_send.astro"
         }
     });
 
-    function handleOfferHover(isHover: boolean) {
+    function handleOfferHover(dropdownId: number, isHover: boolean) {
         if (window.innerWidth < 900) {
             return;
         }
-        const header = document.querySelector('header');
-        if (header) {
+        const header = document.querySelector('header') as HTMLElement;
+        const content = document.getElementById(`content-${dropdownId}`) as HTMLElement;
+        if (header && content) {
             if (isHover) {
-                header.classList.add('hover');
+                const allDropdowns = document.querySelectorAll('.dropdown');
+                const allContents = document.querySelectorAll('.dropdown-content');
+            
+                // Remueve las clases clicked-1 y clicked-2 excepto del elemento actual
+                allDropdowns.forEach(d => {
+                    if (!d.classList.contains(`clicked-${dropdownId}`)) {
+                        d.classList.remove('clicked-1', 'clicked-2', 'clicked-3');
+                    }
+                });
+                allContents.forEach(c => {
+                    if (!c.classList.contains(`clicked-${dropdownId}`)) {
+                        c.classList.remove('clicked-1', 'clicked-2', 'clicked-3');
+                    }
+                });
+                if (!header.classList.contains(`clicked-${dropdownId}`)) {
+                    header.classList.remove('clicked-1', 'clicked-2', 'clicked-3');
+                }
+
+                header.classList.add(`hover-${dropdownId}`);
+                content.classList.add(`hover-${dropdownId}`);
             } else {
-                header.classList.remove('hover');
+                header.classList.remove(`hover-${dropdownId}`);
+                content.classList.remove(`hover-${dropdownId}`);
             }
         }
     }
 
-    function HandleClick() {
-        const dropdown = document.getElementById("dropdown");
-        const content = document.getElementById("content");
-        const header = document.querySelector('header');
 
-        if (dropdown) {
-            if (window.innerWidth < 900) {
-                dropdown.classList.toggle("clicked");
-                content?.classList.toggle("clicked");
-            } else {
-                header?.classList.toggle("clicked");
-                content?.classList.toggle("clicked");
+    function handleClick(dropdownId: number) {
+        const header = document.querySelector('header') as HTMLElement;
+        const dropdown = document.getElementById(`dropdown-${dropdownId}`) as HTMLElement;
+        const content = document.getElementById(`content-${dropdownId}`) as HTMLElement;
+
+        const isDropdownOpen = dropdown.classList.contains(`clicked-${dropdownId}`);
+        const isContentOpen = content.classList.contains(`clicked-${dropdownId}`);
+
+        const allDropdowns = document.querySelectorAll('.dropdown');
+        const allContents = document.querySelectorAll('.dropdown-content');
+
+        // Remove clicked states from all dropdowns and contents
+        allDropdowns.forEach(d => d.classList.remove('clicked-1', 'clicked-2', 'clicked-3'));
+        allContents.forEach(c => c.classList.remove('clicked-1', 'clicked-2', 'clicked-3'));
+        header.classList.remove('clicked-1', 'clicked-2');
+
+        if (!isDropdownOpen && !isContentOpen) {
+            if (dropdown && content) {
+                dropdown.classList.add(`clicked-${dropdownId}`);
+                content.classList.add(`clicked-${dropdownId}`);
+                header.classList.add(`clicked-${dropdownId}`);
             }
-        } 
+        }
     }
+
+
+    function handleMouseLeave() {
+        const header = document.querySelector('header') as HTMLElement;
+        const allDropdowns = document.querySelectorAll('.dropdown') as NodeListOf<HTMLElement>;
+        const allContents = document.querySelectorAll('.dropdown-content') as NodeListOf<HTMLElement>;
+
+        // Remove hover states from all dropdowns and contents
+        header.classList.remove('hover-1', 'hover-2', 'hover-3');
+        allDropdowns.forEach(d => d.classList.remove('hover-1', 'hover-2', 'hover-3'));
+        allContents.forEach(c => c.classList.remove('hover-1', 'hover-2', 'hover-3'));
+    }
+
+
 
     function removeClickedClasses() {
-        const elements = document.querySelectorAll('.clicked');
-        elements.forEach(el => el.classList.remove('clicked'));
+        const elements = document.querySelectorAll('.clicked-1, .clicked-2, .clicked-3, .hover-1, .hover-2, .hover-3');
+        elements.forEach(el => el.classList.remove('.clicked-1, .clicked-2, .clicked-3, .hover-1, .hover-2, .hover-3'));
     }
+
+    document.querySelector('header').addEventListener('mouseleave', handleMouseLeave);
+
 
     window.addEventListener('resize', removeClickedClasses);
     window.handleOfferHover = handleOfferHover;
-    window.handleClick = HandleClick;
-
+    window.handleClick = handleClick;
 </script>
