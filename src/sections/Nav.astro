@@ -79,7 +79,12 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         height: 88.324px;
         top: 0;
         left: 0;
-        background: linear-gradient(180deg, rgba(22,22,23,0.9) 0%, rgba(22,22,23,0.5) 63%, rgba(22,22,23,0.042) 100%);
+        /* background: linear-gradient(180deg, rgba(22,22,23,0.9) 0%, rgba(22,22,23,0.5) 63%, rgba(22,22,23,0.042) 100%); */
+        background: rgb(0,0,0);
+        background: -moz-linear-gradient(180deg, rgba(0,0,0,0.6741071428571428) 0%, rgba(0,0,0,0) 100%);
+        background: -webkit-linear-gradient(180deg, rgba(0,0,0,0.6741071428571428) 0%, rgba(0,0,0,0) 100%);
+        background: linear-gradient(180deg, rgba(0,0,0,0.6741071428571428) 0%, rgba(0,0,0,0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
         backdrop-filter: blur(0px);
         transition: height 0.5s ease, backdrop-filter 0.4s ease;
         z-index: -1;
@@ -211,7 +216,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         overflow: hidden;
         position: absolute;
         z-index: 1;
-        padding: 5px 12px 0;
+        padding: 0;
         transition: height .5s ease, width .4s ease;
     }
 
@@ -324,19 +329,34 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
 
         .dropdown {
             height: 35px;
-            width: 160px;
             display: flex !important;
             flex-direction: column;
             align-items: center;
-            background: #00000054;
+            background: #00000015;
+            backdrop-filter: blur(80px);
             border-radius: 10px;
             transition: height .4s ease, width .4s ease;
         }
+
+        #dropdown-1 {
+            width: 210px;
+        }
+
+        #dropdown-2 {
+            width: 160px;
+        }
+
+        #dropdown-3 {
+            width: 200px;
+        }
+
+
 
         .dropdown-content {
             position: relative;
             width: 100%;
             text-align: center;
+            padding: 0;
         }
 
         .dropdown-content li {
@@ -344,21 +364,18 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         }
 
         .dropdown.clicked-1 {
-            height: 120px;
-            width: 260px;
-            transition: height .5s;
+            height: 80px;
+            width: 240px !important;
         }
 
         .dropdown.clicked-2 {
-            height: 170px;
-            width: 260px;
-            transition: height .5s;
+            height: 115px;
+            width: 220px !important;
         }
 
         .dropdown.clicked-3 {
             height: 170px;
-            width: 260px;
-            transition: height .5s;
+            width: 260px !important;
         }
 
         .dropdown-content.clicked-1,
