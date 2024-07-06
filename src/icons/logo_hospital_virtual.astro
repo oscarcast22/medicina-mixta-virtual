@@ -132,7 +132,7 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 		function handleIntersection(entries, observer) {
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
-					logo.style.animation = 'dash 1.5s ease-in forwards';
+					logo.style.animation = 'dash 1.2s ease-in forwards';
 					observer.unobserve(logo); // Deja de observar una vez que la animación ha empezado
 				}
 			});
