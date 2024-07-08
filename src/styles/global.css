@@ -23,15 +23,14 @@
 	--text-5xl: 4.5rem;
 
 	/* Pesos de fuentes */
-	--font-weight-thin: 100;
-	--font-weight-extra-light: 200;
-	--font-weight-light: 300;
-	--font-weight-regular: 400;
-	--font-weight-medium: 500;
-	--font-weight-semi-bold: 600;
-	--font-weight-bold: 700;
-	--font-weight-extra-bold: 800;
-	--font-weight-black: 900;
+	--thin: 100;
+	--extra-light: 200;
+	--light: 300;
+	--regular: 400;
+	--medium: 500;
+	--semi-bold: 600;
+	--bold: 700;
+	--extra-bold: 800;
 }
 
 body {
@@ -76,6 +75,7 @@ b {
 a {
 	color: var(--blue);
     text-decoration: none;
+	transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, font-weight 0.3s ease-in-out;
 }
 a:hover {
 	color: var(--blue-100);
@@ -94,30 +94,30 @@ input {
 }
 
 .thin {
-	font-weight: var(--font-weight-thin);
+	font-weight: var(--thin);
 }
 
 .extra-light {
-	font-weight: var(--font-weight-extra-light);
+	font-weight: var(--extra-light);
 }
 
 .light {
-	font-weight: var(--font-weight-light);
+	font-weight: var(--light);
 }
 
 .regular {
-	font-weight: var(--font-weight-regular);
+	font-weight: var(--regular);
 }
 
 .medium {
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--medium);
 }
 
 .semi-bold {
-	font-weight: var(--font-weight-semi-bold);
+	font-weight: var(--semi-bold);
 }
 
 .bold {
-	font-weight: var(--font-weight-bold);
+	font-weight: var(--bold);
 }
 
