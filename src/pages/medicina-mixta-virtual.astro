@@ -4,13 +4,20 @@ import Nav from "../sections/Nav.astro"
 import LicenciaturaHero from "../sections/LicenciaturaHero.astro"
 import Medicina from "../icons/medicina.astro"
 import Footer from "../sections/Footer.astro"
+import { getCollection } from "astro:content";
+
+
+const licenciaturas = await getCollection('licenciaturas');
+
+const medicinaData = licenciaturas.find(l => l.slug === "medicina-mixta-virtual")
+console.log(medicinaData)
 ---
 <BaseLayout title="Medicina Mixta Virtual" description="Sitio principal de Medicina Mixta Virtual UAD">
-    <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug="medicina_mixta_virtual"/>
+    <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina_mixta_virtual"}/>
     <LicenciaturaHero 
-        image="/images/portada_plan_estudios.jpg" 
-        title="Medicina General" 
-        rvoe="1205/2020" 
+        image={medicinaData?.data.portada}
+        title={medicinaData?.data.titulo}
+        rvoe={medicinaData?.data.rvoe} 
     >
         <Medicina width="102px" />
     </LicenciaturaHero>
@@ -29,9 +36,9 @@ import Footer from "../sections/Footer.astro"
                 </div>
                 <aside>
                     <div class="menu">
-                        <button class="menu-btn">Propósito del Est.</button>
-                        <button class="menu-btn">Plan de Estudios</button>
-                        <button class="menu-btn">Mapa Curricular</button>
+                        <button class="menu-btn selected" data-target="proposito-content">Propósito del Est.</button>
+                        <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
+                        <button class="menu-btn" data-target="mapa-content">Mapa Curricular</button>
                     </div>
                     <div class="download-btn">
                         <a href="#">Descargar Requisitos</a>
@@ -39,7 +46,7 @@ import Footer from "../sections/Footer.astro"
                     </div>
                 </aside>
                 <section class="content">
-                    <div class="proposito" id="proposito">
+                    <div class="proposito" id="proposito-content">
                         <p>
                             Se definen los aspectos genéricos que persigue el plan de estudios de la Licenciatura de Médico General de la UAD modalidad Mixta-Virtual, es decir, los propósitos que se atenderán durante el proceso educativo:
                         </p>
@@ -87,6 +94,12 @@ import Footer from "../sections/Footer.astro"
                                 Dominar el manejo de las Tecnologías de la Información referente a paquetería de software, en el área de la salud.
                             </li>
                         </ul>
+                    </div>
+                    <div class="plan hidden" id="plan-content">
+                        <h1>Plan</h1>
+                    </div>
+                    <div class="mapa hidden" id="mapa-content">
+                        <h1>Mapa</h1>
                     </div>
                 </section>
             </section>
@@ -238,5 +251,74 @@ import Footer from "../sections/Footer.astro"
         margin: 0 0 60px;
     }
 
+    .menu-btn.selected {
+        background: var(--primary);
+        color: var(--white);
+        font-weight: 350;
+    }
+
+    /* Animaciones para las secciones */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(20px); }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s forwards;
+        display: block;
+    }
+
+    .fade-out {
+        animation: fadeOut 0.5s forwards;
+    }
+
+    /* Mantener oculto el contenido con display: none */
+    .hidden {
+        display: none;
+    }
+
 
 </style>
+
+<script>
+    document.addEventListener('astro:page-load', function () {
+    const buttons = document.querySelectorAll('.menu-btn') as NodeListOf<HTMLInputElement>;
+    const sections = document.querySelectorAll('.content > div') as NodeListOf<HTMLElement>;
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Remove the 'selected' class from all buttons
+            buttons.forEach(btn => btn.classList.remove('selected'));
+
+            // Add the 'selected' class to the clicked button
+            this.classList.add('selected');
+
+            // Hide all sections with animation
+            sections.forEach(section => {
+                section.classList.remove('fade-in');
+                section.classList.add('fade-out');
+                
+                // Once the animation ends, hide the section
+                section.addEventListener('animationend', function () {
+                    if (section.classList.contains('fade-out')) {
+                        section.classList.add('hidden');
+                    }
+                }, { once: true });
+            });
+
+            // Show the targeted section with animation
+            const target = this.getAttribute('data-target');
+            const targetSection = document.getElementById(target) as HTMLElement;
+            targetSection.classList.remove('hidden', 'fade-out');
+            targetSection.classList.add('fade-in');
+        });
+    });
+    });
+</script>
+
+    
