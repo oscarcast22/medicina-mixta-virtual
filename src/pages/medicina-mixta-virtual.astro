@@ -1,23 +1,24 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro"
-import Nav from "../sections/Nav.astro"
-import LicenciaturaHero from "../sections/LicenciaturaHero.astro"
-import Medicina from "../icons/medicina.astro"
-import Footer from "../sections/Footer.astro"
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../sections/Nav.astro";
+import LicenciaturaHero from "../sections/LicenciaturaHero.astro";
+import Medicina from "../icons/medicina.astro";
+import Footer from "../sections/Footer.astro";
 import { getCollection } from "astro:content";
-
+import PlanEstudios from "../components/PlanEstudios.astro";
+import MapaCurricular from "../components/MapaCurricular.astro";
 
 const licenciaturas = await getCollection('licenciaturas');
 
-const medicinaData = licenciaturas.find(l => l.slug === "medicina-mixta-virtual")
+const medicinaData = licenciaturas.find(l => l.data.titulo === "Medicina General")
 console.log(medicinaData)
 ---
 <BaseLayout title="Medicina Mixta Virtual" description="Sitio principal de Medicina Mixta Virtual UAD">
     <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina_mixta_virtual"}/>
     <LicenciaturaHero 
-        image={medicinaData?.data.portada}
-        title={medicinaData?.data.titulo}
-        rvoe={medicinaData?.data.rvoe} 
+        image={medicinaData.data.portada}
+        title={medicinaData.data.titulo}
+        rvoe={medicinaData.data.rvoe} 
     >
         <Medicina width="102px" />
     </LicenciaturaHero>
@@ -35,17 +36,19 @@ console.log(medicinaData)
                     <hr>
                 </div>
                 <aside>
-                    <div class="menu">
-                        <button class="menu-btn selected" data-target="proposito-content">Propósito del Est.</button>
-                        <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
-                        <button class="menu-btn" data-target="mapa-content">Mapa Curricular</button>
-                    </div>
-                    <div class="download-btn">
-                        <a href="#">Descargar Requisitos</a>
-                        <a href="#">Descargar Plan de Estudio</a>
+                    <div class="sticky">
+                        <div class="menu">
+                            <button class="menu-btn selected" data-target="proposito-content">Propósito del Est.</button>
+                            <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
+                            <button class="menu-btn" data-target="mapa-content">Mapa Curricular</button>
+                        </div>
+                        <div class="download-btn">
+                            <a href="#">Descargar Requisitos</a>
+                            <a href="#">Descargar Plan de Estudio</a>
+                        </div>
                     </div>
                 </aside>
-                <section class="content">
+                <section class="content-section">
                     <div class="proposito" id="proposito-content">
                         <p>
                             Se definen los aspectos genéricos que persigue el plan de estudios de la Licenciatura de Médico General de la UAD modalidad Mixta-Virtual, es decir, los propósitos que se atenderán durante el proceso educativo:
@@ -96,10 +99,11 @@ console.log(medicinaData)
                         </ul>
                     </div>
                     <div class="plan hidden" id="plan-content">
-                        <h1>Plan</h1>
+                        <PlanEstudios rvoe={medicinaData.data.rvoe} plan_estudios={medicinaData.data.plan_estudios}/>
+                        <a href="#">Descargar Resultados de Aprendizaje</a>
                     </div>
                     <div class="mapa hidden" id="mapa-content">
-                        <h1>Mapa</h1>
+                        <MapaCurricular titulo="medicina" mapa={medicinaData.data.mapa_curricular} />
                     </div>
                 </section>
             </section>
@@ -139,11 +143,6 @@ console.log(medicinaData)
 
     aside {
         grid-column: 1;
-        grid-row: 2;
-    }
-
-    .content {
-        grid-column: 2;
         grid-row: 2;
     }
 
@@ -251,13 +250,53 @@ console.log(medicinaData)
         margin: 0 0 60px;
     }
 
+    .plan {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .plan a {
+        background: var(--primary);
+        color: var(--white);
+        font-size: var(--text-xs);
+        padding: 8px 15px;
+        border-radius: 5px;
+        margin: 8px 0;
+    }
+
+    .plan a:hover {
+        background: var(--black);
+    }
+
     .menu-btn.selected {
         background: var(--primary);
         color: var(--white);
         font-weight: 350;
     }
 
-    /* Animaciones para las secciones */
+    .sticky {
+        position: sticky;
+        top: 100px;
+    }
+
+    .content-section {
+        overflow: hidden;
+        transition: height 0.5s ease;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .fade-out {
+        animation: fadeOut 0.5s forwards;
+    }
+
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
@@ -268,57 +307,67 @@ console.log(medicinaData)
         to { opacity: 0; transform: translateY(20px); }
     }
 
-    .fade-in {
-        animation: fadeIn 0.5s forwards;
-        display: block;
-    }
-
-    .fade-out {
-        animation: fadeOut 0.5s forwards;
-    }
-
-    /* Mantener oculto el contenido con display: none */
-    .hidden {
-        display: none;
-    }
-
 
 </style>
 
 <script>
     document.addEventListener('astro:page-load', function () {
-    const buttons = document.querySelectorAll('.menu-btn') as NodeListOf<HTMLInputElement>;
-    const sections = document.querySelectorAll('.content > div') as NodeListOf<HTMLElement>;
+        const buttons: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.menu-btn');
+        const sections: NodeListOf<HTMLElement> = document.querySelectorAll('.content-section > div');
+        const contentContainer: HTMLElement | null = document.querySelector('.content-section');
 
-    buttons.forEach(button => {
-        button.addEventListener('click', function () {
-            // Remove the 'selected' class from all buttons
-            buttons.forEach(btn => btn.classList.remove('selected'));
+        // Función para animar el cambio de altura
+        function animateHeight(element: HTMLElement, from: number, to: number): void {
+            element.style.height = `${from}px`;
+            element.offsetHeight; // Forzar un reflow
+            element.style.transition = 'height 0.5s ease';
+            element.style.height = `${to}px`;
+        }
 
-            // Add the 'selected' class to the clicked button
-            this.classList.add('selected');
+        // Mostrar la sección 'proposito' por defecto
+        const defaultSection: HTMLElement | null = document.getElementById('proposito-content');
+        if (defaultSection) {
+            defaultSection.classList.remove('hidden');
+            defaultSection.classList.add('fade-in');
+        }
 
-            // Hide all sections with animation
-            sections.forEach(section => {
-                section.classList.remove('fade-in');
-                section.classList.add('fade-out');
-                
-                // Once the animation ends, hide the section
-                section.addEventListener('animationend', function () {
-                    if (section.classList.contains('fade-out')) {
+        // Establecer la altura inicial del contenedor
+        if (contentContainer && defaultSection) {
+            contentContainer.style.height = `${defaultSection.scrollHeight}px`;
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function (this: HTMLButtonElement) {
+                // Remover la clase 'selected' de todos los botones
+                buttons.forEach(btn => btn.classList.remove('selected'));
+
+                // Añadir la clase 'selected' al botón clickeado
+                this.classList.add('selected');
+
+                // Obtener la sección objetivo
+                const target: string | null = this.getAttribute('data-target');
+                const targetSection: HTMLElement | null = target ? document.getElementById(target) : null;
+
+                if (contentContainer && targetSection) {
+                    // Guardar la altura actual
+                    const currentHeight: number = contentContainer.scrollHeight;
+
+                    // Ocultar todas las secciones
+                    sections.forEach(section => {
                         section.classList.add('hidden');
-                    }
-                }, { once: true });
-            });
+                        section.classList.remove('fade-in');
+                    });
 
-            // Show the targeted section with animation
-            const target = this.getAttribute('data-target');
-            const targetSection = document.getElementById(target) as HTMLElement;
-            targetSection.classList.remove('hidden', 'fade-out');
-            targetSection.classList.add('fade-in');
+                    // Mostrar la sección objetivo
+                    targetSection.classList.remove('hidden');
+                    targetSection.classList.add('fade-in');
+
+                    // Animar el cambio de altura
+                    requestAnimationFrame(() => {
+                        animateHeight(contentContainer, currentHeight, (targetSection.scrollHeight + 15));
+                    });
+                }
+            });
         });
     });
-    });
 </script>
-
-    

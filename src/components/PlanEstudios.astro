@@ -1,0 +1,73 @@
+---
+interface Props {
+    rvoe: string;
+    plan_estudios : {
+        titulo: string;
+        contenido: string[];
+    }[];
+}
+
+const { plan_estudios, rvoe } = Astro.props
+---
+
+<div class="plan">
+    <p>Acuerdo RVOE {rvoe}</p>
+    <div class="plan-grid">
+        {
+            plan_estudios.map((plan) => (
+                <div>
+                    <h5>{plan.titulo}</h5>
+                    <ul>
+                        {plan.contenido.map((materia) => (
+                            <li class="materia light">{materia}</li>
+                        ))}
+                    </ul>
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .plan {
+        width: 100%;
+    }
+    
+    .plan p {
+        font-size: var(--text-sm);
+        color: var(--gray-700);
+    }
+
+    .plan-grid {
+        display: grid;
+        margin: 15px 0 ;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 10px;
+        row-gap: 10px;
+        transition: all 1s ease;
+    }
+
+    .plan-grid h5 {
+        font-size: var(--text-base);
+        color: var(--primary);
+    }
+
+    .plan-grid ul {
+        padding: 0;
+        color: var(--gray-600);
+        font-size: var(--text-sm);
+    }
+
+    .plan-grid li {
+        margin: 4px 0 4px 0;
+    }
+
+    @media (max-width: 940px) {
+        .plan-grid {
+            grid-template-columns: 1fr 1fr;
+            column-gap: 20px;
+        }
+    }
+</style>
+
+
