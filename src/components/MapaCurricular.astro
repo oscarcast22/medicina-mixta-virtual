@@ -25,4 +25,10 @@ const { titulo, mapa } = Astro.props
         cursor: pointer;
 
     }
+
+    @media (max-width: 600px) {
+        .mapa p {
+            display: none;
+        }
+    }
 </style>

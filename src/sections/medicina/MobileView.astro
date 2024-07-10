@@ -33,7 +33,7 @@ const { data } = Astro.props;
     <div class="menu-m">
         <div class="collapse proposito" style="z-index:1">
             <button class="menu-btn-m" data-target="proposito-content">Propósito del Est.</button>
-            <div class="proposito-content" id="proposito-content">
+            <div class="collapse-content" id="proposito-content">
                 <p>
                     Se definen los aspectos genéricos que persigue el plan de estudios de la Licenciatura de Médico General de la UAD modalidad Mixta-Virtual, es decir, los propósitos que se atenderán durante el proceso educativo:
                 </p>
@@ -85,11 +85,16 @@ const { data } = Astro.props;
         </div>
         <div class="collapse plan" style="z-index:2">
             <button class="menu-btn-m" data-target="plan-content">Plan de Estudios</button>
-            <PlanEstudios rvoe={data.rvoe} plan_estudios={data.plan_estudios}/>
+            <div class="collapse-content" id="plan-content">
+                <div style="display: flex; flex-direction: column">
+                    <PlanEstudios rvoe={data.rvoe} plan_estudios={data.plan_estudios}/>
+                    <a class="plan-link" href="https://drive.google.com/uc?id=1Vy6jZhRAv_-p-U8A5bvwDoddLRNwTYYn&export=download">Descargar Resultados de Aprendizaje</a>
+                </div>
+            </div>
         </div>
         <div class="collapse mapa" style="z-index:3">
             <button class="menu-btn-m" data-target="mapa-content">Mapa Curricular</button>
-            <div>
+            <div class="collapse-content" id="mapa-content">
                 <MapaCurricular titulo="medicina" mapa={data.mapa_curricular} />
             </div>
         </div>
@@ -184,21 +189,33 @@ const { data } = Astro.props;
         background: var(--black)
     }
 
-    .proposito-content {
-        text-align: left;
-        padding: 15px;
+    .plan-link {
+        background: var(--primary);
+        color: var(--white);
+        font-size: var(--text-xs);
+        padding: 8px 15px;
+        border-radius: 5px;
+        align-self: center;
     }
 
-    .proposito-content p:first-child {
+    .plan-link:hover {
+        background: var(--black);
+    }
+
+    #proposito-content {
+        text-align: left;
+    }
+
+    #proposito-content p:first-child {
         margin-top: 0;
     }
 
-    .proposito-content p {
+    #proposito-content p {
         font-size: var(--text-xs);
         color: var(--gray-600);
     }
 
-    .proposito-content ul {
+    #proposito-content ul {
         font-size: var(--text-xs);
         color: var(--gray-600);
         list-style: outside;
@@ -222,4 +239,65 @@ const { data } = Astro.props;
         object-fit: cover;
         object-position: 50% 20%;
     }
+
+    #plan-content {
+        text-align: left;
+    }
+
+    .collapse-content {
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.7s ease-out, opacity 0.7s ease-out, padding 0.2s ease-out;
+        max-height: 0;
+    }
+
+    .collapse.open .collapse-content {
+        max-height: 2400px;
+        opacity: 1;
+        padding: 15px;
+    }
 </style>
+
+<script>
+    document.addEventListener('astro:page-load', function (): void {
+        function setupCollapsibles(): void {
+            const collapses: NodeListOf<Element> = document.querySelectorAll('.collapse');
+
+            collapses.forEach((collapse: Element) => {
+                const button: HTMLElement | null = collapse.querySelector('.menu-btn-m');
+                const content: HTMLElement | null = collapse.querySelector('.collapse-content');
+
+                if (button && content) {
+                    button.addEventListener('click', function (): void {
+                        if (collapse.classList.contains('open')) {
+                            collapse.classList.remove('open');
+                            button.classList.remove('selected');
+                        } else {
+                            collapses.forEach((otherCollapse: Element) => {
+                                if (otherCollapse !== collapse && otherCollapse.classList.contains('open')) {
+                                    otherCollapse.classList.remove('open');
+                                    const otherButton: HTMLElement | null = otherCollapse.querySelector('.menu-btn-m');
+                                    if (otherButton) {
+                                        otherButton.classList.remove('selected');
+                                    }
+                                }
+                            });
+                            collapse.classList.add('open');
+                            button.classList.add('selected');
+                        }
+                    });
+                }
+            });
+        }
+
+        setupCollapsibles();
+
+        window.addEventListener('resize', function (): void {
+            setupCollapsibles();
+        });
+    });
+</script>
+
+
+
+
