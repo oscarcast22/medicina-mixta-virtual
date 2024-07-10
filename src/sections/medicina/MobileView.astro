@@ -1,0 +1,133 @@
+---
+import PlanEstudios from '../../components/PlanEstudios.astro';
+import MapaCurricular from '../../components/MapaCurricular.astro';
+
+interface PlanEstudio {
+  titulo: string;
+  contenido: string[];
+}
+
+interface Props {
+  data: {
+    titulo: string;
+    portada: string;
+    mapa_curricular: string;
+    rvoe: string;
+    plan_estudios: PlanEstudio[];
+  }
+}
+
+const { data } = Astro.props;
+---
+
+<section id="mobile-view">
+    <div class="resumen">
+        <p>
+            La Escuela de Medicina de la UAD forma Médicos con un dominio general de la medicina que se imparte en idioma español, cultos, con amplia visión de la profesión y un gran sentido humano, comprometidos, honestos y competentes para resolver de forma efectiva y humanista las situaciones de salud individual y comunitaria.
+        </p>
+        <p>
+            Nuestros médicos durante su formación se preparan con el aval del CIFRHS y de la SEP a través del RVOE y su participación en las Instituciones de Salud públicas y privadas para ejercer una excelente atención primaria de la salud y cuentan con la capacidad de influenciar positivamente a su entorno.
+        </p>
+        <hr>
+    </div>
+    <div class="menu">
+        <div class="proposito">
+            <button class="menu-btn" data-target="proposito-content">Propósito del Est.</button>
+        </div>
+        <div class="plan">
+            <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
+        </div>
+        <div class="mapa">
+            <button class="menu-btn" data-target="mapa-content">Mapa Curricular</button>
+        </div>
+    </div>
+    <div class="download-btn">
+        <a href="https://drive.google.com/uc?id=1yNArDVyLQ1ru9od48V6WTaTUvhTw043d&export=download">Descargar Requisitos</a>
+        <a href="https://drive.google.com/uc?id=19EknwUjYLDNmrEhvEeSV8X8FQjtYXDSW&export=download">Descargar Plan de Estudio</a>
+    </div>
+</section>
+
+<style>
+    #mobile-view {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    @media only screen and (min-width: 601px) {
+        #mobile-view {
+            display: none;
+        }
+    }
+
+    
+    .resumen p {
+        color: var(--primary);
+        font-size: var(--text-xs);
+    }
+    
+    .resumen hr {
+        color: var(--primary);
+        width: 60%;
+        border-color: var(--primary);
+    }
+    
+    .menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 600px;
+
+        margin: 30px auto;
+        background: var(--white);
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.2) -3px 3px 13px 0px;
+    }
+
+    .menu div {
+        box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.25);
+
+    }
+    
+    .menu-btn {
+        background: none;
+        width: 100%;
+        border: 0;
+        border-radius: 5px;
+        color: var(--primary);
+        font-size: var(--text-base);
+        text-align: left;
+        padding: 10px 12px;
+        cursor: pointer;
+        transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, font-weight 0.3s ease-in-out;
+    }
+    
+    .menu-btn:hover {
+        background: var(--primary);
+        color: var(--white);
+        font-weight: 350;
+        border-radius: 5px;
+    }
+    
+    .download-btn {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        width: 200px;
+        gap: 8px;
+    }
+    
+    .download-btn a {
+        background: var(--primary);
+        color: var(--white);
+        font-weight: var(--light);
+        font-size: var(--text-xs);
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.2) -3px 3px 13px 0px;
+    }
+    
+    .download-btn a:hover {
+        background: var(--black)
+    }
+</style>
