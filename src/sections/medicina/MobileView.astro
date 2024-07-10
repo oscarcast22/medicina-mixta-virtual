@@ -31,13 +31,13 @@ const { data } = Astro.props;
         <hr>
     </div>
     <div class="menu">
-        <div class="proposito">
+        <div class="proposito" style="z-index:1">
             <button class="menu-btn" data-target="proposito-content">Propósito del Est.</button>
         </div>
-        <div class="plan">
+        <div class="plan" style="z-index:2">
             <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
         </div>
-        <div class="mapa">
+        <div class="mapa" style="z-index:3">
             <button class="menu-btn" data-target="mapa-content">Mapa Curricular</button>
         </div>
     </div>
@@ -77,16 +77,15 @@ const { data } = Astro.props;
         flex-direction: column;
         width: 100%;
         max-width: 600px;
-
         margin: 30px auto;
-        background: var(--white);
         border-radius: 5px;
-        box-shadow: rgba(0, 0, 0, 0.2) -3px 3px 13px 0px;
     }
 
     .menu div {
-        box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.25);
-
+        position: relative;
+        background: var(--white);
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
     }
     
     .menu-btn {
@@ -130,4 +129,6 @@ const { data } = Astro.props;
     .download-btn a:hover {
         background: var(--black)
     }
+
+
 </style>
