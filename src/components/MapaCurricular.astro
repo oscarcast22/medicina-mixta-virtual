@@ -79,7 +79,13 @@ const { titulo, mapa } = Astro.props
         }
     }
 
-    document.addEventListener('astro:page-load', showModal);
+    document.addEventListener('astro:page-load', function () {
+        showModal();
+    });
+
+    window.addEventListener('resize', function () {
+            showModal();
+    });
 </script>
 
 

@@ -47,4 +47,34 @@ console.log(medicinaData.data)
         margin: auto;
     }
 </style>
+
+<script>
+    document.addEventListener('astro:page-load', function () {
+        const largeView = document.getElementById('large-view');
+        const mobileView = document.getElementById('mobile-view');
+        let largeViewParent = largeView.parentElement;
+        let mobileViewParent = mobileView.parentElement;
+
+        function checkWindowSize() {
+            if (window.innerWidth <= 600) {
+                if (largeViewParent && largeViewParent.contains(largeView)) {
+                    largeViewParent.removeChild(largeView);
+                }
+                if (mobileViewParent && !mobileViewParent.contains(mobileView)) {
+                    mobileViewParent.appendChild(mobileView);
+                }
+            } else {
+                if (mobileViewParent && mobileViewParent.contains(mobileView)) {
+                    mobileViewParent.removeChild(mobileView);
+                }
+                if (largeViewParent && !largeViewParent.contains(largeView)) {
+                    largeViewParent.appendChild(largeView);
+                }
+            }
+        }
+
+        window.addEventListener('resize', checkWindowSize);
+        checkWindowSize();
+    })
+</script>
     

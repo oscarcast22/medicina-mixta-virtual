@@ -21,7 +21,7 @@ const { data } = Astro.props;
 ---
 
 <section id="mobile-view">
-    <div class="resumen">
+    <div class="resumen-m">
         <p>
             La Escuela de Medicina de la UAD forma Médicos con un dominio general de la medicina que se imparte en idioma español, cultos, con amplia visión de la profesión y un gran sentido humano, comprometidos, honestos y competentes para resolver de forma efectiva y humanista las situaciones de salud individual y comunitaria.
         </p>
@@ -30,18 +30,71 @@ const { data } = Astro.props;
         </p>
         <hr>
     </div>
-    <div class="menu">
-        <div class="proposito" style="z-index:1">
-            <button class="menu-btn" data-target="proposito-content">Propósito del Est.</button>
+    <div class="menu-m">
+        <div class="collapse proposito" style="z-index:1">
+            <button class="menu-btn-m" data-target="proposito-content">Propósito del Est.</button>
+            <div class="proposito-content" id="proposito-content">
+                <p>
+                    Se definen los aspectos genéricos que persigue el plan de estudios de la Licenciatura de Médico General de la UAD modalidad Mixta-Virtual, es decir, los propósitos que se atenderán durante el proceso educativo:
+                </p>
+                <p>
+                    Formar profesionales altamente competentes y capacitados para desempeñarse en el ejercicio de la medicina con los conocimientos, calidad técnica, ética profesional y humanismo necesarios para el cuidado y la promoción de la salud, que integren la prevención, curación, recuperación y rehabilitación, en los niveles individual, familiar y comunitario de la región y el país.
+                </p>
+                <div class="img-container">
+                    <img src="/images/plan_estudios_medicina.jpg" alt="">
+                </div>
+                <p>
+                    Al término de sus estudios de Licenciatura, el estudiante de la carrera de Médico General será Competente para:
+                </p>
+                <ul>
+                    <li>
+                        Distinguir entre lo normal y lo patológico en el proceso salud-enfermedad.
+                    </li>
+                    <li>
+                        Fundamentar su práctica profesional en conocimientos biomédicos.
+                    </li>
+                    <li>
+                        Desarrollar una práctica clínica de calidad, al aplicar los procedimientos clínicos de acuerdo con las características particulares de los pacientes.
+                    </li>
+                    <li>
+                        Aplicar los conocimientos y herramientas epidemiológicas para promover la salud colectiva.
+                    </li>
+                    <li>
+                        Basar y ejercer su profesión de acuerdo con sus principios bioéticos, extendiendo esa actitud hacia las esferas personal, social y laboral.
+                    </li>
+                    <li>
+                        Contar con los elementos teóricos y metodológicos para realizar investigación.
+                    </li>
+                    <li>
+                        Practicar su profesión con un sentido humanista.
+                    </li>
+                    <li>
+                        Realizar trabajo interdisciplinario.
+                    </li>
+                    <li>
+                        Desarrollar actividades de enseñanza en el ámbito de su desempeño profesional.
+                    </li>
+                    <li>
+                        Evaluar con sentido crítico su ejercicio profesional y en consecuencia, diseñar y ejecutar un programa de superación profesional.
+                    </li>
+                    <li>
+                        Dominar el manejo de las Tecnologías de la Información referente a paquetería de software, en el área de la salud.
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="plan" style="z-index:2">
-            <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
+        <div class="collapse plan" style="z-index:2">
+            <button class="menu-btn-m" data-target="plan-content">Plan de Estudios</button>
+            <PlanEstudios rvoe={data.rvoe} plan_estudios={data.plan_estudios}/>
         </div>
-        <div class="mapa" style="z-index:3">
-            <button class="menu-btn" data-target="mapa-content">Mapa Curricular</button>
+        <div class="collapse mapa" style="z-index:3">
+            <button class="menu-btn-m" data-target="mapa-content">Mapa Curricular</button>
+            <div>
+                <MapaCurricular titulo="medicina" mapa={data.mapa_curricular} />
+            </div>
         </div>
     </div>
-    <div class="download-btn">
+    <div class="download-btn-m">
         <a href="https://drive.google.com/uc?id=1yNArDVyLQ1ru9od48V6WTaTUvhTw043d&export=download">Descargar Requisitos</a>
         <a href="https://drive.google.com/uc?id=19EknwUjYLDNmrEhvEeSV8X8FQjtYXDSW&export=download">Descargar Plan de Estudio</a>
     </div>
@@ -61,18 +114,18 @@ const { data } = Astro.props;
     }
 
     
-    .resumen p {
+    .resumen-m p {
         color: var(--primary);
         font-size: var(--text-xs);
     }
     
-    .resumen hr {
+    .resumen-m hr {
         color: var(--primary);
         width: 60%;
         border-color: var(--primary);
     }
     
-    .menu {
+    .menu-m {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -81,14 +134,14 @@ const { data } = Astro.props;
         border-radius: 5px;
     }
 
-    .menu div {
+    .collapse {
         position: relative;
         background: var(--white);
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
         border-radius: 5px;
     }
     
-    .menu-btn {
+    .menu-btn-m {
         background: none;
         width: 100%;
         border: 0;
@@ -101,14 +154,15 @@ const { data } = Astro.props;
         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, font-weight 0.3s ease-in-out;
     }
     
-    .menu-btn:hover {
+    .menu-btn-m:hover,
+    .menu-btn-m.selected {
         background: var(--primary);
         color: var(--white);
         font-weight: 350;
         border-radius: 5px;
     }
     
-    .download-btn {
+    .download-btn-m {
         display: flex;
         flex-direction: column;
         margin: auto;
@@ -116,7 +170,7 @@ const { data } = Astro.props;
         gap: 8px;
     }
     
-    .download-btn a {
+    .download-btn-m a {
         background: var(--primary);
         color: var(--white);
         font-weight: var(--light);
@@ -126,9 +180,46 @@ const { data } = Astro.props;
         box-shadow: rgba(0, 0, 0, 0.2) -3px 3px 13px 0px;
     }
     
-    .download-btn a:hover {
+    .download-btn-m a:hover {
         background: var(--black)
     }
 
+    .proposito-content {
+        text-align: left;
+        padding: 15px;
+    }
 
+    .proposito-content p:first-child {
+        margin-top: 0;
+    }
+
+    .proposito-content p {
+        font-size: var(--text-xs);
+        color: var(--gray-600);
+    }
+
+    .proposito-content ul {
+        font-size: var(--text-xs);
+        color: var(--gray-600);
+        list-style: outside;
+        padding: 0 0 0 20px;
+    }
+
+    .img-container {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        margin: 22px 0;
+    }
+
+    .img-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 20%;
+    }
 </style>

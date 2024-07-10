@@ -310,7 +310,8 @@ const { data } = Astro.props;
 </style>
 
 <script>
-    document.addEventListener('astro:page-load', function () {
+    function initializeLargeView() {
+
         const buttons: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.menu-btn');
         const sections: NodeListOf<HTMLElement> = document.querySelectorAll('.content-section > div');
         const contentContainer: HTMLElement | null = document.querySelector('.content-section');
@@ -368,5 +369,21 @@ const { data } = Astro.props;
                 }
             });
         });
+    }
+
+    document.addEventListener('astro:page-load', function () {
+        initializeLargeView();
     });
+
+    // También queremos inicializarlo al redimensionar la ventana
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 600) {
+            initializeLargeView();
+        }
+    });
+
+    // Inicializar al cargar la página
+    if (window.innerWidth > 600) {
+        initializeLargeView();
+    }
 </script>
