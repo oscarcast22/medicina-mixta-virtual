@@ -240,6 +240,7 @@ import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astr
     .logo {
         display: flex;
         justify-content: center;
+        margin: 0 0 20px;
     }
 
     .title {
@@ -289,5 +290,19 @@ import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astr
 
     .perfil-section {
         margin: 35px 0;
+    }
+
+    @media (max-width: 650px) {
+        .text {
+            padding: 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .content h5,
+        p,
+        ul {
+            font-size: var(--text-sm);
+        }
     }
 </style>
