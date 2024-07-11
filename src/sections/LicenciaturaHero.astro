@@ -59,6 +59,7 @@ const { image, title, rvoe } = Astro.props
         align-items: center;
         justify-content: center;
         text-align: center;
+        padding: 10px;
     }
 
     .title,
@@ -86,11 +87,25 @@ const { image, title, rvoe } = Astro.props
         }
 
         .subtitle {
-            font-size: 4vw;
+            font-size: 5vw;
         }
 
         .rvoe {
-            font-size: 2.5vw;
+            font-size: 3.5vw;
+        }
+    }
+
+    @media (max-width: 365px) {
+        .title {
+            font-size: var(--text-2xl);
+        }
+
+        .subtitle {
+            font-size: var(--text-lg);
+        }
+
+        .rvoe {
+            font-size: var(--text-xs);
         }
     }
 
