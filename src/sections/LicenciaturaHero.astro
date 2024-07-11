@@ -16,7 +16,9 @@ const { image, title, rvoe } = Astro.props
         data-aos="zoom-in-up"
         data-aos-duration="650"
     >
-        <slot />
+        <div style="width: 100%">
+            <slot />
+        </div>
         <h1 class="title">{title}</h1>
         <h4 class="subtitle extra-light">Modalidad Mixta-Virtual</h4>
         <p class="rvoe extra-light">Acuerdo RVOE {rvoe}</p>
@@ -78,6 +80,19 @@ const { image, title, rvoe } = Astro.props
         border-radius: 10px;
     }
 
+    @media (max-width: 600px) {
+        .title {
+            font-size: 9vw;
+        }
+
+        .subtitle {
+            font-size: 4vw;
+        }
+
+        .rvoe {
+            font-size: 2.5vw;
+        }
+    }
 
 
 </style>
