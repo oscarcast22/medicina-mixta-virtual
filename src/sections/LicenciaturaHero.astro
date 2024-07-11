@@ -7,7 +7,7 @@ interface Props {
 
 const { image, title, rvoe } = Astro.props
 ---
-<section class="hero" id="hero-lic">
+<section class="hero" id="hero">
     <div class="image-container">
         <img src={image} alt="">
     </div>
@@ -111,21 +111,3 @@ const { image, title, rvoe } = Astro.props
 
 
 </style>
-
-<script>
-    document.addEventListener('astro:page-load', function() {
-        const hero = document.getElementById('hero-lic');
-        
-        if (hero) {
-            window.addEventListener('scroll', function() {
-                const scrollPosition = window.scrollY;
-                const heroBottom = hero.offsetTop;
-                if (scrollPosition >= heroBottom) {
-                    const distanceFromBottom = scrollPosition - heroBottom;
-                    const parallaxValue = distanceFromBottom * .7;
-                    hero.style.transform = `translateY(${parallaxValue}px)`;
-                }
-            });
-        }
-    });
-</script>

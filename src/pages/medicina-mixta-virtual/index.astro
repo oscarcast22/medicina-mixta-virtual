@@ -1,12 +1,12 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Nav from "../sections/Nav.astro";
-import LicenciaturaHero from "../sections/LicenciaturaHero.astro";
-import Medicina from "../icons/medicina.astro";
-import Footer from "../sections/Footer.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../sections/Nav.astro";
+import LicenciaturaHero from "../../sections/LicenciaturaHero.astro";
+import Medicina from "../../icons/medicina.astro";
+import Footer from "../../sections/Footer.astro";
 import { getCollection } from "astro:content";
-import LargeView from "../sections/medicina/LargeView.astro";
-import MobileView from "../sections/medicina/MobileView.astro";
+import LargeView from "../../sections/medicina/LargeView.astro";
+import MobileView from "../../sections/medicina/MobileView.astro";
 
 const licenciaturas = await getCollection('licenciaturas');
 
@@ -19,7 +19,7 @@ if (!medicinaData) {
 console.log(medicinaData.data)
 ---
 <BaseLayout title="Medicina Mixta Virtual" description="Sitio principal de Medicina Mixta Virtual UAD">
-    <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina_mixta_virtual"}/>
+    <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina-mixta-virtual"}/>
     <LicenciaturaHero 
         image={medicinaData.data.portada}
         title={medicinaData.data.titulo}

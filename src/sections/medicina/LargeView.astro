@@ -22,7 +22,7 @@ const { data } = Astro.props;
 
 <section id="large-view">
     <div class="blank"></div>
-    <div class="resumen">
+    <div class="resumen" data-aos="fade-up">
         <p>
             La Escuela de Medicina de la UAD forma Médicos con un dominio general de la medicina que se imparte en idioma español, cultos, con amplia visión de la profesión y un gran sentido humano, comprometidos, honestos y competentes para resolver de forma efectiva y humanista las situaciones de salud individual y comunitaria.
         </p>
@@ -32,7 +32,7 @@ const { data } = Astro.props;
         <hr>
     </div>
     <aside>
-        <div class="sticky">
+        <div class="sticky" data-aos="fade-right">
             <div class="menu">
                 <button class="menu-btn selected" data-target="proposito-content">Propósito del Est.</button>
                 <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
@@ -44,7 +44,7 @@ const { data } = Astro.props;
             </div>
         </div>
     </aside>
-    <section class="content-section">
+    <section class="content-section" data-aos="fade-up" id="plan_de_estudios">
         <div class="proposito" id="proposito-content">
             <p>
                 Se definen los aspectos genéricos que persigue el plan de estudios de la Licenciatura de Médico General de la UAD modalidad Mixta-Virtual, es decir, los propósitos que se atenderán durante el proceso educativo:

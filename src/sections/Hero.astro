@@ -7,10 +7,7 @@ import LogoEscuelaMedicina from "../icons/logo_escuela_medicina.astro"
             Tu navegador no admite el elemento <code>video</code>.
         </video>
     </div>
-    <div 
-        class="logo"
-    
-    >
+    <div class="logo">
         <LogoEscuelaMedicina
             width="650px"
         />
@@ -64,21 +61,3 @@ import LogoEscuelaMedicina from "../icons/logo_escuela_medicina.astro"
 
     }
 </style>
-
-<script>
-    document.addEventListener('astro:page-load', function() {
-        const hero = document.getElementById('hero');
-        
-        if (hero) {
-            window.addEventListener('scroll', function() {
-                const scrollPosition = window.scrollY;
-                const heroBottom = hero.offsetTop;
-                if (scrollPosition >= heroBottom) {
-                    const distanceFromBottom = scrollPosition - heroBottom;
-                    const parallaxValue = distanceFromBottom * .7;
-                    hero.style.transform = `translateY(${parallaxValue}px)`;
-                }
-            });
-        }
-    });
-</script>

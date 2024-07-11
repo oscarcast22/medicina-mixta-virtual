@@ -28,7 +28,8 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
                     <li class="dropdown" id="dropdown-1" onmouseover="handleOfferHover(1, true)" onmouseleave="handleOfferHover(1, false)">
                         <button onclick="handleClick(1)">Estructura Académica</button>
                         <ul class="dropdown-content" id="content-1">
-                            <li><a href={`${LicenciaturaSlug}/perfil_de_ingreso_y_egreso`}>Perfil de Ingreso y Egreso</a></li>
+                            <li><a href={`/${LicenciaturaSlug}/perfil-de-ingreso-y-egreso`}>Perfil de Ingreso y Egreso</a></li>
+                            <li><a href={`/${LicenciaturaSlug}/#plan_de_estudios`}>Plan de Estudios</a></li>
                         </ul>
                     </li>
                 )}
