@@ -112,12 +112,6 @@ const { data } = Astro.props;
         grid-gap: 10px;
     }
 
-    @media only screen and (max-width: 600px) {
-        #large-view {
-            display: none;
-        }
-    }
-
     @media only screen and (max-width: 750px) {
         #large-view {
             grid-template-columns: 210px 1fr;
@@ -308,82 +302,3 @@ const { data } = Astro.props;
         to { opacity: 0; transform: translateY(20px); }
     }
 </style>
-
-<script>
-    function initializeLargeView() {
-
-        const buttons: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.menu-btn');
-        const sections: NodeListOf<HTMLElement> = document.querySelectorAll('.content-section > div');
-        const contentContainer: HTMLElement | null = document.querySelector('.content-section');
-
-        // Función para animar el cambio de altura
-        function animateHeight(element: HTMLElement, from: number, to: number): void {
-            element.style.height = `${from}px`;
-            element.offsetHeight; // Forzar un reflow
-            element.style.transition = 'height 0.5s ease';
-            element.style.height = `${to}px`;
-        }
-
-        // Mostrar la sección 'proposito' por defecto
-        const defaultSection: HTMLElement | null = document.getElementById('proposito-content');
-        if (defaultSection) {
-            defaultSection.classList.remove('hidden');
-            defaultSection.classList.add('fade-in');
-        }
-
-        // Establecer la altura inicial del contenedor
-        if (contentContainer && defaultSection) {
-            contentContainer.style.height = `${defaultSection.scrollHeight}px`;
-        }
-
-        buttons.forEach(button => {
-            button.addEventListener('click', function (this: HTMLButtonElement) {
-                // Remover la clase 'selected' de todos los botones
-                buttons.forEach(btn => btn.classList.remove('selected'));
-
-                // Añadir la clase 'selected' al botón clickeado
-                this.classList.add('selected');
-
-                // Obtener la sección objetivo
-                const target: string | null = this.getAttribute('data-target');
-                const targetSection: HTMLElement | null = target ? document.getElementById(target) : null;
-
-                if (contentContainer && targetSection) {
-                    // Guardar la altura actual
-                    const currentHeight: number = contentContainer.scrollHeight;
-
-                    // Ocultar todas las secciones
-                    sections.forEach(section => {
-                        section.classList.add('hidden');
-                        section.classList.remove('fade-in');
-                    });
-
-                    // Mostrar la sección objetivo
-                    targetSection.classList.remove('hidden');
-                    targetSection.classList.add('fade-in');
-
-                    // Animar el cambio de altura
-                    requestAnimationFrame(() => {
-                        animateHeight(contentContainer, currentHeight, (targetSection.scrollHeight + 15));
-                    });
-                }
-            });
-        });
-    }
-
-    document.addEventListener('astro:page-load', function () {
-        initializeLargeView();
-    });
-
-    // También queremos inicializarlo al redimensionar la ventana
-    window.addEventListener('resize', function () {
-        if (window.innerWidth > 600) {
-            initializeLargeView();
-        }
-    });
-
-    // Inicializar al cargar la página
-    if (window.innerWidth > 600) {
-        initializeLargeView();
-    }
-</script>

@@ -7,27 +7,27 @@ interface Props {
 const { titulo, mapa } = Astro.props
 ---
 
-<div class="mapa" id="mapa">
+<div class="mapa-modal" id="mapa">
     <p>Mapa curricular {titulo} modalidad mixta-virtual</p>
     <img src={mapa} alt={`mapa curriculular de la licenciatura en ${titulo} modalidad mixta-virtual`} id="mapa-img">
 </div>
 
 <style>
-    .mapa {
+    .mapa-modal {
     }
-    .mapa p {
+    .mapa-modal p {
         text-transform: uppercase;
         font-size: var(--text-xs);
     }
 
-    .mapa img {
+    .mapa-modal img {
         width: 100%;
         cursor: pointer;
 
     }
 
     @media (max-width: 600px) {
-        .mapa p {
+        .mapa-modal p {
             display: none;
         }
     }

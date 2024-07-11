@@ -112,13 +112,6 @@ const { data } = Astro.props;
         text-align: center;
     }
     
-    @media only screen and (min-width: 601px) {
-        #mobile-view {
-            display: none;
-        }
-    }
-
-    
     .resumen-m p {
         color: var(--primary);
         font-size: var(--text-xs);
@@ -163,7 +156,7 @@ const { data } = Astro.props;
     .menu-btn-m.selected {
         background: var(--primary);
         color: var(--white);
-        font-weight: 350;
+        font-weight: 550;
         border-radius: 5px;
     }
     
@@ -196,6 +189,7 @@ const { data } = Astro.props;
         padding: 8px 15px;
         border-radius: 5px;
         align-self: center;
+        text-align: center;
     }
 
     .plan-link:hover {
@@ -245,59 +239,14 @@ const { data } = Astro.props;
     }
 
     .collapse-content {
+        height: 0;
         overflow: hidden;
         opacity: 0;
-        transition: max-height 0.7s ease-out, opacity 0.7s ease-out, padding 0.2s ease-out;
-        max-height: 0;
+        transition: height 0.6s ease-out, opacity 0.7s ease-out, padding 0.2s ease-out;
     }
 
     .collapse.open .collapse-content {
-        max-height: 2400px;
         opacity: 1;
         padding: 15px;
     }
 </style>
-
-<script>
-    document.addEventListener('astro:page-load', function (): void {
-        function setupCollapsibles(): void {
-            const collapses: NodeListOf<Element> = document.querySelectorAll('.collapse');
-
-            collapses.forEach((collapse: Element) => {
-                const button: HTMLElement | null = collapse.querySelector('.menu-btn-m');
-                const content: HTMLElement | null = collapse.querySelector('.collapse-content');
-
-                if (button && content) {
-                    button.addEventListener('click', function (): void {
-                        if (collapse.classList.contains('open')) {
-                            collapse.classList.remove('open');
-                            button.classList.remove('selected');
-                        } else {
-                            collapses.forEach((otherCollapse: Element) => {
-                                if (otherCollapse !== collapse && otherCollapse.classList.contains('open')) {
-                                    otherCollapse.classList.remove('open');
-                                    const otherButton: HTMLElement | null = otherCollapse.querySelector('.menu-btn-m');
-                                    if (otherButton) {
-                                        otherButton.classList.remove('selected');
-                                    }
-                                }
-                            });
-                            collapse.classList.add('open');
-                            button.classList.add('selected');
-                        }
-                    });
-                }
-            });
-        }
-
-        setupCollapsibles();
-
-        window.addEventListener('resize', function (): void {
-            setupCollapsibles();
-        });
-    });
-</script>
-
-
-
-

@@ -48,118 +48,6 @@ console.log(medicinaData.data)
     }
 </style>
 
-<script>
-    document.addEventListener('astro:page-load', function () {
-        const largeView = document.getElementById('large-view') as HTMLElement | null;
-        const mobileView = document.getElementById('mobile-view') as HTMLElement | null;
-
-        let largeViewParent = largeView ? largeView.parentElement as HTMLElement | null : null;
-        let mobileViewParent = mobileView ? mobileView.parentElement as HTMLElement | null : null;
-
-        function checkWindowSize(): void {
-            if (window.innerWidth <= 600) {
-                if (largeView && largeViewParent && largeViewParent.contains(largeView)) {
-                    largeViewParent.removeChild(largeView);
-                }
-                if (mobileView && mobileViewParent && !mobileViewParent.contains(mobileView)) {
-                    mobileViewParent.appendChild(mobileView);
-                }
-            } else {
-                if (mobileView && mobileViewParent && mobileViewParent.contains(mobileView)) {
-                    mobileViewParent.removeChild(mobileView);
-                }
-                if (largeView && largeViewParent && !largeViewParent.contains(largeView)) {
-                    largeViewParent.appendChild(largeView);
-                }
-            }
-        }
-
-        window.addEventListener('resize', checkWindowSize);
-        checkWindowSize();
-    });
-</script>
-
-
-
-<script>
-function updateModalImage(): void {
-    const modal = document.getElementById('modal') as HTMLElement | null;
-    const img = document.getElementById('mapa-img') as HTMLImageElement | null;
-    const modalContent = document.getElementById('img-modal') as HTMLImageElement | null;
-    const caption = document.getElementById('caption') as HTMLElement | null;
-
-    if (img && modal && modalContent && caption) {
-        img.onclick = function(): void {
-            console.log("img click");
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-            modalContent.src = img.src;
-            caption.innerHTML = img.alt;
-        }
-    }
-}
-
-function showModal(): void {
-    const mapa = document.getElementById('mapa');
-    if (mapa && !document.getElementById('modal')) {
-        const modal = document.createElement('div');
-        modal.setAttribute('class', 'modal');
-        modal.setAttribute('id', 'modal');
-
-        const closeModal = document.createElement('span');
-        closeModal.setAttribute('class', 'close');
-        closeModal.innerHTML = '&times;';
-
-        const modalContent = document.createElement('img');
-        modalContent.setAttribute('class', 'modal-content');
-        modalContent.setAttribute('id', 'img-modal');
-
-        const caption = document.createElement('div');
-        caption.setAttribute('id', 'caption');
-
-        modal.appendChild(closeModal);
-        modal.appendChild(modalContent);
-        modal.appendChild(caption);
-        document.body.appendChild(modal);
-
-        updateModalImage();
-
-        closeModal.onclick = function(): void {
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 500);
-        }
-
-        window.onclick = function(event: MouseEvent): void {
-            if (event.target == modal) {
-                modal.classList.remove('show');
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 500);
-            }
-        }
-    }
-}
-
-document.addEventListener('astro:page-load', function (): void {
-    showModal();
-    updateModalImage(); // Asegura que la imagen se capture al cargar la página
-    window.addEventListener('resize', updateModalImage);
-    // Check and update image periodically until it is present
-    const checkImage = setInterval(function(): void {
-        const img = document.getElementById('mapa-img');
-        if (img) {
-            updateModalImage();
-            clearInterval(checkImage);
-        }
-    }, 100);
-});
-</script>
-
-
 <style is:global>
     .modal {
         display: none;
@@ -225,4 +113,217 @@ document.addEventListener('astro:page-load', function (): void {
         }
     }
 </style>
-    
+
+<script>
+    function initializeLargeView(): void {
+        const buttons: NodeListOf<HTMLElement> = document.querySelectorAll('.menu-btn');
+        const sections: NodeListOf<HTMLElement> = document.querySelectorAll('.content-section > div');
+        const contentContainer: HTMLElement | null = document.querySelector('.content-section');
+
+        function animateHeight(element: HTMLElement, from: number, to: number): void {
+            element.style.height = `${from}px`;
+            element.offsetHeight;
+            element.style.transition = 'height 0.5s ease';
+            element.style.height = `${to}px`;
+        }
+
+        const defaultSection: HTMLElement | null = document.getElementById('proposito-content');
+        if (defaultSection) {
+            defaultSection.classList.remove('hidden');
+            defaultSection.classList.add('fade-in');
+        }
+
+        if (contentContainer && defaultSection) {
+            contentContainer.style.height = `${defaultSection.scrollHeight}px`;
+        }
+
+        buttons.forEach((button: HTMLElement) => {
+            button.addEventListener('click', function (this: HTMLElement) {
+                buttons.forEach((btn: HTMLElement) => btn.classList.remove('selected'));
+                this.classList.add('selected');
+
+                const target: string | null = this.getAttribute('data-target');
+                const targetSection: HTMLElement | null = target ? document.getElementById(target) : null;
+
+                if (contentContainer && targetSection) {
+                    const currentHeight: number = contentContainer.scrollHeight;
+
+                    sections.forEach((section: HTMLElement) => {
+                        section.classList.add('hidden');
+                        section.classList.remove('fade-in');
+                    });
+
+                    targetSection.classList.remove('hidden');
+                    targetSection.classList.add('fade-in');
+
+                    requestAnimationFrame(() => {
+                        animateHeight(contentContainer, currentHeight, targetSection.scrollHeight + 15);
+                    });
+                }
+            });
+        });
+    }
+
+    function setupCollapsibles(): void {
+        const collapses: NodeListOf<Element> = document.querySelectorAll('.collapse');
+
+        collapses.forEach((collapse: Element) => {
+            const button: HTMLElement | null = collapse.querySelector('.menu-btn-m');
+            const content: HTMLElement | null = collapse.querySelector('.collapse-content');
+            const collapseId: string | null = content ? content.id : null;
+
+            if (button && content) {
+                // Remove existing event listeners to avoid duplication
+                const newButton: HTMLElement = button.cloneNode(true) as HTMLElement;
+                button.parentNode?.replaceChild(newButton, button);
+
+                newButton.addEventListener('click', function () {
+                    const isOpen: boolean = collapse.classList.contains('open');
+
+                    collapses.forEach((otherCollapse: Element) => {
+                        const otherButton: HTMLElement | null = otherCollapse.querySelector('.menu-btn-m');
+                        const otherContent: HTMLElement | null = otherCollapse.querySelector('.collapse-content');
+
+                        if (otherCollapse !== collapse) {
+                            otherCollapse.classList.remove('open');
+                            if (otherButton) {
+                                otherButton.classList.remove('selected');
+                            }
+                            if (otherContent) {
+                                otherContent.style.height = '0px';
+                            }
+                        }
+                    });
+
+                    let additionalHeight: number = 0;
+
+                    switch (collapseId) {
+                        case 'proposito-content':
+                            additionalHeight = 50;
+                            break;
+                        case 'plan-content':
+                            additionalHeight = 40;
+                            break;
+                        case 'mapa-content':
+                            additionalHeight = 0;
+                            break;
+                        default:
+                            additionalHeight = 0;
+                            break;
+                    }
+
+                    if (isOpen) {
+                        collapse.classList.remove('open');
+                        newButton.classList.remove('selected');
+                        content.style.height = '0px';
+                    } else {
+                        collapse.classList.add('open');
+                        newButton.classList.add('selected');
+                        content.style.height = `${content.scrollHeight + additionalHeight}px`;
+                        console.log(`content.style.height: ${content.style.height}`, `currentHeight: ${content.scrollHeight}`, `additionalHeight: ${additionalHeight}`, collapseId);
+                    }
+                });
+            }
+        });
+    }
+
+    function checkWindowSize(): void {
+        const largeView: HTMLElement | null = document.getElementById('large-view');
+        const mobileView: HTMLElement | null = document.getElementById('mobile-view');
+
+        const isSmallScreen: boolean = window.innerWidth <= 600;
+
+        if (isSmallScreen) {
+            if (largeView) {
+                largeView.style.display = 'none';
+            }
+            if (mobileView) {
+                mobileView.style.display = 'block';
+                setupCollapsibles();
+            }
+        } else {
+            if (mobileView) {
+                mobileView.style.display = 'none';
+            }
+            if (largeView) {
+                largeView.style.display = 'grid';
+                initializeLargeView();
+            }
+        }
+    }
+
+    document.addEventListener('astro:page-load', function (): void {
+        checkWindowSize();
+    });
+
+    function showModal(): void {
+        const mapas: NodeListOf<Element> = document.querySelectorAll('.mapa');
+
+        mapas.forEach((mapa: Element) => {
+            const images: NodeListOf<HTMLImageElement> = mapa.querySelectorAll('img');
+
+            images.forEach((img: HTMLImageElement) => {
+                const modal: HTMLDivElement = document.createElement('div');
+                modal.setAttribute('class', 'modal');
+                modal.setAttribute('id', 'modal');
+
+                const closeModal: HTMLSpanElement = document.createElement('span');
+                closeModal.setAttribute('class', 'close');
+                closeModal.innerHTML = '&times;';
+
+                const modalContent: HTMLImageElement = document.createElement('img');
+                modalContent.setAttribute('class', 'modal-content');
+                modalContent.setAttribute('id', 'img-modal');
+
+                const caption: HTMLDivElement = document.createElement('div');
+                caption.setAttribute('id', 'caption');
+
+                modal.appendChild(closeModal);
+                modal.appendChild(modalContent);
+                modal.appendChild(caption);
+                document.body.appendChild(modal);
+
+                function updateModalImage(img: HTMLImageElement): void {
+                    if (modalContent && caption) {
+                        img.onclick = function(): void {
+                            console.log("img click");
+                            modal.style.display = 'flex';
+                            setTimeout(() => {
+                                modal.classList.add('show');
+                            }, 10);
+                            modalContent.src = img.src;
+                            caption.innerHTML = img.alt;
+                        }
+                    }
+                }
+
+                closeModal.onclick = function(): void {
+                    modal.classList.remove('show');
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                    }, 500);
+                }
+
+                document.addEventListener('click', function(event: MouseEvent) {
+                    if (event.target === modal) {
+                        console.log("click en el modal");
+                        modal.classList.remove('show');
+                        setTimeout(() => {
+                            modal.style.display = 'none';
+                        }, 500);
+                    }
+                });
+
+                updateModalImage(img);
+            });
+        });
+    }
+
+    document.addEventListener('astro:page-load', function (): void {
+        showModal();
+    });
+
+    window.addEventListener('resize', checkWindowSize);
+
+    checkWindowSize();
+</script>
