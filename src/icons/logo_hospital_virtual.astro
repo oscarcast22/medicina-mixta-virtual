@@ -121,28 +121,28 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 
 <script>
 	document.addEventListener('astro:page-load', function() {
-		const logo = document.getElementById('logo-h');
+	    const logo: HTMLElement | null = document.getElementById('logo-h');
 	
-		const observerOptions = {
-			root: null, // viewport
-			rootMargin: '0px',
-			threshold: 0.1 // 10% visible
-		};
+	    const observerOptions: IntersectionObserverInit = {
+	        root: null, // viewport
+	        rootMargin: '0px',
+	        threshold: 0.1 // 10% visible
+	    };
 	
-		function handleIntersection(entries, observer) {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					logo.style.animation = 'dash 1.2s ease-in forwards';
-					observer.unobserve(logo); // Deja de observar una vez que la animación ha empezado
-				}
-			});
-		}
+	    function handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
+	        entries.forEach(entry => {
+	            if (entry.isIntersecting && logo) {
+	                logo.style.animation = 'dash 1.2s ease-in forwards';
+	                observer.unobserve(logo); // Stop observing once the animation has started
+	            }
+	        });
+	    }
 	
-		const observer = new IntersectionObserver(handleIntersection, observerOptions);
+	    const observer: IntersectionObserver = new IntersectionObserver(handleIntersection, observerOptions);
 	
-		if (logo) {
-			observer.observe(logo);
-		}
+	    if (logo) {
+	        observer.observe(logo);
+	    }
 	});
-	</script>
+</script>
 	

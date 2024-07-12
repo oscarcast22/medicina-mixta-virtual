@@ -1,0 +1,148 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../sections/Nav.astro";
+import Footer from "../sections/Footer.astro";
+import LogoEscuelaMedicinaAzul from "../icons/logo_escuela_medicina_azul.astro";
+import Medico from "../icons/medico.astro"
+---
+
+<BaseLayout title="Misión y Visión" description="Misión y Visión de la Escuela de Medicina UAD">
+    <Nav LicenciaturaTitle="Medicina"/>
+    <section class="mision-hero" id="hero">
+        <img src="/images/mision-vision-portada.jpg" alt="">
+    </section>
+    <main>
+        <section class="content">
+            <div class="logo">
+                <LogoEscuelaMedicinaAzul />
+            </div>
+            <div class="text">
+                <h5 class="light">Misión</h5>
+                <p>
+                    “Formar médicos generales, mediante un modelo de competencias que les permita actuar de manera integral, orientados a la atención primaria de la salud, el autoaprendizaje, la educación continua y la formación de posgrado, que sean competitivos, innovadores, eficientes y humanitarios. Capaces de aplicar las ciencias básicas, clínicas e investigación en la mejora de la salud global, a través de servicios en un ejercicio ético de la profesión”.
+                </p>                
+            </div>
+            <div class="text">
+                <h5 class="light">Visión</h5>
+                <p>
+                    “Con la educación como principal motor, nuestro fin es considerarnos a nivel nacional como una de las mejores instituciones formadoras de médicos generales éticos y competentes, orientados a continuar su preparación en cualquiera de los niveles, siendo generadores de los cambios sociales que den respuesta a las necesidades de atención primaria de la salud, mediante una disminución de los riesgos y condiciones sanitarias que afectan a la mayoría de los países”.
+                </p>
+            </div>
+            <div class="hr"></div>
+        </section>
+        <section class="medico">
+            <img src="/images/fondo-mision-y-vision.svg" alt="">
+            <div class="overlay"></div>
+            <div class="animated-svg">
+                <Medico />
+            </div>
+        </section>
+    </main>
+    <Footer />
+</BaseLayout>
+
+<style>
+    .mision-hero {
+        width: 100%;
+        height: 60vh;
+        overflow: hidden;
+        position: relative;
+        z-index: -10;
+    }
+
+    .mision-hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    main {
+        background: var(--gray-950);
+    }
+
+    .content {
+        padding: 30px 20px;
+        max-width: 1280px;
+        margin: auto;
+        text-align: center;
+    }
+
+    .logo {
+        display: flex;
+        justify-content: center;
+        margin: 0 0 20px;
+    }
+
+    .text {
+        max-width: 1000px;
+        margin: 50px auto;
+    }
+
+    .text h5 {
+        font-size: var(--text-base);
+        text-transform: uppercase;
+        color: var(--primary);
+        margin: 0;
+    }
+
+    .text p {
+        color: var(--gray-500);
+    }
+
+    .hr {
+        width: 80%;
+        max-width: 1280px;
+        height: 1px;
+        background: var(--primary);
+        margin: 40px auto 0;
+    }
+
+    .medico {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 740px;
+        overflow: hidden;
+        max-width: 1280px;
+        margin: auto;
+        position: relative;
+        padding: 20px 0 60px;
+        transition: all .3s ease;
+    }
+
+    .medico img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+        object-fit: cover;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #f2f2f2bd;
+    }
+
+    .animated-svg {
+        z-index: 0;
+        width: 90%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    @media (max-width: 590px) {
+        .medico {
+            height: 450px;
+        }
+    }
+</style>
