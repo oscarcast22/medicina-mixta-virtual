@@ -51,15 +51,27 @@
         color: var(--white);
     }
 
-    form input {
+    form input,
+    textarea {
         width: -webkit-fill-available;
         background: none;
         border-width: 1px;
         border-color: var(--white);
+        color: var(--gray-700);
         border-style: groove;
         outline: none;
         margin: 6px 0 0;
         padding: 6px;
+    }
+
+    form input:hover,
+    textarea:hover {
+        border-color: var(--primary);
+    }
+
+    form input:focus,
+    form textarea:focus {
+        border-color: var(--primary);
     }
 
     form label {
@@ -114,3 +126,15 @@
         color: var(--primary);
     }
 </style>
+
+<script>
+    document.querySelectorAll('input, textarea').forEach((element) => {
+        const originalPlaceholder = element.getAttribute('placeholder');
+        element.addEventListener('focus', () => {
+            element.setAttribute('placeholder', '');
+        });
+        element.addEventListener('blur', () => {
+            element.setAttribute('placeholder', originalPlaceholder);
+        });
+    });
+</script>
