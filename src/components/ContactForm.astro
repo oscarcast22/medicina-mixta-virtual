@@ -26,7 +26,7 @@
     </div>
     <div class="checkbox-container">
         <input type="checkbox" id="tyc" name="tyc" required/>
-        <label for="tyc">Acepto los <span id="openModal">Términos y condiciones</span></label>
+        <label for="tyc"><span id="openModal">Estoy de acuerdo en proporcionar mis datos para recibir información.</span></label>
     </div>
     <div class="submit-button">
         <input type="submit" value="Enviar"/>
@@ -35,7 +35,7 @@
 
 <style>
     form {
-        margin: 0 0 2.5rem 0;
+        margin: 40px 0 2.5rem 0;
         text-align: left;
     }
 
@@ -53,7 +53,7 @@
 
     form input,
     textarea {
-        width: -webkit-fill-available;
+        width: 100%;
         background: none;
         border-width: 1px;
         border-color: var(--white);
@@ -107,8 +107,9 @@
     }
 
     .submit-button input {
-        width: 174px;
+        width: 175px;
         background-color: var(--primary);
+        margin: 30px 0 0;
         border: none;
         color: var(--white);
         padding: 8px 25px;
@@ -124,6 +125,12 @@
     .submit-button input:hover {
         background-color: var(--white);
         color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+        form h1 {
+            font-size: var(--text-3xl);
+        }
     }
 </style>
 

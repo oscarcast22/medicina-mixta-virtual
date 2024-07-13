@@ -6,13 +6,14 @@ import ContactForm from "../components/ContactForm.astro";
 
 <BaseLayout title="Contacto" description="Pagina de contacto Escuela de Medicina UAD">
     <main>
+        <img class="background" src="/images/background_contacto.jpg" alt="">
         <section class="contact-grid">
             <aside id="aside-form">
                 <div class="form-container">
                     <div class="form">
                         <a href="/">
                             <LogoMixtaVirtual
-                                width="190px"
+                                width="235px"
                             />
                         </a>
                         <ContactForm />
@@ -30,31 +31,61 @@ import ContactForm from "../components/ContactForm.astro";
 
 <style>
     main {
-        background: #00000094;
+        position: relative;
+        background: #00000021;
+        overflow: hidden;
+    }
+
+    aside {
+        min-height: 100vh;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -100;
+        object-fit: cover;
     }
 
     .contact-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr; 
+        min-height: 100vh;
+        grid-template-columns: 2fr 1fr;
     }
 
     #aside-form {
         display: flex;
         align-items: center;
-        height: 100vh;
         padding: 20px;
     }
 
     .form-container {
-        height: 100%;
         display: flex;
         flex-direction: column;
+        height: 100%;
         justify-content: space-between;
         margin: auto;
         text-align: center;
     }
 
     .form {
-        padding: 20vh 0 0;
+        padding: 10vh 0 0;
+    }
+
+    @media (max-width: 900px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form {
+            padding: 5vh 0 0;
+        }
+
+        #aside-text {
+            display: none;
+        }
     }
 </style>
