@@ -86,7 +86,7 @@ const { data } = Astro.props;
         <div class="collapse plan" style="z-index:2">
             <button class="menu-btn-m" data-target="plan-content">Plan de Estudios</button>
             <div class="collapse-content" id="plan-content">
-                <div style="display: flex; flex-direction: column">
+                <div style="display: flex; flex-direction: column; margin-bottom: 20px">
                     <PlanEstudios rvoe={data.rvoe} plan_estudios={data.plan_estudios}/>
                     <a class="plan-link" href="https://drive.google.com/uc?id=1Vy6jZhRAv_-p-U8A5bvwDoddLRNwTYYn&export=download">Descargar Resultados de Aprendizaje</a>
                 </div>
