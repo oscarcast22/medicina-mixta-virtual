@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../sections/Nav.astro";
+import Footer from "../sections/Footer.astro";
+import HeroPreguntasFrecuentes from "../sections/HeroPreguntasFrecuentes.astro";
+import QAs from '../utils/QAs';
+---
+
+<BaseLayout title="Preguntas Frecuentes" description="Pagina de preguntas frecuentes Escuela de Medicina UAD">
+    <Nav LicenciaturaTitle="Medicina"/>
+    <HeroPreguntasFrecuentes />
+    <main>
+        <section class="content">
+            <div class="title" data-aos="fade-up">
+                <div></div><h5 class="light">Preguntas Frecuentes</h5>
+            </div>
+            <div class="questions">
+                {QAs.map(([question, answer]) => (
+                    <div data-aos="fade-up">
+                        <h3>{question}</h3>
+                        <p><Fragment set:html={answer} /></p>
+                    </div>
+                ))}
+            </div>
+        </section>
+    </main>
+    <Footer />
+</BaseLayout>
+
+<style>
+    main {
+        background: var(--white);
+    }
+
+    .content {
+        padding: 150px 20px 150px;
+        max-width: 1280px;
+        margin: auto;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .title h5 {
+        font-size: var(--text-md);
+        color: var(--primary);
+        margin: 0;
+    }
+
+    .title div {
+        width: 6px;
+        height: 6px;
+        background: var(--primary);
+    }
+
+    .questions {
+        padding: 0 0 0 14px;
+    }
+
+    .questions div {
+        margin: 20px 0;
+    }
+
+    .questions h3 {
+        color: var(--primary);
+        font-size: var(--text-base);
+        font-weight: var(--light);
+        margin: 0;
+    }
+
+    .questions p {
+        margin: 0;
+        color: var(--gray-500);
+        font-size: var(--text-sm);
+    }
+
+    @media (max-width: 550px) {
+        .questions {
+            padding: 0;
+        }
+    }
+</style>

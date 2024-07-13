@@ -1,0 +1,116 @@
+<form action="/agradecimiento" id="contactForm" data-astro-reload>
+    <h1>Contacto</h1>
+    <div class="form-input">
+        <label for="nombre">Nombre</label><br>
+        <input type="text" id="nombre" name="nombre" placeholder="Introducir nombre" required>
+    </div>
+    <div class="form-input">
+        <label for="apellidos">Apellidos</label><br>
+        <input type="text" id="apellidos" name="apellidos" placeholder="Introducir apellidos" required>
+    </div>
+    <div class="form-input">
+        <label for="telefono">Teléfono móvil</label><br>
+        <input type="tel" id="telefono" name="telefono" pattern="[0-9]{10}" placeholder="Introducir numero de telf." required>
+    </div>
+    <div class="form-input">
+        <label for="email">Correo electrónico</label><br>
+        <input type="email" id="email" placeholder="Introducir correo electr." required>
+    </div>
+    <div class="form-input">
+        <label for="ciudad">Ciudad</label><br>
+        <input type="text" id="ciudad" name="ciudad" placeholder="Introducir Ciudad" required>
+    </div>
+    <div class="form-input">
+        <label for="mensaje">Mensaje</label><br>
+        <textarea id="mensaje" name="mensaje" rows="4" cols="50" placeholder="Escribe tu mensaje" />
+    </div>
+    <div class="checkbox-container">
+        <input type="checkbox" id="tyc" name="tyc" required/>
+        <label for="tyc">Acepto los <span id="openModal">Términos y condiciones</span></label>
+    </div>
+    <div class="submit-button">
+        <input type="submit" value="Enviar"/>
+    </div>
+</form>
+
+<style>
+    form {
+        margin: 0 0 2.5rem 0;
+        text-align: left;
+    }
+
+    .form-input {
+        margin: 12px 0 0;
+        position: relative;
+    }
+
+    form h1 {
+        text-transform: uppercase;
+        font-weight: var(--bold);
+        font-size: 3.44rem;
+        color: var(--white);
+    }
+
+    form input {
+        width: -webkit-fill-available;
+        background: none;
+        border-width: 1px;
+        border-color: var(--white);
+        border-style: groove;
+        outline: none;
+        margin: 6px 0 0;
+        padding: 6px;
+    }
+
+    form label {
+        font-size: var(--text-xs);
+        color: var(--white);
+    }
+
+    .checkbox-container {
+        width: fit-content;
+        margin: 20px 0 0 0;
+    }
+
+    .checkbox-container span {
+        color: var(--link-color);
+        cursor: pointer;
+    }
+
+    form input[type="checkbox"] {
+        width: fit-content;
+        margin-right: 10px;
+    }
+
+    form label.error::after {
+        content: '*';
+        color: var(--red-200);
+        margin-left: 5px;
+        font-weight: bold;
+    }
+
+    .submit-button {
+        width: fit-content;
+        margin: auto;
+    }
+
+    .submit-button input {
+        width: 174px;
+        background-color: var(--primary);
+        border: none;
+        color: var(--white);
+        padding: 8px 25px;
+        border-radius: 5px;
+        text-align: center;
+        display: inline-block;
+        font-size: var(--text-base);
+        font-weight: var(--regular);
+        cursor: pointer;
+        transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    }
+
+    .submit-button input:hover {
+        background-color: var(--white);
+        color: var(--primary);
+    }
+</style>

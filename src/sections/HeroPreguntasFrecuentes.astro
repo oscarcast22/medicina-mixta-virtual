@@ -1,0 +1,87 @@
+---
+import BienvenidosMedicina from "../icons/bienvenidos_medicina.astro"
+---
+<section class="preguntas-hero" id="hero">
+    <div class="img-container">
+        <img src="/images/hospital_virtual/HV_img2.jpg" alt="">
+        <img src="/images/hospital_virtual/HV_img4.jpg" alt="">
+        <img src="/images/hospital_virtual/HV_img6.jpg" alt="">
+    </div>
+    <div class="logo">
+        <BienvenidosMedicina />
+    </div>
+</section>
+
+<style>
+    .preguntas-hero {
+        z-index: -5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 45vh;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .img-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    .img-container img.active {
+        opacity: 1;
+    }
+
+    .img-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.30);
+    }
+
+    .logo {
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', function() {
+        const images: NodeListOf<HTMLImageElement> = document.querySelectorAll('.img-container img');
+        let currentImageIndex: number = 0;
+
+        function showNextImage(): void {
+            images[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            images[currentImageIndex].classList.add('active');
+        }
+
+        images[currentImageIndex].classList.add('active');
+
+        setInterval(showNextImage, 3700);
+    });
+</script>

@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LogoMixtaVirtual from "../icons/logo-mixta-virtual.astro"
+import ContactForm from "../components/ContactForm.astro";
+---
+
+<BaseLayout title="Contacto" description="Pagina de contacto Escuela de Medicina UAD">
+    <main>
+        <section class="contact-grid">
+            <aside id="aside-form">
+                <div class="form-container">
+                    <div class="form">
+                        <a href="/">
+                            <LogoMixtaVirtual
+                                width="190px"
+                            />
+                        </a>
+                        <ContactForm />
+                    </div>
+                    <h3>Footer</h3>
+                </div>
+            </aside>
+            <aside id="aside-text">
+                <h3>La opcion a la excelencia</h3>
+            </aside>
+        </section>
+    </main>
+</BaseLayout>
+
+
+<style>
+    main {
+        background: #00000094;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+    }
+
+    #aside-form {
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+    }
+
+    .form-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: auto;
+        text-align: center;
+    }
+
+    .form {
+        padding: 20vh 0 0;
+    }
+</style>
