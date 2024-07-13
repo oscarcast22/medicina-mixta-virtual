@@ -2,12 +2,15 @@
 interface Props {
     color?: string | undefined;
     width?: string | undefined;
+	colorHover?: string | undefined;
 }
 
-const { color = "#FFFFFF", width = "40px" } = Astro.props
+const { color = "#FFFFFF", width = "40px", colorHover = "#7F7F7F" } = Astro.props
 ---
 <svg 
     style={`fill: ${color} !important; width: ${width}`}
+	onmouseover={`this.style.fill="${colorHover}"`}
+	onmouseleave={`this.style.fill="${color}"`}
     version="1.1" 
     id="Capa_1" 
     xmlns="http://www.w3.org/2000/svg" 
@@ -309,3 +312,9 @@ const { color = "#FFFFFF", width = "40px" } = Astro.props
     	</g>
     </g>
 </svg>
+
+<style>
+	svg {
+		transition: fill 0.4s ease-in-out
+	}
+</style>

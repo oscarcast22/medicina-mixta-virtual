@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LogoMixtaVirtual from "../icons/logo-mixta-virtual.astro"
 import ContactForm from "../components/ContactForm.astro";
+import SocialMediaIcons from "../icons/SocialMediaIcons.astro"
 ---
 
 <BaseLayout title="Contacto" description="Pagina de contacto Escuela de Medicina UAD">
@@ -18,11 +19,31 @@ import ContactForm from "../components/ContactForm.astro";
                         </a>
                         <ContactForm />
                     </div>
-                    <h3>Footer</h3>
+                    <div class="excelencia form-text">
+                        <h1>La opción
+                        <h1 style="font-weight: var(--extra-bold); margin-bottom: 0">a la excelencia</h1>
+                    </div>
+                    <div class="footer">
+                        <SocialMediaIcons width="32px" margin="5px"/>
+                        <div class="info">
+                            <p>
+                                Avenida Universidad Autónoma de Durango #300
+                            </p>
+                            <p>
+                                Colonia Jardines de Durango. Durango, Durango, México.
+                            </p>
+                            <p>
+                                Teléfono(s): (618) 129 5901 Ext. 275 a 285
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </aside>
             <aside id="aside-text">
-                <h3>La opcion a la excelencia</h3>
+                <div class="excelencia">
+                    <h1>La opción
+                    <h1 style="font-weight: var(--extra-bold); margin-bottom: 0">a la excelencia</h1>
+                </div>
             </aside>
         </section>
     </main>
@@ -59,7 +80,7 @@ import ContactForm from "../components/ContactForm.astro";
     #aside-form {
         display: flex;
         align-items: center;
-        padding: 20px;
+        padding: 20px 20px 40px;
     }
 
     .form-container {
@@ -75,6 +96,46 @@ import ContactForm from "../components/ContactForm.astro";
         padding: 10vh 0 0;
     }
 
+    .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .info p {
+        margin: 0;
+        color: var(--white);
+        font-size: var(--text-xs);
+
+    }
+
+    #aside-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        padding: 20px 20px 40px 0;
+    }
+
+    .excelencia h1 {
+        text-transform: uppercase;
+        text-align: left;
+        color: var(--white);
+        font-weight: var(--regular);
+        font-size: 32px;
+        margin: 0 0 5px;
+    }
+
+    .form-text {
+        display: none;
+        width: fit-content;
+        margin: 20px auto 60px;
+    }
+
+    .form-text h1 {
+        font-size: 25px;
+    }
+
     @media (max-width: 900px) {
         .contact-grid {
             grid-template-columns: 1fr;
@@ -82,6 +143,10 @@ import ContactForm from "../components/ContactForm.astro";
 
         .form {
             padding: 5vh 0 0;
+        }
+
+        .form-text {
+            display: block;
         }
 
         #aside-text {

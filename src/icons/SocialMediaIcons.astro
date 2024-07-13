@@ -3,14 +3,15 @@ interface Props {
     color?: string | undefined;
     width?: string | undefined;
     colorHover?: string | undefined;
+    margin?: string | undefined;
 }
 
-const { color = "var(--white)", colorHover = "var(--primary)", width = "40px"} = Astro.props
+const { color = "var(--white)", colorHover = "var(--primary)", width = "40px", margin = "10px"} = Astro.props
 ---
 <div class="social-media-icons">
     <a href="#" id="lobo-icon">
         <svg
-            style={`fill: ${color}; width: ${width}`}
+            style={`fill: ${color}; width: ${width}; margin: ${margin};`}
             onmouseover={`this.style.fill="${colorHover}"`}
             onmouseleave={`this.style.fill="${color}"`}
             viewBox="0 0 129.04 129.04" 
@@ -20,7 +21,7 @@ const { color = "var(--white)", colorHover = "var(--primary)", width = "40px"} =
     </a>
     <a href="#" id="facebook-logo">
         <svg
-            style={`fill: ${color}; width: ${width}`}
+            style={`fill: ${color}; width: ${width}; margin: ${margin}`}
             onmouseover={`this.style.fill="${colorHover}"`}
             onmouseleave={`this.style.fill="${color}"`}
             viewBox="-5 0 20 20" 
@@ -30,7 +31,7 @@ const { color = "var(--white)", colorHover = "var(--primary)", width = "40px"} =
     </a>
     <a href="#" id="instagram-logo">
         <svg
-            style={`fill: ${color}; width: ${width}`}
+            style={`fill: ${color}; width: ${width}; margin: ${margin}`}
             onmouseover={`this.style.fill="${colorHover}"`}
             onmouseleave={`this.style.fill="${color}"`}
             viewBox="0 0 24 24"
@@ -42,7 +43,7 @@ const { color = "var(--white)", colorHover = "var(--primary)", width = "40px"} =
     </a>
     <a href="#" id="x-logo">
         <svg 
-            style={`fill: ${color}; width: ${width}`}
+            style={`fill: ${color}; width: ${width}; margin: ${margin}`}
             onmouseover={`this.style.fill="${colorHover}"`}
             onmouseleave={`this.style.fill="${color}"`}
             shape-rendering="geometricPrecision" 
@@ -57,7 +58,7 @@ const { color = "var(--white)", colorHover = "var(--primary)", width = "40px"} =
     </a>
     <a href="#" id="whatsapp-logo">
         <svg
-            style={`fill: ${color}; width: ${width}`}
+            style={`fill: ${color}; width: ${width}; margin: ${margin}`}
             onmouseover={`this.style.fill="${colorHover}"`}
             onmouseleave={`this.style.fill="${color}"`}
             viewBox="0 0 32 32" 
@@ -73,7 +74,6 @@ const { color = "var(--white)", colorHover = "var(--primary)", width = "40px"} =
     }
 
     .social-media-icons svg {
-        margin: 10px;
         transition: fill 0.3s ease-in-out
     }
 </style>
