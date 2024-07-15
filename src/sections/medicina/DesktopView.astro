@@ -1,0 +1,304 @@
+---
+import PlanEstudios from '../../components/PlanEstudios.astro';
+import MapaCurricular from '../../components/MapaCurricular.astro';
+
+interface PlanEstudio {
+  titulo: string;
+  contenido: string[];
+}
+
+interface Props {
+  data: {
+    titulo: string;
+    portada: string;
+    mapa_curricular: string;
+    rvoe: string;
+    plan_estudios: PlanEstudio[];
+  }
+}
+
+const { data } = Astro.props;
+---
+
+<section id="desktop-view">
+    <div class="blank"></div>
+    <div class="resumen" data-aos="fade-up">
+        <p>
+            La Escuela de Medicina de la UAD forma Médicos con un dominio general de la medicina que se imparte en idioma español, cultos, con amplia visión de la profesión y un gran sentido humano, comprometidos, honestos y competentes para resolver de forma efectiva y humanista las situaciones de salud individual y comunitaria.
+        </p>
+        <p>
+            Nuestros médicos durante su formación se preparan con el aval del CIFRHS y de la SEP a través del RVOE y su participación en las Instituciones de Salud públicas y privadas para ejercer una excelente atención primaria de la salud y cuentan con la capacidad de influenciar positivamente a su entorno.
+        </p>
+        <hr>
+    </div>
+    <aside>
+        <div class="sticky" data-aos="fade-right">
+            <div class="menu">
+                <button class="menu-btn selected" data-target="proposito-content">Propósito del Est.</button>
+                <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
+                <button class="menu-btn" data-target="mapa-content">Mapa Curricular</button>
+            </div>
+            <div class="download-btn">
+                <a href="https://drive.google.com/uc?id=1yNArDVyLQ1ru9od48V6WTaTUvhTw043d&export=download">Descargar Requisitos</a>
+                <a href="https://drive.google.com/uc?id=19EknwUjYLDNmrEhvEeSV8X8FQjtYXDSW&export=download">Descargar Plan de Estudio</a>
+            </div>
+        </div>
+    </aside>
+    <section class="content-section" data-aos="fade-up" id="plan_de_estudios">
+        <div class="proposito" id="proposito-content">
+            <p>
+                Se definen los aspectos genéricos que persigue el plan de estudios de la Licenciatura de Médico General de la UAD modalidad Mixta-Virtual, es decir, los propósitos que se atenderán durante el proceso educativo:
+            </p>
+            <p>
+                Formar profesionales altamente competentes y capacitados para desempeñarse en el ejercicio de la medicina con los conocimientos, calidad técnica, ética profesional y humanismo necesarios para el cuidado y la promoción de la salud, que integren la prevención, curación, recuperación y rehabilitación, en los niveles individual, familiar y comunitario de la región y el país.
+            </p>
+            <div class="img-container">
+                <img src="/images/plan_estudios_medicina.jpg" alt="">
+            </div>
+            <p>
+                Al término de sus estudios de Licenciatura, el estudiante de la carrera de Médico General será Competente para:
+            </p>
+            <ul>
+                <li>
+                    Distinguir entre lo normal y lo patológico en el proceso salud-enfermedad.
+                </li>
+                <li>
+                    Fundamentar su práctica profesional en conocimientos biomédicos.
+                </li>
+                <li>
+                    Desarrollar una práctica clínica de calidad, al aplicar los procedimientos clínicos de acuerdo con las características particulares de los pacientes.
+                </li>
+                <li>
+                    Aplicar los conocimientos y herramientas epidemiológicas para promover la salud colectiva.
+                </li>
+                <li>
+                    Basar y ejercer su profesión de acuerdo con sus principios bioéticos, extendiendo esa actitud hacia las esferas personal, social y laboral.
+                </li>
+                <li>
+                    Contar con los elementos teóricos y metodológicos para realizar investigación.
+                </li>
+                <li>
+                    Practicar su profesión con un sentido humanista.
+                </li>
+                <li>
+                    Realizar trabajo interdisciplinario.
+                </li>
+                <li>
+                    Desarrollar actividades de enseñanza en el ámbito de su desempeño profesional.
+                </li>
+                <li>
+                    Evaluar con sentido crítico su ejercicio profesional y en consecuencia, diseñar y ejecutar un programa de superación profesional.
+                </li>
+                <li>
+                    Dominar el manejo de las Tecnologías de la Información referente a paquetería de software, en el área de la salud.
+                </li>
+            </ul>
+        </div>
+        <div class="plan hidden" id="plan-content">
+            <PlanEstudios rvoe={data.rvoe} plan_estudios={data.plan_estudios}/>
+            <a href="https://drive.google.com/uc?id=1Vy6jZhRAv_-p-U8A5bvwDoddLRNwTYYn&export=download">Descargar Resultados de Aprendizaje</a>
+        </div>
+        <div class="mapa hidden" id="mapa-content">
+            <MapaCurricular titulo="medicina" mapa={data.mapa_curricular} />
+        </div>
+    </section>
+</section>
+
+<style>
+    #desktop-view {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        grid-template-rows: auto 1fr;
+        grid-gap: 10px;
+    }
+
+    @media only screen and (max-width: 750px) {
+        #desktop-view {
+            grid-template-columns: 210px 1fr;
+        }
+
+        .resumen {
+            grid-column: 1 / 3 !important;
+        }
+    }
+
+    .blank {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .resumen {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    aside {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .resumen {
+        margin-bottom: 40px;
+    }
+
+    .resumen p {
+        color: var(--gray-400);
+    }
+
+    .resumen hr {
+        color: var(--primary);
+        margin-left: 0;
+        width: 40%;
+        border-color: var(--primary);
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        margin: 0 auto 0 0;
+        background: var(--white);
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.2) -3px 3px 13px 0px;
+    }
+
+    .menu-btn {
+        background: none;
+        border: 0;
+        border-radius: 5px;
+        color: var(--primary);
+        font-weight: 250;
+        font-size: var(--text-md);
+        text-align: start;
+        padding: 10px 12px;
+        cursor: pointer;
+        transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, font-weight 0.3s ease-in-out;
+    }
+
+    .menu-btn:hover {
+        background: var(--primary);
+        color: var(--white);
+        font-weight: 350;
+        border-radius: 5px;
+    }
+
+    .proposito p {
+        color: var(--gray-600);
+    }
+
+    .proposito p:first-child {
+        margin-top: 0;
+    }
+
+    .download-btn {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        margin: 40px auto 0 0;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .download-btn a {
+        background: var(--primary);
+        color: var(--white);
+        font-weight: var(--light);
+        font-size: var(--text-xs);
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.2) -3px 3px 13px 0px;
+    }
+
+    .download-btn a:hover {
+        background: var(--black)
+    }
+
+    .content p {
+        color: var(--gray-600)
+    }
+
+    .img-container {
+        position: relative;
+        width: 100%;
+        height: 380px;
+        overflow: hidden;
+        margin: 22px 0;
+    }
+
+    .img-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+    }
+
+    .proposito ul {
+        list-style: outside;
+        padding: 0 0 0 20px;
+        color: var(--gray-600);
+    }
+
+    .proposito {
+        margin: 0 0 60px;
+    }
+
+    .plan {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .plan a {
+        background: var(--primary);
+        color: var(--white);
+        font-size: var(--text-xs);
+        padding: 8px 15px;
+        border-radius: 5px;
+        margin: 8px 0;
+    }
+
+    .plan a:hover {
+        background: var(--black);
+    }
+
+    .menu-btn.selected {
+        background: var(--primary);
+        color: var(--white);
+        font-weight: 350;
+    }
+
+    .sticky {
+        position: sticky;
+        top: 100px;
+    }
+
+    .content-section {
+        overflow: hidden;
+        transition: height 0.5s ease;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .fade-out {
+        animation: fadeOut 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(20px); }
+    }
+</style>

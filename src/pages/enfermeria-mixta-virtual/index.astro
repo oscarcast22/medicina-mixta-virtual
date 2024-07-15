@@ -2,35 +2,35 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../sections/Nav.astro";
 import LicenciaturaHero from "../../sections/LicenciaturaHero.astro";
-import Medicina from "../../icons/medicina.astro";
 import Footer from "../../sections/Footer.astro";
 import { getCollection } from "astro:content";
-import DesktopView from "../../sections/medicina/DesktopView.astro";
-import MobileView from "../../sections/medicina/MobileView.astro";
+import LargeView from "../../sections/enfermeria/DesktopView.astro";
+import MobileView from "../../sections/enfermeria/MobileView.astro";
+import Enfermeria from "../../icons/enfermeria.astro";
 
 const licenciaturas = await getCollection('licenciaturas');
 
-const medicinaData = licenciaturas.find(l => l.data.titulo === "Medicina General")
+const enfermeriaData = licenciaturas.find(l => l.data.titulo === "Enfermeria")
 
-if (!medicinaData) {
-  throw new Error("Medicina General data not found");
+if (!enfermeriaData) {
+  throw new Error("Enfermeria data not found");
 }
 
-console.log(medicinaData.data)
+console.log(enfermeriaData.data)
 ---
-<BaseLayout title="Medicina Mixta-Virtual" description="Sitio principal de Medicina Mixta Virtual UAD">
-    <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina-mixta-virtual"}/>
+<BaseLayout title="Enfermeria Mixta-Virtual" description="Sitio principal de Enfermeria Mixta Virtual UAD">
+    <Nav LicenciaturaTitle="Enfermeria" LicenciaturaSlug={"enfermeria-mixta-virtual"}/>
     <LicenciaturaHero 
-        image={medicinaData.data.portada}
-        title={medicinaData.data.titulo}
-        rvoe={medicinaData.data.rvoe} 
+        image={enfermeriaData.data.portada}
+        title={enfermeriaData.data.titulo}
+        rvoe={enfermeriaData.data.rvoe} 
     >
-        <Medicina width="102px" />
+        <Enfermeria width="102px" />
     </LicenciaturaHero>
-    <main id="medicina">
+    <main id="enfermeria">
         <div class="max-w">
-            <DesktopView data={medicinaData.data} />
-            <MobileView data={medicinaData.data} />
+            <LargeView data={enfermeriaData.data} />
+            <MobileView data={enfermeriaData.data} />
         </div>
         <Footer />
     </main>

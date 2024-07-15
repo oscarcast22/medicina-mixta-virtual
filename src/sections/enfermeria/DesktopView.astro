@@ -20,7 +20,7 @@ interface Props {
 const { data } = Astro.props;
 ---
 
-<section id="large-view">
+<section id="desktop-view">
     <div class="blank"></div>
     <div class="resumen" data-aos="fade-up">
         <p>
@@ -105,7 +105,7 @@ const { data } = Astro.props;
 </section>
 
 <style>
-    #large-view {
+    #desktop-view {
         display: grid;
         grid-template-columns: 240px 1fr;
         grid-template-rows: auto 1fr;
@@ -113,7 +113,7 @@ const { data } = Astro.props;
     }
 
     @media only screen and (max-width: 750px) {
-        #large-view {
+        #desktop-view {
             grid-template-columns: 210px 1fr;
         }
 

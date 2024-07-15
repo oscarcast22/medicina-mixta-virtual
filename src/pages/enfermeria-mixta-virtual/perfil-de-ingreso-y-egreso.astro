@@ -1,0 +1,246 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../sections/Nav.astro";
+import Footer from "../../sections/Footer.astro";
+import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astro";
+---
+
+<BaseLayout title="Perfil de Ingreso y Egreso Enfermeria Mixta-Virtual" description="Sitio del perfil de ingreso y egreso para Enfermeria Mixta Virtual UAD">
+    <Nav LicenciaturaTitle="Enfermeria" LicenciaturaSlug={"enfermeria-mixta-virtual"}/>
+    <section class="perfil-hero" id="hero">
+        <img src="/images/portada_perfil_egreso.jpg" alt="">
+    </section>
+    <main>
+        <section class="content">
+            <div class="logo">
+                <LogoEscuelaMedicinaAzul />
+            </div>
+            <div class="perfil" data-aos="fade-up">
+                <div class="title">
+                    <div></div><h5 class="light">Perfil de ingreso</h5>
+                </div>
+                <div class="text">
+                    <p data-aos="fade-up">
+                        El estudiante de la licenciatura en enfermería deberá tener la capacidad de comunicarse correctamente de manera oral y escrita, cultura general amplia, buena memoria, capacidad de observación, habilidades de relación interpersonal.
+                    </p>
+                    <p data-aos="fade-up">
+                        Actitudes que reflejen valores humanos de respeto de a vida. Responsabilidad social y solidaridad, interés en la problemática de su comunidad y la capacidad de trabajar en situaciones críticas e imprevistas.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <div class="img-container" data-aos="fade-right">
+            <img src="/images/medicina_banner_img.jpg" alt="">
+        </div>
+        <section class="content">
+            <div class="perfil">
+                <div class="title" data-aos="fade-up">
+                    <div></div><h5 class="light">Perfil profesional de egreso</h5>
+                </div>
+                <div class="text">
+                    <p data-aos="fade-up">
+                        El egresado de la Licenciatura en Enfermería pretende egresar profesionistas con una formación innovadora, competitiva y de alta calidad que dé respuesta a las demandas de salud de la población.
+                    </p>
+                    <p data-aos="fade-up">
+                        La articulación entre formación y práctica profesional se concentra en torno a los cuatro Núcleos Básicos de Enfermería: persona, entorno, salud, y cuidado, presentes en forma implícita o explícita.
+                    </p>
+                    <div id="collapse">
+                        <div class="perfil-section">
+                            <p data-aos="fade-up">
+                                Para cumplir con su función social enmarcada en la realidad económica y política el egresado de la Licenciatura en Enfermería será capaz de:
+                            </p>
+                            <ul data-aos="fade-up">
+                                <li>
+                                    Vincular conocimientos teóricos, metodológicos y disciplinares relacionados con las áreas biomédica, humanística y social, al desempeñar el rol de proveedor de cuidados, educador, investigador y administrador, en beneficio de la calidad del cuidado a la salud de la población.
+                                </li>
+                                <li>
+                                    Participar en el equipo multidisciplinario con intervenciones de enfermería sustentadas en el conocimiento de modelos, teorías, técnicas y procedimientos, para atender necesidades de la persona, a través de la sistematización del cuidado y mediante la aplicación del Proceso de Enfermería como herramienta metodológica.
+                                </li>
+                                <li>
+                                    Intervenir de forma anticipativa y resolutiva en el continuo salud enfermedad en los diferentes niveles de atención, con un mayor abordaje hacia el primer y segundo nivel.
+                                </li>
+                                <li>
+                                    Atender las necesidades de salud actuales y futuras de la población con actitud solidaria, responsable y propositiva, entendiendo la riqueza del saber universitario como un compromiso social.
+                                </li>
+                                <li>
+                                    Influir mediante el liderazgo, habilidad de negociación y capacidad gerencial, en las políticas del sector salud, en sus diferentes niveles, así como en las instituciones de educación superior y organismos representativos de la disciplina. Desarrollar el ejercicio independiente de enfermería como expresión de la autogestión disciplinar, creando nichos laborales alternativos y un espacio de prácticas profesionales innovadoras.
+                                </li>
+                                <li>
+                                    Intervenir con sentido ético y crítico en su quehacer profesional. Desarrollar habilidades intelectuales, dominio de otro idioma y uso de la computadora como herramienta para el procesamiento de la información elaboración de escritos científicos y su difusión.
+                                </li>
+                                <li>
+                                    Asesorar y administrar programas de investigación científica, docencia y difusión de enfermería y plantear alternativas de formación, actualización y capacitación de recursos humanos en mejora de la calidad del servicio.
+                                </li>
+                                <li>
+                                    Crear, diseñar, adaptar y mejorar tecnologías del cuidado de enfermería con enfoque al primer y segundo nivel de atención que mejoren y eficienticen la calidad del cuidado.
+                                </li>
+                                <li>
+                                    Reconocer el trabajo en equipo, la comunicación y la cohesión del colectivo de enfermería como elementos para lograr el avance de la disciplina e identidad social.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="btn-collapse" data-aos="fade-up">
+                        <button>Seguir leyendo...</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <Footer />
+</BaseLayout>
+
+<style>
+    .perfil-hero {
+        width: 100%;
+        height: 60vh;
+        overflow: hidden;
+        position: relative;
+        z-index: -10;
+    }
+
+    .perfil-hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    main {
+        background: var(--white);
+    }
+
+    .content {
+        padding: 30px 20px;
+        max-width: 1280px;
+        margin: auto;
+    }
+
+    .logo {
+        display: flex;
+        justify-content: center;
+        margin: 0 0 20px;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .title h5 {
+        text-transform: uppercase;
+        font-size: var(--text-base);
+        color: var(--gray-500);
+        margin: 0;
+    }
+
+    .title div {
+        width: 6px;
+        height: 6px;
+        background: var(--primary);
+    }
+
+    .subtitle {
+        margin: 0;
+    }
+
+    .text {
+        padding: 0 0 0 14px;
+    }
+
+    .text p {
+        color: var(--gray-600);
+    }
+
+    .text ul {
+	    list-style: outside;
+	    padding: 0 0 0 20px;
+	    color: var(--gray-600);
+    }
+
+    .img-container {
+        margin: auto;
+        max-width: 1280px;
+        overflow: hidden;
+    }
+
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .perfil-section {
+        margin: 35px 0;
+    }
+
+    #collapse {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .5s ease-in-out;
+    }
+
+    #collapse div:first-child {
+        margin-top: 0;
+    }
+
+    #collapse div:last-child {
+        margin-bottom: 0;
+    }
+
+    #collapse.expanded {
+        max-height: 2800px;
+    }
+
+    .btn-collapse {
+        display: flex;
+        margin-bottom: 50px;
+    }
+
+    .btn-collapse button {
+        background: none;
+        border: none;
+        color: var(--gray-700);
+        margin: auto;
+        cursor: pointer;
+    }
+
+    .btn-collapse button:hover {
+        color: var(--primary);
+    }
+
+    @media (max-width: 650px) {
+        .text {
+            padding: 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .content h5,
+        p,
+        ul,
+        button {
+            font-size: var(--text-sm);
+        }
+    }
+
+    @media (max-width: 950px) {
+        .img-container {
+            height: 210px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', function() {
+        const collapseButton: HTMLButtonElement | null = document.querySelector('.btn-collapse button');
+        const collapseContent: HTMLElement | null = document.getElementById('collapse');
+
+        if (collapseButton && collapseContent) {
+            collapseButton.addEventListener('click', function() {
+                collapseContent.classList.toggle('expanded');
+                collapseButton.style.display = 'none';
+            });
+        }
+    });
+</script>
