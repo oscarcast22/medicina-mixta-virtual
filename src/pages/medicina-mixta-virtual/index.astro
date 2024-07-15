@@ -127,10 +127,36 @@ console.log(medicinaData.data)
             element.style.height = `${to}px`;
         }
 
-        const defaultSection: HTMLElement | null = document.getElementById('proposito-content');
+        let defaultSectionId: string = 'proposito-content';
+        const hash = window.location.hash;
+        if (hash) {
+            switch (hash.toLowerCase()) {
+                case '#plan_de_estudios':
+                    defaultSectionId = 'plan-content';
+                    console.log(defaultSectionId);
+                    break;
+                case '#mapa_curricular':
+                    defaultSectionId = 'mapa-content';
+                    break;
+            }
+        }
+
+        const defaultSection: HTMLElement | null = document.getElementById(defaultSectionId);
+        console.log(defaultSection);
+
+        sections.forEach((section: HTMLElement) => {
+            section.classList.add('hidden');
+            section.classList.remove('fade-in');
+        });
+
         if (defaultSection) {
             defaultSection.classList.remove('hidden');
             defaultSection.classList.add('fade-in');
+
+            const defaultButton: HTMLElement | null = document.querySelector(`[data-target="${defaultSectionId}"]`);
+            if (defaultButton) {
+                defaultButton.classList.add('selected');
+            }
         }
 
         if (contentContainer && defaultSection) {
@@ -335,9 +361,8 @@ console.log(medicinaData.data)
 
     document.addEventListener('astro:page-load', function (): void {
         showModal();
+        checkWindowSize();
     });
 
     window.addEventListener('resize', checkWindowSize);
-
-    checkWindowSize();
 </script>

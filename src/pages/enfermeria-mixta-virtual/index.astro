@@ -173,7 +173,6 @@ console.log(enfermeriaData.data)
             const collapseId: string | null = content ? content.id : null;
 
             if (button && content) {
-                // Remove existing event listeners to avoid duplication
                 const newButton: HTMLElement = button.cloneNode(true) as HTMLElement;
                 button.parentNode?.replaceChild(newButton, button);
 
@@ -335,9 +334,8 @@ console.log(enfermeriaData.data)
 
     document.addEventListener('astro:page-load', function (): void {
         showModal();
+        checkWindowSize();
     });
 
     window.addEventListener('resize', checkWindowSize);
-
-    checkWindowSize();
 </script>

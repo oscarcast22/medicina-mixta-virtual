@@ -80,6 +80,11 @@
         border-color: var(--primary);
     }
 
+    form input:focus::placeholder,
+    form textarea:focus::placeholder {
+        opacity: 0;
+    }
+
     form label {
         font-size: var(--text-xs);
         color: var(--white);
@@ -157,19 +162,3 @@
         }
     }
 </style>
-
-<script>
-    document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea').forEach((element) => {
-        const originalPlaceholder: string | null = element.getAttribute('placeholder');
-        
-        element.addEventListener('focus', () => {
-            element.setAttribute('placeholder', '');
-        });
-        
-        element.addEventListener('blur', () => {
-            if (originalPlaceholder !== null) {
-                element.setAttribute('placeholder', originalPlaceholder);
-            }
-        });
-    });
-</script>
