@@ -22,7 +22,7 @@
     </div>
     <div class="form-input">
         <label for="mensaje">Mensaje</label><br>
-        <textarea id="mensaje" name="mensaje" rows="4" cols="50" placeholder="Escribe tu mensaje" />
+        <textarea id="mensaje" name="mensaje" rows="4" cols="50" placeholder="Escribe tu mensaje" required/>
     </div>
     <div class="checkbox-container">
         <input type="checkbox" id="tyc" name="tyc" required/>
@@ -107,7 +107,7 @@
 
     form label.error::after {
         content: '*';
-        color: var(--red-200);
+        color: var(--errors);
         margin-left: 5px;
         font-weight: bold;
     }
@@ -162,3 +162,140 @@
         }
     }
 </style>
+
+<style is:global>
+    .error-message {
+        position: absolute;
+        transition: all .3s;
+        background-color: #a7ebff;
+        border: 1px solid #7fe1ff;
+        padding: 5px;
+        margin-top: 5px;
+        font-size: 0.8rem;
+        z-index: 4;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .error-message:before {
+        content: '';
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 10px solid transparent;
+        border-bottom-color: #a7ebff;
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', function () {
+        const form: HTMLFormElement | null = document.getElementById('contactForm') as HTMLFormElement;
+    
+        if (form) {
+            const inputs: NodeListOf<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> = form.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(function (input) {
+                input.addEventListener('input', validateInput);
+                input.addEventListener('blur', validateInputOnBlur);
+            });
+        
+            function validateInput(event: Event): void {
+                const input = event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+                clearError(input);
+            }
+        
+            function validateInputOnBlur(event: Event): boolean {
+                const input = event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+                let isValid = true;
+            
+                if (input.id === 'nombre' && input.value.trim() === '') {
+                    isValid = false;
+                    showError(input);
+                }
+            
+                if (input.id === 'apellidos' && input.value.trim() === '') {
+                    isValid = false;
+                    showError(input);
+                }
+            
+                if (input.id === 'email') {
+                    if (input.value.trim() === '') {
+                        isValid = false;
+                        showError(input);
+                    } else if (!validateEmail(input.value)) {
+                        isValid = false;
+                        showError(input, 'El correo electrónico no es válido');
+                    }
+                }
+            
+                if (input.id === 'telefono') {
+                    if (input.value.trim() === '') {
+                        isValid = false;
+                        showError(input);
+                    } else if (!validatePhone(input.value)) {
+                        isValid = false;
+                        showError(input, 'El teléfono debe tener 10 dígitos');
+                    }
+                }
+            
+                if (input.id === 'ciudad' && input.value.trim() === '') {
+                    isValid = false;
+                    showError(input);
+                }
+            
+                if (input.id === 'mensaje' && input.value.trim() === '') {
+                    isValid = false;
+                    showError(input);
+                }
+            
+                if (input.id === 'tyc' && !(input as HTMLInputElement).checked) {
+                    isValid = false;
+                    showError(input);
+                }
+            
+                if (!isValid) {
+                    input.classList.add('invalid');
+                }
+            
+                return isValid;
+            }
+        
+            function showError(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, message?: string): void {
+                const label = document.querySelector(`label[for=${input.id}]`);
+                if (label) {
+                    label.classList.add('error');
+                }
+                if (message) {
+                    const error = document.createElement('p');
+                    error.className = 'error-message';
+                    error.textContent = message;
+                    input.parentNode?.insertBefore(error, input.nextSibling);
+                }
+                input.classList.add('invalid');
+            }
+        
+            function clearError(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement): void {
+                const label = document.querySelector(`label[for=${input.id}]`);
+                const nextElement = input.nextElementSibling;
+                if (label) {
+                    label.classList.remove('error');
+                }
+                if (nextElement && nextElement.classList.contains('error-message')) {
+                    nextElement.remove();
+                }
+                input.classList.remove('invalid');
+            }
+        
+            function validateEmail(email: string): boolean {
+                const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                return re.test(email);
+            }
+        
+            function validatePhone(phone: string): boolean {
+                const re = /^[0-9]{10}$/;
+                return re.test(phone);
+            }
+        }
+    });
+</script>
