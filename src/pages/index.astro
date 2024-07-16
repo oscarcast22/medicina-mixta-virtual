@@ -18,7 +18,7 @@ import Footer from "../sections/Footer.astro"
 				<p data-aos="fade-up">
 					Les damos la mas cordial bienvenida, este espacio esta diseñado para ti, aquí conocerás la experiencia, retos y responsabilidades que tiene esta institución, la cual tiene como misión formar a los mejores médicos , con ética, calidad humana y espíritu de competencia que persevera la salud y calidad de vida.
 				</p>
-				<h5 data-aos="fade-up" class="extra-light">
+				<h5 data-aos="fade-up" class="light">
 					“LA EXPERIENCIA DE SER MÉDICO ES ÚNICA, SER MÉDICO NO ES UN TRABAJO, ES UN ESTILO DE VIDA”
 				</h5>
 			</div>
@@ -54,9 +54,24 @@ import Footer from "../sections/Footer.astro"
 	.welcome p {
 		color: var(--gray-500);
 		margin: 30px 0 60px;
+		background-image: linear-gradient(90deg, #7F7F7F 0%,#2f7fa1 50%, #7F7F7F);
+    	background-size: auto auto;
+    	background-clip: border-box;
+    	background-size: 200% auto;
+		color: var(--primary);
+    	background-clip: text;
+    	-webkit-background-clip: text;
+    	-webkit-text-fill-color: transparent;
+    	animation: textclip 4s linear infinite;
 	}
 	.welcome h5 {
 		color: var(--primary);
+  	}
+	
+	@keyframes textclip {
+	  to {
+	    background-position: 200% bottom;
+	  }
 	}
 
 	@media (max-width: 480px) {
