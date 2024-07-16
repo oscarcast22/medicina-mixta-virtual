@@ -78,7 +78,7 @@ import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astr
                         El egresado de la Licenciatura de Medicina General (Modalidad Mixta-Virtual) de la Universidad Autónoma de Durango es un médico, que se reconoce por una serie de atributos profesionales, personales y sociales. Un profesional que de forma integral responda a las necesidades de salud de la población.<br>
                         Que su práctica médica se identifique por estar basada en el conocimiento científico, el desarrollo de actitudes éticas y de habilidades técnicas, que en forma conjunta le permitan la realización de las funciones de: asistencia, educación, administración e investigación en medicina. Que sea capaz de aplicar el conocimiento en el cuidado de individuos, familias y comunidades en áreas básicas de la práctica: acción comunitaria, materno infantil, médico quirúrgico, atención geriátrica, salud mental, salud ocupacional, etc. Así como desarrollar actividades de administración de los servicios médicos y participar en el conocimiento y solución de problemas relacionados con su práctica.
                     </p>
-                    <div id="collapse">
+                    <div id="collapse-p">
                         <div class="perfil-section">
                             <p data-aos="fade-up">
                                 Rasgos del Perfil
@@ -184,7 +184,7 @@ import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astr
                             </ul>
                         </div>
                     </div>
-                    <div class="btn-collapse" data-aos="fade-up">
+                    <div class="btn-collapse-p" data-aos="fade-up">
                         <button>Seguir leyendo...</button>
                     </div>
                 </div>
@@ -303,30 +303,30 @@ import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astr
         margin: 35px 0;
     }
 
-    #collapse {
+    #collapse-p {
         max-height: 0;
         overflow: hidden;
         transition: max-height .5s ease-in-out;
     }
 
-    #collapse div:first-child {
+    #collapse-p div:first-child {
         margin-top: 0;
     }
 
-    #collapse div:last-child {
+    #collapse-p div:last-child {
         margin-bottom: 0;
     }
 
-    #collapse.expanded {
+    #collapse-p.expanded {
         max-height: 2800px;
     }
 
-    .btn-collapse {
+    .btn-collapse-p {
         display: flex;
         margin-bottom: 50px;
     }
 
-    .btn-collapse button {
+    .btn-collapse-p button {
         background: none;
         border: none;
         color: var(--gray-700);
@@ -334,7 +334,7 @@ import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astr
         cursor: pointer;
     }
 
-    .btn-collapse button:hover {
+    .btn-collapse-p button:hover {
         color: var(--primary);
     }
 
@@ -360,10 +360,10 @@ import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astr
     }
 </style>
 
-<script>
+<script data-astro-rerun>
     document.addEventListener('astro:page-load', function() {
-        const collapseButton: HTMLButtonElement | null = document.querySelector('.btn-collapse button');
-        const collapseContent: HTMLElement | null = document.getElementById('collapse');
+        const collapseButton = document.querySelector('.btn-collapse-p button');
+        const collapseContent = document.getElementById('collapse-p');
 
         if (collapseButton && collapseContent) {
             collapseButton.addEventListener('click', function() {
