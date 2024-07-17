@@ -7,6 +7,7 @@ import { getCollection } from "astro:content";
 import LargeView from "../../sections/enfermeria/DesktopView.astro";
 import MobileView from "../../sections/enfermeria/MobileView.astro";
 import Enfermeria from "../../icons/enfermeria.astro";
+import WhatsAppWidget from "../../components/WhatsAppWidget.astro";
 
 const licenciaturas = await getCollection('licenciaturas');
 
@@ -32,6 +33,7 @@ console.log(enfermeriaData.data)
             <LargeView data={enfermeriaData.data} />
             <MobileView data={enfermeriaData.data} />
         </div>
+        <WhatsAppWidget />
         <Footer />
     </main>
 </BaseLayout>

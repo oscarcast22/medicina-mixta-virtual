@@ -1,15 +1,13 @@
 ---
 import MainHead from '../components/MainHead.astro';
-import WhatsAppWidget from '../components/WhatsAppWidget.astro';
 import '@fontsource-variable/dm-sans';
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
-	haveWhatsAppWidget?: boolean | undefined;
 }
 
-const { title, description, haveWhatsAppWidget = true } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <html lang="es">
@@ -18,9 +16,6 @@ const { title, description, haveWhatsAppWidget = true } = Astro.props;
 	</head>
 	<body>
 		<slot />
-		{haveWhatsAppWidget && (
-			<WhatsAppWidget />
-		)}
 	</body>
 
 	<script>

@@ -4,9 +4,10 @@ import Nav from "../sections/Nav.astro";
 import Footer from "../sections/Footer.astro";
 import LogoEscuelaMedicinaAzul from "../icons/logo_escuela_medicina_azul.astro";
 import Medico from "../icons/medico.astro"
+import WhatsAppWidget from "../components/WhatsAppWidget.astro";
 ---
 
-<BaseLayout title="Misión y Visión" description="Misión y Visión de la Escuela de Medicina UAD" haveWhatsAppWidget={false}>
+<BaseLayout title="Misión y Visión" description="Misión y Visión de la Escuela de Medicina UAD">
     <Nav LicenciaturaTitle="Medicina"/>
     <section class="mision-hero" id="hero">
         <img src="/images/mision-vision-portada.jpg" alt="">
@@ -38,6 +39,7 @@ import Medico from "../icons/medico.astro"
             </div>
         </section>
     </main>
+    <WhatsAppWidget />
     <Footer />
 </BaseLayout>
 

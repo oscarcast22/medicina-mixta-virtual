@@ -1,7 +1,13 @@
 ---
 import WhatsappLogo from "../icons/whatsapp-logo.astro"
+
+interface Props {
+    opacity?: number | undefined;
+}
+
+const { opacity = 1 } = Astro.props
 ---
-<div class="widget">
+<div class="widget" style={`opacity: ${opacity}`}>
     <a href="#">
         <WhatsappLogo />
     </a>
@@ -18,11 +24,13 @@ import WhatsappLogo from "../icons/whatsapp-logo.astro"
     .widget.show {
         animation: slideUp 0.5s forwards;
         transform: translateY(0);
+        opacity: 1 !important;
     }
 
     .widget.hide {
         animation: slideDown 0.5s forwards;
     }
+
 
     .widget a {
         display: flex;
@@ -31,6 +39,7 @@ import WhatsappLogo from "../icons/whatsapp-logo.astro"
         width: 60px;
         height: 60px;
         border-radius: 50%;
+        box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 4px 1px;
     }
 
     .widget:hover a {
@@ -49,11 +58,9 @@ import WhatsappLogo from "../icons/whatsapp-logo.astro"
     @keyframes slideDown {
         from {
             transform: translateY(0);
-            opacity: 1;
         }
         to {
             transform: translateY(250%);
-            opacity: 0;
         }
     }
 </style>
@@ -64,7 +71,7 @@ import WhatsappLogo from "../icons/whatsapp-logo.astro"
         const isHomePage: boolean = window.location.pathname === '/' || window.location.pathname === '/index.html';
 
         if (isHomePage && widget) {
-            const scrollPercentage: number = 0.12;
+            const scrollPercentage: number = 0.14;
             let hasShown: boolean = false;
 
             function checkScroll(): void {
