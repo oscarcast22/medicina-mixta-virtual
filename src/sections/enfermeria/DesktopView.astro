@@ -1,6 +1,5 @@
 ---
 import PlanEstudios from '../../components/PlanEstudios.astro';
-import MapaCurricular from '../../components/MapaCurricular.astro';
 
 interface PlanEstudio {
   titulo: string;
@@ -24,10 +23,10 @@ const { data } = Astro.props;
     <div class="blank"></div>
     <div class="resumen" data-aos="fade-up">
         <p>
-            La Escuela de Medicina de la UAD forma Médicos con un dominio general de la medicina que se imparte en idioma español, cultos, con amplia visión de la profesión y un gran sentido humano, comprometidos, honestos y competentes para resolver de forma efectiva y humanista las situaciones de salud individual y comunitaria.
+            El estudiante de la licenciatura en enfermería deberá tener la capacidad de comunicarse correctamente de manera oral y escrita, cultura general amplia, buena memoria, capacidad de observación, habilidades de relación interpersonal.
         </p>
         <p>
-            Nuestros médicos durante su formación se preparan con el aval del CIFRHS y de la SEP a través del RVOE y su participación en las Instituciones de Salud públicas y privadas para ejercer una excelente atención primaria de la salud y cuentan con la capacidad de influenciar positivamente a su entorno.
+            Actitudes que reflejen valores humanos de respeto de a vida. Responsabilidad social y solidaridad, interés en la problemática de su comunidad y la capacidad de trabajar en situaciones críticas e imprevistas.
         </p>
         <hr>
     </div>
@@ -36,7 +35,7 @@ const { data } = Astro.props;
             <div class="menu">
                 <button class="menu-btn" data-target="proposito-content">Propósito del Est.</button>
                 <button class="menu-btn" data-target="plan-content">Plan de Estudios</button>
-                <button class="menu-btn" data-target="mapa-content">Mapa Curricular</button>
+                <button class="menu-btn" data-target="mapa-content">Perfil de Egreso</button>
             </div>
             <div class="download-btn">
                 <a href="https://drive.google.com/uc?id=1yNArDVyLQ1ru9od48V6WTaTUvhTw043d&export=download">Descargar Requisitos</a>
@@ -47,59 +46,68 @@ const { data } = Astro.props;
     <section class="content-section" data-aos="fade-up" id="plan_de_estudios">
         <div class="proposito" id="proposito-content">
             <p>
-                Se definen los aspectos genéricos que persigue el plan de estudios de la Licenciatura de Médico General de la UAD modalidad Mixta-Virtual, es decir, los propósitos que se atenderán durante el proceso educativo:
+                La orientación pedagógica que prima en la institución está sustentada en un enfoque humanista y constructivista, atendiendo principalmente a la consideración social que debe tener la educación escolar.
             </p>
             <p>
-                Formar profesionales altamente competentes y capacitados para desempeñarse en el ejercicio de la medicina con los conocimientos, calidad técnica, ética profesional y humanismo necesarios para el cuidado y la promoción de la salud, que integren la prevención, curación, recuperación y rehabilitación, en los niveles individual, familiar y comunitario de la región y el país.
+                Teniendo como principio que la calidad académica sustenta la orientación hacia la excelencia y conscientes de que la Universidad Autónoma de Durango, es una institución comprometida en formar profesionales con un enfoque integral y por consiguiente, responsable de la transmisión de los conocimientos científicos, técnicos y sociales, con orientación pedagógica basada en el desarrollo de competencias, que le permita a nuestros egresados desarrollar con éxito su profesión, así como relacionarse con el mundo circundante en su futuro quehacer profesional.
+            </p>
+            <p>
+                De acuerdo a lo anterior, aspiramos a ser una casa de estudios de excelencia y libertad académica, así como, un centro de investigación de calidad, que forme hombres y mujeres capaces de actuar de manera informada, racional, responsable, critica y comprometida con la creación, dirección y orientación de opinión pública, instituciones y obras; así como, profesionales con la capacidad de innovar y difundir conocimientos de alto nivel ético, científico y profesional.
             </p>
             <div class="img-container">
                 <img src="/images/plan_estudios_medicina.jpg" alt="">
             </div>
-            <p>
-                Al término de sus estudios de Licenciatura, el estudiante de la carrera de Médico General será Competente para:
-            </p>
-            <ul>
-                <li>
-                    Distinguir entre lo normal y lo patológico en el proceso salud-enfermedad.
-                </li>
-                <li>
-                    Fundamentar su práctica profesional en conocimientos biomédicos.
-                </li>
-                <li>
-                    Desarrollar una práctica clínica de calidad, al aplicar los procedimientos clínicos de acuerdo con las características particulares de los pacientes.
-                </li>
-                <li>
-                    Aplicar los conocimientos y herramientas epidemiológicas para promover la salud colectiva.
-                </li>
-                <li>
-                    Basar y ejercer su profesión de acuerdo con sus principios bioéticos, extendiendo esa actitud hacia las esferas personal, social y laboral.
-                </li>
-                <li>
-                    Contar con los elementos teóricos y metodológicos para realizar investigación.
-                </li>
-                <li>
-                    Practicar su profesión con un sentido humanista.
-                </li>
-                <li>
-                    Realizar trabajo interdisciplinario.
-                </li>
-                <li>
-                    Desarrollar actividades de enseñanza en el ámbito de su desempeño profesional.
-                </li>
-                <li>
-                    Evaluar con sentido crítico su ejercicio profesional y en consecuencia, diseñar y ejecutar un programa de superación profesional.
-                </li>
-                <li>
-                    Dominar el manejo de las Tecnologías de la Información referente a paquetería de software, en el área de la salud.
-                </li>
-            </ul>
         </div>
         <div class="plan hidden" id="plan-content">
             <PlanEstudios rvoe={data.rvoe} plan_estudios={data.plan_estudios}/>
-            <a href="https://drive.google.com/uc?id=1Vy6jZhRAv_-p-U8A5bvwDoddLRNwTYYn&export=download">Descargar Resultados de Aprendizaje</a>
         </div>
         <div class="mapa hidden" id="mapa-content">
-            <MapaCurricular titulo="medicina" mapa={data.mapa_curricular} />
+            <div class="perfil-egreso">
+                <p>
+                    El egresado de la Licenciatura en Enfermería  pretende egresar profesionistas con una formación innovadora, competitiva y de alta calidad que dé respuesta a las demandas de salud de la población.
+                </p>
+                <p>
+                    La articulación entre formación y práctica profesional se concentra en torno a los cuatro Núcleos Básicos de Enfermería: persona, entorno, salud, y cuidado, presentes en forma implícita o explícita.
+                </p>
+                <p>
+                    Para cumplir con su función social enmarcada en la realidad económica y política el egresado de la Licenciatura en Enfermería será capaz de:
+                </p>
+                <ul>
+                    <li>
+                        Vincular conocimientos teóricos, metodológicos y disciplinares relacionados con las áreas biomédica, humanística y social, al desempeñar el rol de proveedor de cuidados, educador, investigador y administrador, en beneficio de la calidad del cuidado a la salud de la población.
+                    </li>
+                    <li>
+                        Participar en el equipo multidisciplinario con intervenciones de enfermería sustentadas en el conocimiento de modelos, teorías, técnicas y procedimientos, para atender necesidades de la persona, a través de la sistematización del cuidado y mediante la aplicación del Proceso de Enfermería como herramienta metodológica.
+                    </li>
+                    <li>
+                        Intervenir de forma anticipativa y resolutiva en el continuo salud enfermedad en los diferentes niveles de atención, con un mayor abordaje hacia el primer y segundo nivel.
+                    </li>
+                    <li>
+                        Atender las necesidades de salud actuales y futuras de la población con actitud solidaria, responsable y propositiva, entendiendo la riqueza del saber universitario como un compromiso social.
+                    </li>
+                    <li>
+                        Influir mediante el liderazgo, habilidad de negociación y capacidad gerencial, en las políticas del sector salud, en sus diferentes niveles, así como en las instituciones de educación superior y organismos representativos de la disciplina.
+                    </li>
+                    <li>
+                        Desarrollar el ejercicio independiente de enfermería como expresión de la autogestión disciplinar, creando nichos laborales alternativos y un espacio de prácticas profesionales innovadoras.
+                    </li>
+                    <li>
+                        Intervenir con sentido ético y crítico en su quehacer profesional.
+                    </li>
+                    <li>
+                        Desarrollar habilidades intelectuales, dominio de otro idioma y uso de la computadora como herramienta para el procesamiento de la información elaboración de escritos científicos y su difusión.
+                    </li>
+                    <li>
+                        Asesorar y administrar programas de investigación científica, docencia y difusión de enfermería y plantear alternativas de formación, actualización y capacitación de recursos humanos en mejora de la calidad del servicio.
+                    </li>
+                    <li>
+                        Crear, diseñar, adaptar y mejorar tecnologías del cuidado de enfermería con enfoque al primer y segundo nivel de atención que mejoren y eficienticen la calidad del cuidado.
+                    </li>
+                    <li>
+                        Reconocer el trabajo en equipo, la comunicación y la cohesión del colectivo de enfermería como elementos para lograr el avance de la disciplina e identidad social.
+                    </li>
+                </ul>
+            </div>
         </div>
     </section>
 </section>
@@ -188,6 +196,28 @@ const { data } = Astro.props;
 
     .proposito p:first-child {
         margin-top: 0;
+    }
+
+    .perfil-egreso p:first-child {
+        margin-top: 0;
+    }
+
+    .perfil-egreso p {
+        color: var(--gray-600);
+    }
+
+    .perfil-egreso ul {
+        list-style: outside;
+        color: var(--gray-600);
+        padding: 0 0 0 20px;
+    }
+
+    .perfil-egreso li:first-child {
+        margin-top: 0;
+    }
+
+    .perfil-egreso li {
+        margin-top: 6px;
     }
 
     .download-btn {

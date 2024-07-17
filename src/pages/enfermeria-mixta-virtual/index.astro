@@ -19,7 +19,7 @@ if (!enfermeriaData) {
 console.log(enfermeriaData.data)
 ---
 <BaseLayout title="Enfermeria Mixta-Virtual" description="Sitio principal de Enfermeria Mixta Virtual UAD">
-    <Nav LicenciaturaTitle="Enfermeria" LicenciaturaSlug={"enfermeria-mixta-virtual"}/>
+    <Nav LicenciaturaTitle="Enfermeria"/>
     <LicenciaturaHero 
         image={enfermeriaData.data.portada}
         title={enfermeriaData.data.titulo}
@@ -127,10 +127,36 @@ console.log(enfermeriaData.data)
             element.style.height = `${to}px`;
         }
 
-        const defaultSection: HTMLElement | null = document.getElementById('proposito-content');
+        let defaultSectionId: string = 'proposito-content';
+        const hash = window.location.hash;
+        if (hash) {
+            switch (hash.toLowerCase()) {
+                case '#plan_de_estudios':
+                    defaultSectionId = 'plan-content';
+                    console.log(defaultSectionId);
+                    break;
+                case '#mapa_curricular':
+                    defaultSectionId = 'mapa-content';
+                    break;
+            }
+        }
+
+        const defaultSection: HTMLElement | null = document.getElementById(defaultSectionId);
+        console.log(defaultSection);
+
+        sections.forEach((section: HTMLElement) => {
+            section.classList.add('hidden');
+            section.classList.remove('fade-in');
+        });
+
         if (defaultSection) {
             defaultSection.classList.remove('hidden');
             defaultSection.classList.add('fade-in');
+
+            const defaultButton: HTMLElement | null = document.querySelector(`[data-target="${defaultSectionId}"]`);
+            if (defaultButton) {
+                defaultButton.classList.add('selected');
+            }
         }
 
         if (contentContainer && defaultSection) {
@@ -208,8 +234,10 @@ console.log(enfermeriaData.data)
                                 additionalHeight = 125;
                             } else if (window.innerWidth <= 365) {
                                 additionalHeight = 115;
-                            } else if (window.innerWidth <= 375) {
+                            } else if (window.innerWidth <= 455) {
                                 additionalHeight = 80;
+                            } else if (window.innerWidth <= 475) {
+                                additionalHeight = 110;
                             } else {
                                 additionalHeight = 50;
                             }
@@ -218,7 +246,13 @@ console.log(enfermeriaData.data)
                             additionalHeight = 25;
                             break;
                         case 'mapa-content':
-                            additionalHeight = 0;
+                        if (window.innerWidth <= 350) {
+                                additionalHeight = 160;
+                            } else if (window.innerWidth <= 375) {
+                                additionalHeight = 135;
+                            } else {
+                                additionalHeight = 100;
+                            }
                             break;
                         default:
                             additionalHeight = 0;
@@ -265,75 +299,11 @@ console.log(enfermeriaData.data)
         }
     }
 
-    document.addEventListener('astro:page-load', function (): void {
+    document.addEventListener('astro:after-swap', function (): void {
         checkWindowSize();
     });
 
-    function showModal(): void {
-        const mapas: NodeListOf<Element> = document.querySelectorAll('.mapa');
-
-        mapas.forEach((mapa: Element) => {
-            const images: NodeListOf<HTMLImageElement> = mapa.querySelectorAll('img');
-
-            images.forEach((img: HTMLImageElement) => {
-                const modal: HTMLDivElement = document.createElement('div');
-                modal.setAttribute('class', 'modal');
-                modal.setAttribute('id', 'modal');
-
-                const closeModal: HTMLSpanElement = document.createElement('span');
-                closeModal.setAttribute('class', 'close');
-                closeModal.innerHTML = '&times;';
-
-                const modalContent: HTMLImageElement = document.createElement('img');
-                modalContent.setAttribute('class', 'modal-content');
-                modalContent.setAttribute('id', 'img-modal');
-
-                const caption: HTMLDivElement = document.createElement('div');
-                caption.setAttribute('id', 'caption');
-
-                modal.appendChild(closeModal);
-                modal.appendChild(modalContent);
-                modal.appendChild(caption);
-                document.body.appendChild(modal);
-
-                function updateModalImage(img: HTMLImageElement): void {
-                    if (modalContent && caption) {
-                        img.onclick = function(): void {
-                            console.log("img click");
-                            modal.style.display = 'flex';
-                            setTimeout(() => {
-                                modal.classList.add('show');
-                            }, 10);
-                            modalContent.src = img.src;
-                            caption.innerHTML = img.alt;
-                        }
-                    }
-                }
-
-                closeModal.onclick = function(): void {
-                    modal.classList.remove('show');
-                    setTimeout(() => {
-                        modal.style.display = 'none';
-                    }, 500);
-                }
-
-                document.addEventListener('click', function(event: MouseEvent) {
-                    if (event.target === modal) {
-                        console.log("click en el modal");
-                        modal.classList.remove('show');
-                        setTimeout(() => {
-                            modal.style.display = 'none';
-                        }, 500);
-                    }
-                });
-
-                updateModalImage(img);
-            });
-        });
-    }
-
     document.addEventListener('astro:page-load', function (): void {
-        showModal();
         checkWindowSize();
     });
 

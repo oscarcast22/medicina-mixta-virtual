@@ -47,9 +47,9 @@ const animationOffset = "200"
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close" id="modal-close">&times;</span>
-        <div class="image-container">
+        <img id="modal-img">
+        <div class="nav-btns">
             <span class="prev" id="modal-prev">&#10094;</span>
-            <img id="modal-img">
             <span class="next" id="modal-next">&#10095;</span>
         </div>
     </div>
@@ -106,28 +106,18 @@ const animationOffset = "200"
             grid-template-columns: 1fr;
         }
 
-        .image-container {
-            flex-direction: column;
-            align-content: center;
-        }
-
         #modal-img {
             width: 98% !important;
-            align-self: center;
-            margin: 20px 0;
         }
 
         .close {
-            font-size: 7vw !important;
-            position: absolute;
-            margin: 15px 0 !important;
-            right: 7px;
-            top: -20px;
+            font-size: 8vw !important;
+            margin: 0 0 8px !important;
         }
 
         .prev,
         .next {
-            font-size: 5vw !important;
+            font-size: 6vw !important;
         }
     }
 
@@ -156,6 +146,7 @@ const animationOffset = "200"
         position: absolute;
         display: flex;
         flex-direction: column;
+        align-items: center;
         top: 50%;
         right: 50%;
         transform: translateY(-50%) translateX(50%);
@@ -163,10 +154,10 @@ const animationOffset = "200"
         max-width: 1550px;
     }
 
-    .image-container {
-        width: 100%;
+    .nav-btns {
+        margin: 20px 0 0;
         display: flex;
-        justify-content: space-around;
+        gap: 40px;
     }
 
     #modal-img {
@@ -218,7 +209,6 @@ const animationOffset = "200"
 </style>
 
 <script>
-
     document.addEventListener('astro:page-load', function() {
         const modal = document.getElementById("modal") as HTMLElement;
 
@@ -228,6 +218,7 @@ const animationOffset = "200"
             const closeBtn = document.getElementById("modal-close") as HTMLElement;
             const prevBtn = document.getElementById("modal-prev") as HTMLElement;
             const nextBtn = document.getElementById("modal-next") as HTMLElement;
+            modal.addEventListener('click', handleClickOutside);
             let currentIndex = 0;
 
             images.forEach((img, index) => {
@@ -281,15 +272,19 @@ const animationOffset = "200"
                 changeImage(newIndex);
             }
 
+            function handleClickOutside(event: MouseEvent): void {
+                const isInImage = (event.target === modalImg);
+                const isInNavButtons = (event.target as HTMLElement).closest('.nav-btns') !== null;
+                
+                if (!isInImage && !isInNavButtons) {
+                    closeModal();
+                }
+            }
+
             closeBtn.addEventListener("click", closeModal);
             prevBtn.addEventListener("click", showPrev);
             nextBtn.addEventListener("click", showNext);
 
-            window.addEventListener("click", (event) => {
-                if (event.target === modal) {
-                    closeModal();
-                }
-            });
         }
-    })
+    });
 </script>

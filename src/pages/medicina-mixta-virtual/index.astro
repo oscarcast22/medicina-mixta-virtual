@@ -235,8 +235,10 @@ console.log(medicinaData.data)
                                 additionalHeight = 125;
                             } else if (window.innerWidth <= 365) {
                                 additionalHeight = 115;
-                            } else if (window.innerWidth <= 375) {
+                            } else if (window.innerWidth <= 455) {
                                 additionalHeight = 80;
+                            } else if (window.innerWidth <= 475) {
+                                additionalHeight = 100;
                             } else {
                                 additionalHeight = 50;
                             }
@@ -292,7 +294,7 @@ console.log(medicinaData.data)
         }
     }
 
-    document.addEventListener('astro:page-load', function (): void {
+    document.addEventListener('astro:after-swap', function (): void {
         checkWindowSize();
     });
 
