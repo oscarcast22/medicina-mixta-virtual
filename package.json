@@ -12,11 +12,13 @@
   "dependencies": {
     "@astrojs/check": "^0.7.0",
     "@fontsource-variable/dm-sans": "^5.0.6",
+    "animejs": "^3.2.2",
     "aos": "^2.3.4",
     "astro": "^4.11.3",
     "typescript": "^5.5.2"
   },
   "devDependencies": {
+    "@types/animejs": "^3.1.12",
     "@types/aos": "^3.0.7"
   }
 }

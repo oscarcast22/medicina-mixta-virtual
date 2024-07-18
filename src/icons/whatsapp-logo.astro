@@ -8,7 +8,7 @@ interface Props {
 const { color = "var(--white)", width = "40px", colorHover = "var(--white)"} = Astro.props
 ---
 <svg
-    style={`fill: ${color}; width: ${width};`}
+    style={`fill: ${color}; width: ${width}; max-width: 70%`}
     onmouseover={`this.style.fill="${colorHover}"`}
     onmouseleave={`this.style.fill="${color}"`}
     viewBox="0 0 32 32" 

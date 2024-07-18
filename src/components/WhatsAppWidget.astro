@@ -8,7 +8,10 @@ interface Props {
 const { opacity = 1 } = Astro.props
 ---
 <div class="widget" style={`opacity: ${opacity}`}>
-    <a href="#">
+    <a 
+        href="https://wa.me/526181102529?text=%F0%9F%91%8B%20Hola,%0A%0AEstoy%20interesado%20en%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20Escuela%20de%20Medicina%20Mixta%20Virtual."
+        target="_blank"
+    >
         <WhatsappLogo />
     </a>
 </div>
@@ -68,6 +71,13 @@ const { opacity = 1 } = Astro.props
         .widget {
             bottom: 40px;
             right: 20px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .widget a {
+            width: 50px;
+            height: 50px;
         }
     }
 </style>
