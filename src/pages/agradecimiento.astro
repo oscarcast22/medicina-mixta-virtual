@@ -23,9 +23,6 @@ import LogoMixtaVirtual from "../icons/logo-mixta-virtual.astro";
         </p>
         <a href="/">Volver a inicio</a>
     </main>
-    <footer>
-        <SocialMediaIcons color="var(--gray-500)" margin="6px"/>
-    </footer>
 </BaseLayout>
 
 <style>
@@ -38,7 +35,7 @@ import LogoMixtaVirtual from "../icons/logo-mixta-virtual.astro";
         margin: auto;
         text-align: center;
         flex-direction: column;
-        padding: 35px;
+        padding: 70px 35px 35px;
     }
 
     main h1 {
@@ -59,19 +56,6 @@ import LogoMixtaVirtual from "../icons/logo-mixta-virtual.astro";
 
     main a:hover {
         background-color: var(--blue-100);
-    }
-
-    footer {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 0;
-        padding: 35px;
-        display: flex;
-        width: 100%;
-        text-align: center;
-        flex-direction: column;
-        align-items: center;
     }
 
     .logo {
