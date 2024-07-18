@@ -17,7 +17,7 @@ const { opacity = 1 } = Astro.props
     .widget {
         position: fixed;
         bottom: 50px;
-        right: 40px;
+        right: 45px;
         transition: transform 0.5s, opacity 0.5s;
     }
 
@@ -61,6 +61,13 @@ const { opacity = 1 } = Astro.props
         }
         to {
             transform: translateY(250%);
+        }
+    }
+
+    @media (max-width: 800px) {
+        .widget {
+            bottom: 40px;
+            right: 20px;
         }
     }
 </style>

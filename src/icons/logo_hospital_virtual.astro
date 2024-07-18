@@ -11,7 +11,6 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 	id="logo-h"
 	stroke={color}
     style={`fill: ${color}; width: ${width}; max-width: 90%;`}
-
 	viewBox="0 0 1302.7 331" 
 >
 	<path class="st0" d="M217.2,70.7c1.1-10.4-6.5-19.7-16.9-20.8c-0.9-0.1-1.8-0.1-2.7-0.1c-4.9,9.2-1.3,20.7,7.9,25.6
@@ -126,13 +125,13 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 	    const observerOptions: IntersectionObserverInit = {
 	        root: null, // viewport
 	        rootMargin: '0px',
-	        threshold: 0.1 // 10% visible
+	        threshold: 0.15 // 10% visible
 	    };
 	
 	    function handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
 	        entries.forEach(entry => {
 	            if (entry.isIntersecting && logo) {
-	                logo.style.animation = 'dash 1.2s ease-in forwards';
+	                logo.style.animation = 'dash 1.5s ease-in forwards';
 	                observer.unobserve(logo); // Stop observing once the animation has started
 	            }
 	        });
