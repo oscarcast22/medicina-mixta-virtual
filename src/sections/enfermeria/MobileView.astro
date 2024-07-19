@@ -1,6 +1,5 @@
 ---
 import PlanEstudios from '../../components/PlanEstudios.astro';
-import MapaCurricular from '../../components/MapaCurricular.astro';
 
 interface PlanEstudio {
   titulo: string;
@@ -21,7 +20,7 @@ const { data } = Astro.props;
 ---
 
 <section id="mobile-view">
-    <div class="resumen-m" data-aos="fade-up">
+    <div class="resumen-m">
         <p>
             El estudiante de la licenciatura en enfermería deberá tener la capacidad de comunicarse correctamente de manera oral y escrita, cultura general amplia, buena memoria, capacidad de observación, habilidades de relación interpersonal.
         </p>
@@ -30,7 +29,7 @@ const { data } = Astro.props;
         </p>
         <hr>
     </div>
-    <div class="menu-m" data-aos="fade-right" id="plan_de_estudios">
+    <div class="menu-m" id="plan_de_estudios">
         <div class="collapse proposito" style="z-index:1">
             <button class="menu-btn-m" data-target="proposito-content">Propósito del Est.</button>
             <div class="collapse-content" id="proposito-content">
@@ -108,7 +107,7 @@ const { data } = Astro.props;
             </div>
         </div>
     </div>
-    <div class="download-btn-m" data-aos="fade-right">
+    <div class="download-btn-m">
         <a href="https://drive.google.com/uc?id=1yNArDVyLQ1ru9od48V6WTaTUvhTw043d&export=download">Descargar Requisitos</a>
         <a href="https://drive.google.com/uc?id=19EknwUjYLDNmrEhvEeSV8X8FQjtYXDSW&export=download">Descargar Plan de Estudio</a>
     </div>

@@ -287,7 +287,7 @@ console.log(enfermeriaData.data)
                 largeView.style.display = 'none';
             }
             if (mobileView) {
-                mobileView.style.display = 'block';
+                mobileView.style.display = 'flex';
                 setupCollapsibles();
             }
         } else {
@@ -301,13 +301,8 @@ console.log(enfermeriaData.data)
         }
     }
 
-    document.addEventListener('astro:after-swap', function (): void {
-        checkWindowSize();
-    });
-
-    document.addEventListener('astro:page-load', function (): void {
-        checkWindowSize();
-    });
-
+    document.addEventListener('DOMContentLoaded', checkWindowSize);
+    document.addEventListener('astro:after-swap', checkWindowSize);
+    document.addEventListener('astro:page-load', checkWindowSize);
     window.addEventListener('resize', checkWindowSize);
 </script>
