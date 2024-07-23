@@ -1,6 +1,6 @@
 ---
 titulo: Enfermeria
-portada: /images/portada_plan_estudios_medicina.jpg
+portada: /images/Enfermeria-MV.webp
 mapa_curricular: /images/medicina_mapa_curricular.jpg
 rvoe: 1030/2016
 plan_estudios:
