@@ -1,7 +1,7 @@
 ---
 titulo: Medicina General
-portada: /images/portada_plan_estudios_medicina.jpg
-mapa_curricular: /images/medicina_mapa_curricular.jpg
+portada: /images/portada_plan_estudios_medicina.webp
+mapa_curricular: /images/medicina_mapa_curricular.webp
 rvoe: 1205/2020
 plan_estudios:
   - titulo: Primer Semestre
