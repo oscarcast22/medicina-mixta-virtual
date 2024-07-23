@@ -97,18 +97,18 @@ const { opacity = 1 } = Astro.props
                 if (window.scrollY > showOnScrollPosition && !hasShown) {
                     widget.classList.remove('hide');
                     widget.classList.add('show');
-                    hasShown = true;  // Set the flag to true once the widget is shown
+                    hasShown = true;
                 } else if (window.scrollY <= showOnScrollPosition) {
                     widget.classList.remove('show');
                     widget.classList.add('hide');
-                    hasShown = false; // Reset the flag if user scrolls back to top
+                    hasShown = false;
                 }
             }
 
             window.addEventListener('scroll', checkScroll);
             checkScroll();
         } else if (widget) {
-            widget.classList.remove('hide'); // Ensure widget is visible on non-index pages
+            widget.classList.remove('hide');
         }
     });
 </script>

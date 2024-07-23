@@ -388,6 +388,16 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
 </style>
 
 <script>
+    type HandleOfferHoverFunction = (dropdownId: number, isHover: boolean) => void;
+    type HandleClickFunction = (dropdownId: number) => void;
+
+    declare global {
+      interface Window {
+        handleOfferHover: HandleOfferHoverFunction;
+        handleClick: HandleClickFunction;
+      }
+    }
+
     window.addEventListener('scroll', function() {
         const nav = document.querySelector('header') as HTMLElement;
         if (nav) {
@@ -484,10 +494,11 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
     }
 
 
-    document.querySelector('header').addEventListener('mouseleave', handleMouseLeave);
+    (document.querySelector('header') as HTMLElement)?.addEventListener('mouseleave', handleMouseLeave);
 
 
     window.addEventListener('resize', removeClickedClasses);
+
     window.handleOfferHover = handleOfferHover;
     window.handleClick = handleClick;
 </script>

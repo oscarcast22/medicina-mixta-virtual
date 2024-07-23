@@ -129,50 +129,50 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 	import anime from 'animejs/lib/anime.es.js';
 	
 	document.addEventListener('astro:page-load', function() {
-		const logo = document.getElementById('logo-h');
-		const pulsePath = document.getElementById('line');
+	    const logo: HTMLElement | null = document.getElementById('logo-h');
+	    const pulsePath: SVGPathElement | null = document.getElementById('line') as SVGPathElement | null;
 	
-		const observerOptions = {
-			root: null,
-			rootMargin: '0px',
-			threshold: 0.15
-		};
+	    const observerOptions: IntersectionObserverInit = {
+	        root: null,
+	        rootMargin: '0px',
+	        threshold: 0.15
+	    };
 	
-		function handleIntersection(entries, observer) {
-			entries.forEach(entry => {
-				if (entry.isIntersecting && logo) {
-					logo.style.animation = 'dash 1.5s ease-in forwards';
-					if (pulsePath) {
-						const pathLength = pulsePath.getTotalLength();
-						pulsePath.setAttribute('stroke-dasharray', pathLength);
-						pulsePath.setAttribute('stroke-dashoffset', pathLength);
-
-						anime({
-						    targets: '#line',
-						    strokeDashoffset: [
-						        { value: pathLength },
-						        { value: 0, duration: 800 }
-						    ],
-						    opacity: [
-						        { value: 1, duration: 0 },
-						        { value: 1, duration: 1250 },
-						        { value: 0, duration: 750 }
-						    ],
-						    easing: 'linear',
-						    duration: 1500,
-						    loop: true
-						});
-					}
+	    function handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
+	        entries.forEach(entry => {
+	            if (entry.isIntersecting && logo) {
+	                logo.style.animation = 'dash 1.5s ease-in forwards';
+	                if (pulsePath) {
+	                    const pathLength: number = pulsePath.getTotalLength();
+	                    pulsePath.setAttribute('stroke-dasharray', pathLength.toString());
+	                    pulsePath.setAttribute('stroke-dashoffset', pathLength.toString());
+					
+	                    anime({
+	                        targets: '#line',
+	                        strokeDashoffset: [
+	                            { value: pathLength },
+	                            { value: 0, duration: 800 }
+	                        ],
+	                        opacity: [
+	                            { value: 1, duration: 0 },
+	                            { value: 1, duration: 1250 },
+	                            { value: 0, duration: 750 }
+	                        ],
+	                        easing: 'linear',
+	                        duration: 1500,
+	                        loop: true
+	                    });
+	                }
+				
+	                observer.unobserve(logo);
+	            }
+	        });
+	    }
 	
-					observer.unobserve(logo);
-				}
-			});
-		}
+	    const observer: IntersectionObserver = new IntersectionObserver(handleIntersection, observerOptions);
 	
-		const observer = new IntersectionObserver(handleIntersection, observerOptions);
-	
-		if (logo) {
-			observer.observe(logo);
-		}
+	    if (logo) {
+	        observer.observe(logo);
+	    }
 	});
 </script>
