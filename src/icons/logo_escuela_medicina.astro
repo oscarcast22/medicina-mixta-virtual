@@ -176,7 +176,6 @@ const { color = "#FFFFFF", width = "400px" } = Astro.props
 		fill-opacity: 0;
 		stroke-dasharray: 1300;
 		stroke-dashoffset: 1300;
-		animation: dash 1.5s ease-in forwards;
 	}
 
 	@keyframes dash {
@@ -191,3 +190,20 @@ const { color = "#FFFFFF", width = "400px" } = Astro.props
 		}
 	}
 </style>
+
+<script>
+	document.addEventListener('astro:page-load', function() {
+		const logo = document.getElementById("logo") as HTMLElement | null;
+
+		if (logo) {
+			if (!localStorage.getItem('firstLoadDone')) {
+				setTimeout(function() {
+				  logo.style.animation = 'dash 1.5s ease-in forwards';
+				  localStorage.setItem('firstLoadDone', 'true');
+				}, 600);
+			} else {
+				logo.style.animation = 'dash 1.5s ease-in forwards';
+			}
+		}
+	});
+</script>
