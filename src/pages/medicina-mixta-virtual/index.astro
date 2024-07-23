@@ -16,8 +16,6 @@ const medicinaData = licenciaturas.find(l => l.data.titulo === "Medicina General
 if (!medicinaData) {
   throw new Error("Medicina General data not found");
 }
-
-console.log(medicinaData.data)
 ---
 <BaseLayout title="Medicina Mixta-Virtual" description="Sitio principal de Medicina Mixta Virtual UAD">
     <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina-mixta-virtual"}/>
@@ -135,7 +133,6 @@ console.log(medicinaData.data)
             switch (hash.toLowerCase()) {
                 case '#plan_de_estudios':
                     defaultSectionId = 'plan-content';
-                    console.log(defaultSectionId);
                     break;
                 case '#mapa_curricular':
                     defaultSectionId = 'mapa-content';
@@ -144,7 +141,6 @@ console.log(medicinaData.data)
         }
 
         const defaultSection: HTMLElement | null = document.getElementById(defaultSectionId);
-        console.log(defaultSection);
 
         sections.forEach((section: HTMLElement) => {
             section.classList.add('hidden');
@@ -264,7 +260,6 @@ console.log(medicinaData.data)
                         collapse.classList.add('open');
                         newButton.classList.add('selected');
                         content.style.height = `${content.scrollHeight + additionalHeight}px`;
-                        console.log(`content.style.height: ${content.style.height}`, `currentHeight: ${content.scrollHeight}`, `additionalHeight: ${additionalHeight}`, collapseId);
                     }
                 });
             }
@@ -326,7 +321,6 @@ console.log(medicinaData.data)
                 function updateModalImage(img: HTMLImageElement): void {
                     if (modalContent && caption) {
                         img.onclick = function(): void {
-                            console.log("img click");
                             modal.style.display = 'flex';
                             setTimeout(() => {
                                 modal.classList.add('show');
@@ -346,7 +340,6 @@ console.log(medicinaData.data)
 
                 document.addEventListener('click', function(event: MouseEvent) {
                     if (event.target === modal) {
-                        console.log("click en el modal");
                         modal.classList.remove('show');
                         setTimeout(() => {
                             modal.style.display = 'none';

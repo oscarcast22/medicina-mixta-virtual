@@ -16,8 +16,6 @@ const enfermeriaData = licenciaturas.find(l => l.data.titulo === "Enfermeria")
 if (!enfermeriaData) {
   throw new Error("Enfermeria data not found");
 }
-
-console.log(enfermeriaData.data)
 ---
 <BaseLayout title="Enfermeria Mixta-Virtual" description="Sitio principal de Enfermeria Mixta Virtual UAD">
     <Nav LicenciaturaTitle="Enfermeria"/>
@@ -135,7 +133,6 @@ console.log(enfermeriaData.data)
             switch (hash.toLowerCase()) {
                 case '#plan_de_estudios':
                     defaultSectionId = 'plan-content';
-                    console.log(defaultSectionId);
                     break;
                 case '#mapa_curricular':
                     defaultSectionId = 'mapa-content';
@@ -144,7 +141,6 @@ console.log(enfermeriaData.data)
         }
 
         const defaultSection: HTMLElement | null = document.getElementById(defaultSectionId);
-        console.log(defaultSection);
 
         sections.forEach((section: HTMLElement) => {
             section.classList.add('hidden');
@@ -269,7 +265,6 @@ console.log(enfermeriaData.data)
                         collapse.classList.add('open');
                         newButton.classList.add('selected');
                         content.style.height = `${content.scrollHeight + additionalHeight}px`;
-                        console.log(`content.style.height: ${content.style.height}`, `currentHeight: ${content.scrollHeight}`, `additionalHeight: ${additionalHeight}`, collapseId);
                     }
                 });
             }
