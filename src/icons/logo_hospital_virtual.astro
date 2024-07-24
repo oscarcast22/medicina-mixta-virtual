@@ -141,7 +141,7 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 	    function handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
 	        entries.forEach(entry => {
 	            if (entry.isIntersecting && logo) {
-	                logo.style.animation = 'dash 1.5s ease-in forwards';
+	                logo.style.animation = 'dash 1.2s ease-in forwards';
 	                if (pulsePath) {
 	                    const pathLength: number = pulsePath.getTotalLength();
 	                    pulsePath.setAttribute('stroke-dasharray', pathLength.toString());

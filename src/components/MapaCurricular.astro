@@ -9,12 +9,10 @@ const { titulo, mapa } = Astro.props
 
 <div class="mapa-modal" id="mapa">
     <p>Mapa curricular {titulo} modalidad mixta-virtual</p>
-    <img src={mapa} alt={`mapa curriculular de la licenciatura en ${titulo} modalidad mixta-virtual`} id="mapa-img">
+    <img src={mapa} alt={`mapa curriculular de la licenciatura en ${titulo} modalidad mixta-virtual`} id="mapa-img" loading="eager">
 </div>
 
 <style>
-    .mapa-modal {
-    }
     .mapa-modal p {
         text-transform: uppercase;
         font-size: var(--text-xs);
