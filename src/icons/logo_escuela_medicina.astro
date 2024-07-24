@@ -198,8 +198,8 @@ const { color = "#FFFFFF", width = "400px" } = Astro.props
 		if (logo) {
 			if (!localStorage.getItem('firstLoadDone')) {
 				setTimeout(function() {
-				  logo.style.animation = 'dash 1.5s ease-in forwards';
-				  localStorage.setItem('firstLoadDone', 'true');
+					logo.style.animation = 'dash 1.5s ease-in forwards';
+					localStorage.setItem('firstLoadDone', 'true');
 				}, 1000);
 			} else {
 				logo.style.animation = 'dash 1.5s ease-in forwards';
