@@ -10,7 +10,7 @@
 	--white: #FFFFFF;
 	--black: #000000;
 	--errors: #C10230;
-	--nav-background: #00000050;
+	--nav-background: linear-gradient(180deg, rgba(0,0,0,0.4990371148459384) 0%, rgba(0, 0, 0, 0.301) 100%);
 
 	/* Tamaño de fuentes*/
 	--text-xs: 0.75rem;

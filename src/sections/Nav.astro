@@ -81,6 +81,11 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         top: 0;
         left: 0;
         backdrop-filter: blur(0px);
+        background: rgb(0,0,0);
+        background: -moz-linear-gradient(180deg, rgba(0,0,0,0.700717787114846) 0%, rgba(0,0,0,0) 100%);
+        background: -webkit-linear-gradient(180deg, rgba(0,0,0,0.700717787114846) 0%, rgba(0,0,0,0) 100%);
+        background: linear-gradient(180deg, rgba(0,0,0,0.700717787114846) 0%, rgba(0,0,0,0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
         transition: height 0.5s ease, backdrop-filter 0.4s ease, background-color .4s ease;
         z-index: -1;
         overflow: hidden;
@@ -88,44 +93,37 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
 
     header.scrolled::before {
         backdrop-filter: blur(20px);
-        background: var(--nav-background);
     }
 
 
     header.hover-1::before {
         height: 150px;
         backdrop-filter: blur(20px);
-        background: var(--nav-background);
     }
 
     header.hover-2::before {
         height: 150px;
         backdrop-filter: blur(20px);
-        background: var(--nav-background);
     }
 
     header.hover-3::before {
         height: 190px;
         backdrop-filter: blur(20px);
-        background: var(--nav-background);
     }
 
     header.clicked-1::before {
         height: 150px;
         backdrop-filter: blur(20px);
-        background: var(--nav-background);
     }
 
     header.clicked-2::before {
         height: 150px;
         backdrop-filter: blur(20px);
-        background: var(--nav-background);
     }
 
     header.clicked-3::before {
         height: 190px;
         backdrop-filter: blur(20px);
-        background: var(--nav-background);
     }
 
     .dropdown-content.clicked-1, .dropdown-content.hover-1 {
