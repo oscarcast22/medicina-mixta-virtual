@@ -21,6 +21,36 @@ const { title, description } = Astro.props;
 	<script>
 		document.addEventListener('astro:page-load', function() {
 			const hero = document.getElementById('hero');
+	
+			if (hero) {
+				let lastScrollPosition = 0;
+				let ticking = false;
+	
+				const onScroll = () => {
+					lastScrollPosition = window.scrollY;
+					if (!ticking) {
+						window.requestAnimationFrame(() => {
+							const heroBottom = hero.offsetTop;
+							if (lastScrollPosition >= heroBottom) {
+								const distanceFromBottom = lastScrollPosition - heroBottom;
+								const parallaxValue = distanceFromBottom * 0.7;
+								hero.style.transform = `translateY(${parallaxValue}px)`;
+							}
+							ticking = false;
+						});
+						ticking = true;
+					}
+				};
+	
+				window.addEventListener('scroll', onScroll);
+			}
+		});
+	</script>
+	
+
+	<!-- <script>
+		document.addEventListener('astro:page-load', function() {
+			const hero = document.getElementById('hero');
 			
 			if (hero) {
 				window.addEventListener('scroll', function() {
@@ -34,5 +64,5 @@ const { title, description } = Astro.props;
 				});
 			}
 		});
-	</script>
+	</script> -->
 </html>
