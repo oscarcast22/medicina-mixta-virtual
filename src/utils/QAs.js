@@ -89,7 +89,7 @@ const QAs = [
     ],
     [
         "23.- PROCESOS DE TITULACIÓN, ¿SON VIRTUALES O EN ALGÚN MOMENTO ME TENGO QUE PRESENTAR FÍSICAMENTE EN LA INSTITUCIÓN?",
-        ""
+        "No es necesario, ya que todos tus estudios son en línea y podrás realizar todo proceso académico y/o administrativo por esta vía. Sin embargo, formas parte de la Comunidad Educativa Lobos, por lo que estas invitado a visitarnos en cualquiera de nuestros más de 28 Campus."
     ],
     [
         "24.- ¿QUÉ BIBLIOTECAS DIGITALES SE UTILIZAN Y SON GRATUITOS?",
