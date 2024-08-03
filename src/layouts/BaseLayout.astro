@@ -28,7 +28,7 @@ const { title, description } = Astro.props;
 					const heroBottom = hero.offsetTop;
 					if (scrollPosition >= heroBottom) {
 						const distanceFromBottom = scrollPosition - heroBottom;
-						const parallaxValue = distanceFromBottom * .7;
+						const parallaxValue = distanceFromBottom * .6;
 						hero.style.transform = `translateY(${parallaxValue}px)`;
 					}
 				});
