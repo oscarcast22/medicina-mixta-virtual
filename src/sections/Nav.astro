@@ -99,31 +99,37 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
     header.hover-1::before {
         height: 150px;
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     header.hover-2::before {
         height: 150px;
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     header.hover-3::before {
         height: 190px;
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     header.clicked-1::before {
         height: 150px;
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     header.clicked-2::before {
         height: 150px;
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     header.clicked-3::before {
         height: 190px;
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     .dropdown-content.clicked-1, .dropdown-content.hover-1 {
@@ -312,6 +318,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         #menu:checked + header::before {
             height: 100vh;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             background: var(--nav-background);
         }
 

@@ -154,13 +154,25 @@
 		stroke-dashoffset: 500;
 	}
 
+	@-webkit-keyframes dash {
+		70% {
+			fill-opacity: 0;
+		}
+
+		100% {
+			fill-opacity: 1;
+			stroke-dashoffset: 0;
+			stroke-width: 1;
+		}
+	}
+
 	@keyframes dash {
 		70% {
 			fill-opacity: 0;
 		}
 
 		100% {
-			fill-opacity: 100%;
+			fill-opacity: 1;
 			stroke-dashoffset: 0;
 			stroke-width: 1;
 		}
