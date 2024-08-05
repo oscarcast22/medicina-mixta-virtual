@@ -14,24 +14,27 @@ import WhatsAppWidget from "../components/WhatsAppWidget.astro"
 	<div id="hero-delay" class="hidden">
 		<Hero />
 	</div>
-	<section class="welcome-section">
-		<div class="content">
-			<div class="welcome">
-				<h1 data-aos="fade-up">Bienvenidos</h1>
-				<p data-aos="fade-up">
-					Les damos la mas cordial bienvenida, este espacio esta diseñado para ti, aquí conocerás la experiencia, retos y responsabilidades que tiene esta institución, la cual tiene como misión formar a los mejores médicos , con ética, calidad humana y espíritu de competencia que persevera la salud y calidad de vida.
-				</p>
-				<h5 data-aos="fade-up" class="light">
-					“LA EXPERIENCIA DE SER MÉDICO ES ÚNICA, SER MÉDICO NO ES UN TRABAJO, ES UN ESTILO DE VIDA”
-				</h5>
+	<div style="margin-top: 100vh;">
+		<section class="welcome-section">
+			<div class="content">
+				<div class="welcome">
+					<h1 data-aos="fade-up">Bienvenidos</h1>
+					<p data-aos="fade-up">
+						Les damos la mas cordial bienvenida, este espacio esta diseñado para ti, aquí conocerás la experiencia, retos y responsabilidades que tiene esta institución, la cual tiene como misión formar a los mejores médicos , con ética, calidad humana y espíritu de competencia que persevera la salud y calidad de vida.
+					</p>
+					<h5 data-aos="fade-up" class="light">
+						“LA EXPERIENCIA DE SER MÉDICO ES ÚNICA, SER MÉDICO NO ES UN TRABAJO, ES UN ESTILO DE VIDA”
+					</h5>
+				</div>
+				<OfferCard />
 			</div>
-			<OfferCard />
-		</div>
-	</section>
-	<Ovid/>
-	<HospitalVirtual />
-	<BottomBanner image="/images/anatomage.webp" />
-	<Footer />
+		</section>
+		<Ovid/>
+		<HospitalVirtual />
+		<BottomBanner image="/images/anatomage.webp" />
+		<Footer />
+	</div>
+	
 	<WhatsAppWidget opacity={0}/>
 </BaseLayout>
 
