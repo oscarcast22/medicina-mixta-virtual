@@ -180,29 +180,32 @@
 </style>
 
 x
-<script>
+<script is:inline>
 	document.addEventListener('astro:page-load', function() {
-    	const paths: NodeListOf<SVGPathElement> = document.querySelectorAll('.medico-path');
-		
-    	const observerOptions: IntersectionObserverInit = {
-    	    root: null,
-    	    rootMargin: '0px',
-    	    threshold: 0.22
-    	};
+	    const paths = document.querySelectorAll('.medico-path');
+	
+	    const observerOptions = {
+	        root: null,
+	        rootMargin: '0px',
+	        threshold: 0.22
+	    };
 
-    	function handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
-    	    entries.forEach(entry => {
-    	        if (entry.isIntersecting) {
-    	            (entry.target as SVGPathElement).style.animation = 'dash 1.6s ease-in forwards';
-    	            observer.unobserve(entry.target);
-    	        }
-    	    });
-    	}
+	    function handleIntersection(entries, observer) {
+	        entries.forEach(entry => {
+	            if (entry.isIntersecting) {
+	                entry.target.style.animation = 'dash 1.6s ease-in forwards';
+	                observer.unobserve(entry.target);
+	            }
+	        });
+	    }
 
-    	const observer: IntersectionObserver = new IntersectionObserver(handleIntersection, observerOptions);
+	    const observer = new IntersectionObserver(handleIntersection, observerOptions);
 
-    	paths.forEach(path => {
-    	    observer.observe(path);
-    	});
+		if (paths) {
+			paths.forEach(path => {
+	        	observer.observe(path);
+	    	});
+		}
+
 	});
 </script>
