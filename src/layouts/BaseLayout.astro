@@ -18,7 +18,35 @@ const { title, description } = Astro.props;
 		<slot />
 	</body>
 
-	<script>
+	<script is:inline>
+		document.addEventListener('astro:page-load', function() {
+		  const hero = document.getElementById('hero');
+		  
+		  if (hero) {
+			let ticking = false;
+			const heroRect = hero.getBoundingClientRect();
+			const heroTop = heroRect.top + window.pageYOffset;
+	  
+			function updateParallax() {
+			  const scrollPosition = window.pageYOffset;
+			  if (scrollPosition >= heroTop) {
+				const parallaxValue = (scrollPosition - heroTop) * 0.6;
+				hero.style.transform = `translate3d(0, ${parallaxValue}px, 0)`;
+			  }
+			  ticking = false;
+			}
+	  
+			window.addEventListener('scroll', function() {
+			  if (!ticking) {
+				window.requestAnimationFrame(updateParallax);
+				ticking = true;
+			  }
+			});
+		  }
+		});
+	</script>
+
+	<!-- <script is:inline>
 		document.addEventListener('astro:page-load', function() {
 			const hero = document.getElementById('hero');
 			
@@ -34,5 +62,5 @@ const { title, description } = Astro.props;
 				});
 			}
 		});
-	</script>
+	</script> -->
 </html>
