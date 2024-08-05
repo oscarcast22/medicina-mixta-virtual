@@ -179,7 +179,6 @@
 	}
 </style>
 
-x
 <script is:inline>
 	document.addEventListener('astro:page-load', function() {
 	    const paths = document.querySelectorAll('.medico-path');
@@ -193,7 +192,10 @@ x
 	    function handleIntersection(entries, observer) {
 	        entries.forEach(entry => {
 	            if (entry.isIntersecting) {
-	                entry.target.style.animation = 'dash 1.6s ease-in forwards';
+	                entry.target.style.animationName = 'dash';
+					entry.target.style.animationDuration = '1.6s';
+					entry.target.style.animationTimingFunction = 'ease-in';
+					entry.target.style.animationFillMode = 'forwards';
 	                observer.unobserve(entry.target);
 	            }
 	        });
