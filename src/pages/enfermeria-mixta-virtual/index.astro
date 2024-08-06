@@ -11,7 +11,7 @@ import WhatsAppWidget from "../../components/WhatsAppWidget.astro";
 
 const licenciaturas = await getCollection('licenciaturas');
 
-const enfermeriaData = licenciaturas.find(l => l.data.titulo === "Enfermeria")
+const enfermeriaData = licenciaturas.find(l => l.data.titulo === "Enfermería")
 
 if (!enfermeriaData) {
   throw new Error("Enfermeria data not found");
