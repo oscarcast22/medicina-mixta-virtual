@@ -1,5 +1,5 @@
 ---
-titulo: Enfermeria
+titulo: Enfermería
 portada: /images/Enfermeria-MV.webp
 mapa_curricular: /images/medicina_mapa_curricular.jpg
 rvoe: 1030/2016
