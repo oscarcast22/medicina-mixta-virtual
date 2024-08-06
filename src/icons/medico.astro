@@ -148,87 +148,51 @@
 </svg>
 
 <style>
-    body {
-        overflow-y: scroll;
-    }
+	.medico-path {
+		fill-opacity: 0;
+		stroke-dasharray: 500;
+		stroke-dashoffset: 500;
+	}
 
-    .medico-path {
-        fill-opacity: 0;
-        stroke-dasharray: 500;
-        stroke-dashoffset: 500;
-    }
+	@-webkit-keyframes dash {
+		70% {
+			fill-opacity: 0;
+		}
 
-    @-webkit-keyframes dash {
-        70% {
-            fill-opacity: 0;
-        }
-        100% {
-            fill-opacity: 1;
-            stroke-dashoffset: 0;
-            stroke-width: 1;
-        }
-    }
+		100% {
+			fill-opacity: 1;
+			stroke-dashoffset: 0;
+			stroke-width: 1;
+		}
+	}
 
-    @keyframes dash {
-        70% {
-            fill-opacity: 0;
-        }
-        100% {
-            fill-opacity: 1;
-            stroke-dashoffset: 0;
-            stroke-width: 1;
-        }
-    }
+	@keyframes dash {
+		70% {
+			fill-opacity: 0;
+		}
 
-    .medico-path.animate {
-        -webkit-animation: dash 1.8s ease-in forwards;
-        animation: dash 1.8s ease-in forwards;
-    }
+		100% {
+			fill-opacity: 1;
+			stroke-dashoffset: 0;
+			stroke-width: 1;
+		}
+	}
 </style>
 
 <script is:inline>
-    document.addEventListener('astro:page-load', function() {
-        const paths = document.querySelectorAll('.medico-path');
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99]
-        };
-
-        function handleIntersection(entries, observer) {
-            entries.forEach(entry => {
-                if (entry.intersectionRatio > 0) {
-                    console.log("path observado");
-                    entry.target.classList.add('animate');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }
-
-        const observer = new IntersectionObserver(handleIntersection, observerOptions);
-
-        if (paths) {
-            paths.forEach(path => {
-                observer.observe(path);
-            });
-        }
-    });
-</script>
-
-<!-- <script is:inline>
 	document.addEventListener('astro:page-load', function() {
 	    const paths = document.querySelectorAll('.medico-path');
 	
 	    const observerOptions = {
-	        root: null,
-	        rootMargin: '0px',
-	        threshold: 0.22
-	    };
+    		root: document.body,
+			rootMargin: '0px',
+    		threshold: 0.1
+		};
 
 	    function handleIntersection(entries, observer) {
 	        entries.forEach(entry => {
 	            if (entry.isIntersecting) {
+					console.log("path observer")
 	                entry.target.style.animation = 'dash 1.6s ease-in forwards';
 	                observer.unobserve(entry.target);
 	            }
@@ -244,4 +208,4 @@
 		}
 
 	});
-</script> -->
+</script>
