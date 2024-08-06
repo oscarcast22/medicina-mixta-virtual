@@ -17,7 +17,7 @@ import WhatsAppWidget from "../components/WhatsAppWidget.astro";
             </div>
             <div class="questions">
                 {QAs.map(([question, answer]) => (
-                    <div data-aos="fade-up">
+                    <div data-aos="fade-up" data-aos-once="true" data-aos-offset="85">
                         <h3>{question}</h3>
                         <p><Fragment set:html={answer} /></p>
                     </div>

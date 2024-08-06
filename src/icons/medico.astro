@@ -155,7 +155,7 @@
 	}
 
 	.animate {
-            animation: dash 1.6s ease-in forwards;
+            animation: dash 1.7s ease-in forwards;
         }
 
 	@-webkit-keyframes dash {
@@ -186,7 +186,6 @@
 <script>
 	document.addEventListener('astro:page-load', function() {
 	    const paths: NodeListOf<Element> = document.querySelectorAll('.medico-path');
-	    console.log("Paths encontrados:", paths);
 		
 	    function isElementInViewport(el: Element): boolean {
 	        const rect: DOMRect = el.getBoundingClientRect();
