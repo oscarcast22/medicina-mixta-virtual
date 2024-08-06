@@ -130,6 +130,8 @@ if (!enfermeriaData) {
 
         let defaultSectionId: string = 'proposito-content';
         const hash = window.location.hash;
+        const internalNavigation = sessionStorage.getItem('internalNavigation');
+
         if (hash) {
             switch (hash.toLowerCase()) {
                 case '#plan_de_estudios':
@@ -138,6 +140,11 @@ if (!enfermeriaData) {
                 case '#mapa_curricular':
                     defaultSectionId = 'perfil-content';
                     break;
+            }
+        } else if (internalNavigation === 'true') {
+            const savedSectionId = sessionStorage.getItem('defaultSectionId');
+            if (savedSectionId) {
+                defaultSectionId = savedSectionId;
             }
         }
 
@@ -167,11 +174,16 @@ if (!enfermeriaData) {
                 buttons.forEach((btn: HTMLElement) => btn.classList.remove('selected'));
                 this.classList.add('selected');
 
-                const target: string | null = this.getAttribute('data-target');
-                const targetSection: HTMLElement | null = target ? document.getElementById(target) : null;
+                const target = this.getAttribute('data-target');
+                const targetSection = target ? document.getElementById(target) : null;
+
+                if (target) {
+                    sessionStorage.setItem('defaultSectionId', target);
+                    sessionStorage.setItem('internalNavigation', 'true');
+                }
 
                 if (contentContainer && targetSection) {
-                    const currentHeight: number = contentContainer.scrollHeight;
+                    const currentHeight = contentContainer.scrollHeight;
 
                     sections.forEach((section: HTMLElement) => {
                         section.classList.add('hidden');
@@ -301,4 +313,16 @@ if (!enfermeriaData) {
     document.addEventListener('astro:after-swap', checkWindowSize);
     document.addEventListener('astro:page-load', checkWindowSize);
     window.addEventListener('resize', checkWindowSize);
+    document.addEventListener('DOMContentLoaded', () => {
+        sessionStorage.setItem('internalNavigation', 'false');
+        checkWindowSize();
+    });
+    document.addEventListener('astro:after-swap', () => {
+        sessionStorage.setItem('internalNavigation', 'false');
+        checkWindowSize();
+    });
+    document.addEventListener('astro:page-load', () => {
+        sessionStorage.setItem('internalNavigation', 'false');
+        checkWindowSize();
+    });
 </script>
