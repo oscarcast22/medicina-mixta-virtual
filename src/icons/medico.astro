@@ -192,6 +192,7 @@
 	    function handleIntersection(entries, observer) {
 	        entries.forEach(entry => {
 	            if (entry.isIntersecting) {
+					console.log("path observado")
 	                entry.target.style.animationName = 'dash';
 					entry.target.style.animationDuration = '1.6s';
 					entry.target.style.animationTimingFunction = 'ease-in';
