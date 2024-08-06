@@ -148,39 +148,46 @@
 </svg>
 
 <style>
-	.medico-path {
-		fill-opacity: 0;
-		stroke-dasharray: 500;
-		stroke-dashoffset: 500;
-	}
+    body {
+        overflow-y: scroll;
+    }
 
-	@-webkit-keyframes dash {
-		70% {
-			fill-opacity: 0;
-		}
+    .medico-path {
+        fill-opacity: 0;
+        stroke-dasharray: 500;
+        stroke-dashoffset: 500;
+    }
 
-		100% {
-			fill-opacity: 1;
-			stroke-dashoffset: 0;
-			stroke-width: 1;
-		}
-	}
+    @-webkit-keyframes dash {
+        70% {
+            fill-opacity: 0;
+        }
+        100% {
+            fill-opacity: 1;
+            stroke-dashoffset: 0;
+            stroke-width: 1;
+        }
+    }
 
-	@keyframes dash {
-		70% {
-			fill-opacity: 0;
-		}
+    @keyframes dash {
+        70% {
+            fill-opacity: 0;
+        }
+        100% {
+            fill-opacity: 1;
+            stroke-dashoffset: 0;
+            stroke-width: 1;
+        }
+    }
 
-		100% {
-			fill-opacity: 1;
-			stroke-dashoffset: 0;
-			stroke-width: 1;
-		}
-	}
+    .medico-path.animate {
+        -webkit-animation: dash 1.8s ease-in forwards;
+        animation: dash 1.8s ease-in forwards;
+    }
 </style>
 
 <script is:inline>
-    document.addEventListener('astro:page-load', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         const paths = document.querySelectorAll('.medico-path');
 
         const observerOptions = {
@@ -193,7 +200,7 @@
             entries.forEach(entry => {
                 if (entry.intersectionRatio > 0) {
                     console.log("path observado");
-                    entry.target.style.animation = 'dash 1.6s ease-in forwards';
+                    entry.target.classList.add('animate');
                     observer.unobserve(entry.target);
                 }
             });
