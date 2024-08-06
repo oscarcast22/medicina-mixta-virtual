@@ -154,6 +154,10 @@
 		stroke-dashoffset: 500;
 	}
 
+	.animate {
+            animation: dash 1.6s ease-in forwards;
+        }
+
 	@-webkit-keyframes dash {
 		70% {
 			fill-opacity: 0;
@@ -181,18 +185,48 @@
 
 <script is:inline>
 	document.addEventListener('astro:page-load', function() {
+		const paths = document.querySelectorAll('.medico-path');
+		console.log("Paths encontrados:", paths);
+
+		function isElementInViewport(el) {
+			const rect = el.getBoundingClientRect();
+			return (
+				rect.top >= 0 &&
+				rect.left >= 0 &&
+				rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+				rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+			);
+		}
+
+		function checkPaths() {
+			paths.forEach(path => {
+				if (isElementInViewport(path)) {
+					path.classList.add('animate');
+				}
+			});
+		}
+
+		// Verifica los paths al cargar la página y al desplazarse
+		window.addEventListener('scroll', checkPaths);
+		window.addEventListener('resize', checkPaths);
+		checkPaths();  // Verifica inmediatamente después de cargar
+	});
+</script>
+
+<!-- <script is:inline>
+	document.addEventListener('astro:page-load', function() {
 	    const paths = document.querySelectorAll('.medico-path');
 	
 	    const observerOptions = {
-    		root: document.body,
-			rootMargin: '0px',
-    		threshold: 0.1
+	        root: null,
+	        rootMargin: '0px',
+	        threshold: 0.15
 		};
 
 	    function handleIntersection(entries, observer) {
 	        entries.forEach(entry => {
 	            if (entry.isIntersecting) {
-					console.log("path observer")
+					console.log("path observado")
 	                entry.target.style.animation = 'dash 1.6s ease-in forwards';
 	                observer.unobserve(entry.target);
 	            }
@@ -208,4 +242,4 @@
 		}
 
 	});
-</script>
+</script> -->
