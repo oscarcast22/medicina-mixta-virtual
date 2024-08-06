@@ -186,7 +186,7 @@
 	    const observerOptions = {
 	        root: null,
 	        rootMargin: '0px',
-	        threshold: 0.20
+	        threshold: 0.18
 	    };
 
 	    function handleIntersection(entries, observer) {
@@ -194,7 +194,7 @@
 	            if (entry.isIntersecting) {
 					console.log("path observado")
 	                entry.target.style.animationName = 'dash';
-					entry.target.style.animationDuration = '1.6s';
+					entry.target.style.animationDuration = '1.8s';
 					entry.target.style.animationTimingFunction = 'ease-in';
 					entry.target.style.animationFillMode = 'forwards';
 	                observer.unobserve(entry.target);
