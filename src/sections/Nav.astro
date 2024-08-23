@@ -73,6 +73,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         top: 0;
         z-index: 99;
         width: 100%;
+        transition: top 0.45s ease-in-out; 
     }
 
     header::before {
@@ -88,7 +89,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         background: -webkit-linear-gradient(180deg, rgba(0,0,0,0.700717787114846) 0%, rgba(0,0,0,0) 100%);
         background: linear-gradient(180deg, rgba(0,0,0,0.700717787114846) 0%, rgba(0,0,0,0) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
-        transition: height 0.5s ease, backdrop-filter 0.4s ease, background-color .4s ease;
+        transition: height 0.5s ease, backdrop-filter 0.4s ease, background-color .4s ease, top 0.45s ease-in-out;
         z-index: -1;
         overflow: hidden;
     }
@@ -401,6 +402,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
 <script>
     type HandleOfferHoverFunction = (dropdownId: number, isHover: boolean) => void;
     type HandleClickFunction = (dropdownId: number) => void;
+    let lastScrollTop = 0;
 
     declare global {
       interface Window {
@@ -417,6 +419,15 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
             } else {
                 nav.classList.remove('scrolled');
             }
+
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop) {
+                nav.style.top = '-100px';
+            } else {
+                nav.style.top = '0';
+            }
+            lastScrollTop = scrollTop;
         }
     });
 
