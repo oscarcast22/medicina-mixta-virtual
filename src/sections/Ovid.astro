@@ -1,3 +1,8 @@
+
+<script type="module">
+    import justinribeiroliteYoutube from 'https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1.5.0/+esm'
+</script>
+
 <section class="ovid-section">
     <div class="content">
         <img data-aos="fade-up" src="/icons/LogoOvid.png" alt="">
@@ -10,7 +15,8 @@
             </p>
         </div>
         <div class="video-container" data-aos="fade-up">
-            <iframe 
+            <lite-youtube videoid="yS4D-K0mbOU"></lite-youtube>
+            <!-- <iframe 
                 width="560" 
                 height="315" 
                 src="https://www.youtube.com/embed/yS4D-K0mbOU?si=fGcQYJR8d8AMMaYZ" 
@@ -20,7 +26,7 @@
                 referrerpolicy="strict-origin-when-cross-origin" 
                 allowfullscreen
             >
-            </iframe>
+            </iframe> -->
         </div>
         <div data-aos="fade-up" style="text-align: center;">
             <a href="https://access.ovid.com/custom/uad/" target="_blank">Acceso a Ovid aquí</a>
@@ -90,11 +96,9 @@
         border-radius: 10px;
     }
 
-    .video-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    @media (min-width: 1120px) {
+        .video-container {
+            padding-bottom: 46.6%;
+        }
     }
 </style>

@@ -413,6 +413,8 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
 
     window.addEventListener('scroll', function() {
         const nav = document.querySelector('header') as HTMLElement;
+        const menuCheckbox = document.getElementById('menu') as HTMLInputElement;
+
         if (nav) {
             if (window.scrollY > 0) {
                 nav.classList.add('scrolled');
@@ -420,14 +422,19 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
                 nav.classList.remove('scrolled');
             }
 
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (!menuCheckbox.checked) {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            if (scrollTop > lastScrollTop) {
-                nav.style.top = '-100px';
+                if (scrollTop > lastScrollTop) {
+                    nav.style.top = '-100px';
+                } else {
+                    nav.style.top = '0';
+                }
+
+                lastScrollTop = scrollTop;
             } else {
                 nav.style.top = '0';
             }
-            lastScrollTop = scrollTop;
         }
     });
 
@@ -442,7 +449,6 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
                 const allDropdowns = document.querySelectorAll('.dropdown');
                 const allContents = document.querySelectorAll('.dropdown-content');
             
-                // Remueve las clases clicked-1 y clicked-2 excepto del elemento actual
                 allDropdowns.forEach(d => {
                     if (!d.classList.contains(`clicked-${dropdownId}`)) {
                         d.classList.remove('clicked-1', 'clicked-2', 'clicked-3');
@@ -478,7 +484,6 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         const allDropdowns = document.querySelectorAll('.dropdown');
         const allContents = document.querySelectorAll('.dropdown-content');
 
-        // Remove clicked states from all dropdowns and contents
         allDropdowns.forEach(d => d.classList.remove('clicked-1', 'clicked-2', 'clicked-3'));
         allContents.forEach(c => c.classList.remove('clicked-1', 'clicked-2', 'clicked-3'));
         header.classList.remove('clicked-1', 'clicked-2', 'clicked-3');
@@ -500,7 +505,6 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         const allDropdowns = document.querySelectorAll('.dropdown') as NodeListOf<HTMLElement>;
         const allContents = document.querySelectorAll('.dropdown-content') as NodeListOf<HTMLElement>;
 
-        // Remove hover states from all dropdowns and contents
         header.classList.remove('hover-1', 'hover-2', 'hover-3');
         allDropdowns.forEach(d => d.classList.remove('hover-1', 'hover-2', 'hover-3'));
         allContents.forEach(c => c.classList.remove('hover-1', 'hover-2', 'hover-3'));
