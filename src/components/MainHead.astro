@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/normalice.css';
+import 'locomotive-scroll/dist/locomotive-scroll.css'
 import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
@@ -25,6 +26,13 @@ const {
 <script>
 	// @ts-ignore
 	import AOS from 'aos/dist/aos.js';
+	import LocomotiveScroll from 'locomotive-scroll';
+
 	document.addEventListener('astro:page-load', () => AOS.init());
+
+	  
+	document.addEventListener('astro:page-load', () => {
+		const locomotiveScroll = new LocomotiveScroll();
+	});
 </script>
 
