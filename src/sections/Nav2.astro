@@ -1,0 +1,674 @@
+---
+import LogoMixtaVirtual from "../icons/logo-mixta-virtual.astro"
+import EmailSend from "../icons/email_send.astro"
+
+interface Props {
+    LicenciaturaTitle?: string | undefined;
+    LicenciaturaSlug?: string | undefined;
+}
+
+const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
+
+const licenciaturasLinks = [
+    {
+        label: "Medicina Mixta Virtual",
+        href: "/medicina-mixta-virtual",
+    },
+    {
+        label: "Enfermería Mixta Virtual",
+        href: "/enfermeria-mixta-virtual",
+    },
+];
+
+const submenuLinks = [
+    {
+        label: "Simulacion",
+        href: "https://medicinavirtual.uad.mx/",
+    },
+    {
+        label: "Misión y Visión",
+        href: "/mision-y-vision",
+    },
+    {
+        label: "Preguntas Frecuentes",
+        href: "/preguntas-frecuentes",
+    },
+];
+---
+<input type="checkbox" id="menu">
+<header>
+    <div class="nav">
+        <div class="menu-logo">
+            <a class="logo" href="/">
+                <LogoMixtaVirtual width="190px"/>
+            </a>
+        </div>
+        <label id="hamburger" for="menu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </label>
+        <nav>
+            <ul class="menu-links">
+                {LicenciaturaSlug && (
+                    <li class="submenu" aria-expanded="false">
+                        <button id="submenu-button">
+                            Estructura Académica
+                            <span></span>
+                        </button>
+                        <ul class="oferta-content licenciaturas">
+                            <li><a class="link oferta" href={`/${LicenciaturaSlug}/perfil-de-ingreso-y-egreso`}>Perfil de Ingreso y Egreso</a></li>
+                            <li><a class="link oferta" href={`/${LicenciaturaSlug}/#plan_de_estudios`}>Plan de Estudios</a></li>
+                        </ul>
+                    </li>
+                )}
+                <li class="submenu" aria-expanded="false">
+                    <button id="submenu-button">
+                        Oferta Educativa
+                        <span></span>
+                    </button>
+                    <ul class="oferta-content licenciaturas">
+                        {licenciaturasLinks.map(({ label, href}) => (
+                            <li>
+                                <a 
+                                    class="link oferta"
+                                    href={href}
+                                >
+                                    {label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </li>
+                <li class="submenu" aria-expanded="false">
+                    <button id="submenu-button">
+                        {LicenciaturaTitle} Mixta-Virtual
+                        <span></span>
+                    </button>
+                    <ul class="oferta-content licenciaturas">
+                        {submenuLinks.map(({ label, href}) => (
+                            <li>
+                                <a 
+                                    class="link oferta"
+                                    href={href}
+                                >
+                                    {label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </li>
+                <li class="menu-item button">
+                    <a class="pv-button" href="https://medicinavirtual.uad.mx/" target="_blank">Plataforma Virtual</a>
+                </li>
+                <li class="menu-item">
+                    <a 
+                        class="email"
+                        href="/contacto"
+                        style="display: flex; align-items: center;"
+                    >
+                        <EmailSend 
+                            width="30px"
+                        />
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<style>
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 99;
+        padding: 15px 20px;
+        background: linear-gradient(180deg, rgba(22,22,23,0.9) 0%, rgba(22,22,23,0.5) 63%, rgba(22,22,23,0.042) 100%);
+        transition: height 0.4s ease;
+        overflow: hidden;
+        z-index: 95;
+        font-size: var(--text-md);
+        color: var(--white);
+        -webkit-backdrop-filter: blur(0px);
+        backdrop-filter: blur(0px);
+        transition: width 0.4s ease, height 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s ease;
+        align-items: center;
+    }
+
+    header.scrolled {
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+    }
+
+    header.hovered {
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+    }
+
+    .nav {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1280px;
+        margin: auto;
+        font-size: 1rem;
+    }
+
+    nav {
+        display: flex;
+    }
+
+    .menu-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu-logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .menu-item {
+        position: relative;
+    }
+
+    .link {
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.4s;
+        text-wrap: nowrap;
+    }
+
+    .link:hover {
+        color: var(--link-hover-color);
+    }
+
+    .link.active {
+        color: var(--link-hover-color);
+    }
+
+    .menu-item:has(> .link.active)::before {
+        transform: scaleX(1);
+    }
+
+    .submenu button:hover {
+        color: var(--link-hover-color);
+    }
+
+    .submenu button::before {
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        content: '';
+        display: block;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: transform 0.3s ease;
+        width: 100%;
+        transform: scale(0);
+        transform-origin: left;
+        will-change: transform;
+    }
+
+    .submenu.active button::before {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+    
+    .submenu:not(.active) button::before {
+        transform: scaleX(0);
+        transform-origin: right;
+    }
+
+    .submenu {
+        position: relative;
+    }
+
+    .submenu button span {
+        position: absolute;
+        bottom: -28px;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 40px;
+    }
+
+    .submenu button {
+        color: white;
+        cursor: pointer;
+        background: none;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        transition: color 0.4s;
+    }
+
+    .submenu.active button {
+        color: var(--gray-950);
+    }
+
+    .oferta-content {
+        position: absolute;
+        padding: 30px 30px 18px 0;
+        column-count: 1;
+        top: 25px;
+        left: 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        pointer-events: none;
+    }
+
+    .oferta-content p {
+        margin: 0 0 10px;
+        font-size: var(--text-sm);
+    }
+
+    .link.oferta {
+        font-size: var(--text-base);
+        text-wrap: wrap;
+        transition: color 0.3s;
+    }
+
+    .link.oferta:hover {
+        color: var(--primary) !important;
+    }
+
+    .licenciaturas li {
+        width: max-content;
+    }
+
+    .submenu.active .oferta-content {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+    }
+
+    .oferta-content li {
+        white-space: nowrap;
+        margin-bottom: 15px;
+    }
+
+    .oferta-content .link:hover {
+        color: var(--primary);
+    }
+
+    .pv-button {
+        background-color: var(--primary);
+        border-radius: .5rem;
+        padding: 7px 15px;
+        color: var(--white);
+    }
+
+    .pv-button:hover {
+      background-color: var(--blue-100);
+    }
+
+    #menu {
+        display: none;
+    }
+
+
+    @media (max-width: 1040px) {
+
+        nav {
+            position: absolute;
+            align-items: center;
+            overflow-y: auto;
+            flex-direction: column;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            gap: 1.5rem;
+            align-items: center;
+            transition: height .5s ease;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity .5s ease;
+        }
+
+        nav .menu-links {
+            flex-direction: column;
+        }
+
+        .submenu button {
+            padding: 0;
+            position: relative;
+        }
+
+        .link {
+            padding: 0;
+        }
+
+        .submenu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 1.15rem;
+            overflow: hidden;
+            width: min-content;
+            /* backdrop-filter: blur(80px);
+            -webkit-backdrop-filter: blur(80px); */
+            background: #00000056;
+            border-radius: 15px;
+            padding: 7px;
+        }
+
+        .oferta-content {
+            column-count: 1;
+            padding: 28px 15px 5px;
+            position: initial;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button {
+            margin: 8px 0;
+        }
+
+        #hamburger {
+            width: 35px;
+            height: 20px;
+            position: relative;
+            align-self: center;
+            cursor: pointer;
+            margin-bottom: 3.5px;
+        }
+
+        #hamburger div {
+            width: 100%;
+            height: 3px;
+            background: white;
+            position: absolute;
+            transform: translateY(-50%);
+            border-radius: 99px;
+            transition: 0.3s;
+            transform: scale(1);
+        }
+
+        #hamburger div:nth-child(1) {
+            top: 0;
+        }
+
+        #hamburger div:nth-child(2) {
+            top: 50%;
+        }
+
+        #hamburger div:nth-child(3) {
+            top: 100%;
+        }
+
+        #menu:checked + header #hamburger div:nth-child(1) {
+            transform: rotate(45deg);
+            top: 50%;
+        }
+
+        #menu:checked + header #hamburger div:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 50%;
+        }
+
+        #menu:checked + header #hamburger div:nth-child(2) {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        #menu:checked + header nav {
+            opacity: 1;
+        }
+    }
+</style>
+
+<script>
+    const eventListenersMap = new WeakMap<HTMLElement | typeof document, { 
+        mouseEnter: EventListener, 
+        mouseLeave: EventListener, 
+        click: EventListener 
+    }>();
+
+    function setUpNav() {
+        const nav = document.querySelector('nav') as HTMLElement;
+        const submenus = document.querySelectorAll('.submenu') as NodeListOf<HTMLElement>;
+        const header = document.querySelector('header') as HTMLElement;
+        const menuButton = document.querySelector('#menu') as HTMLInputElement;
+        const breakPointDesktop: number = 1040;
+        let activeSubmenu: HTMLElement | null = null;
+        const buttomPadding = 14;
+        menuButton.checked = false;
+            
+        submenus.forEach(submenu => {
+            const button = submenu.querySelector('#submenu-button') as HTMLElement;
+
+            submenu.dataset.isExpanded = 'false';
+            submenu.classList.remove('active');
+            console.log(submenu.dataset.isExpanded);
+            submenu.setAttribute('aria-expanded', 'false');
+            button?.setAttribute('aria-expanded', 'false');
+            
+            if (window.innerWidth <= breakPointDesktop) {
+                submenu.style.width = button.scrollWidth + buttomPadding + 20 + 'px';
+                submenu.style.height = button.offsetHeight + buttomPadding + 'px';
+            } else {
+                submenu.style.height = 'auto';
+                submenu.style.width = 'auto';
+            }
+
+            if (eventListenersMap.has(submenu)) {
+                const { mouseEnter, mouseLeave, click } = eventListenersMap.get(submenu)!;
+                submenu.removeEventListener('mouseenter', mouseEnter);
+                submenu.removeEventListener('mouseleave', mouseLeave);
+                button?.removeEventListener('click', click);
+                console.log('removed');
+            }
+
+            if (eventListenersMap.has(document)) {
+                const { click } = eventListenersMap.get(document)!;
+                document.removeEventListener('click', click);
+            }
+
+        });
+
+        header.style.height = 'auto';
+        let originalHeight = header.offsetHeight;
+
+        const outsideClickListener = () => {
+                if (window.innerWidth <= breakPointDesktop) return;
+                submenus.forEach(submenu => {
+                    console.log('outsideClickListener');
+                    if (submenu.dataset.isExpanded === 'false') return;
+                    const button = submenu.querySelector('button');
+                    submenu.classList.remove('active');
+                    submenu.dataset.isExpanded = 'false';
+                    submenu.setAttribute('aria-expanded', 'false');
+                    button?.setAttribute('aria-expanded', 'false');
+                    animateHeight(header, header.scrollHeight, originalHeight);
+                });
+            };
+
+        function animateHeight(element: HTMLElement, from: number, to: number | string): void {
+            element.style.height = `${from}px`;
+            element.offsetHeight;
+            element.style.transition = 'width 0.4s ease, height 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s ease';
+            element.style.height = `${to === '100%' ? to : to + 'px'}`;
+        }
+
+        function animateWidth(element: HTMLElement, from: number, to: number | string): void {
+            element.style.width = `${from}px`;
+            element.offsetWidth;
+            element.style.transition = 'width 0.4s ease, height 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s ease';
+            element.style.width = `${to === '100%' ? to : to + 'px'}`;
+        }
+
+        function closeAllSubmenus(current?: HTMLElement) {
+            submenus.forEach(submenu => {
+                if (submenu !== current) {
+                    if (submenu.dataset.isExpanded === 'false') return;
+                    const button = submenu.querySelector('button');
+                    submenu.classList.remove('active');
+                    submenu.dataset.isExpanded = 'false';
+                    button?.setAttribute('aria-expanded', 'false');
+                    if (window.innerWidth > breakPointDesktop) {
+                        animateHeight(header, header.scrollHeight, originalHeight);
+                    } else {
+                        animateHeight(submenu, submenu.scrollHeight, button.offsetHeight + buttomPadding || 0);
+                        animateWidth(submenu, submenu.offsetWidth, button?.offsetWidth + buttomPadding + 20 || 0);
+                    }
+                }
+            });
+        }
+
+        submenus.forEach(submenu => {
+            const button = submenu.querySelector('#submenu-button') as HTMLElement;
+            const content = submenu.querySelector('.oferta-content') as HTMLElement;
+            const contentHeight = content?.scrollHeight || 0;
+            let isExpanded = submenu.dataset.isExpanded === 'true' ? true : false;
+            submenu.classList.remove('active');
+            button?.setAttribute('aria-expanded', 'false');
+
+            const mouseEnterListener = () => {
+                if (window.innerWidth > breakPointDesktop) {
+                    closeAllSubmenus(submenu);
+                    activeSubmenu = submenu;
+                    animateHeight(header, header.scrollHeight, originalHeight + contentHeight - 25);
+                    submenu.classList.add('active');
+                    header.classList.add('hovered');
+                    button?.setAttribute('aria-expanded', 'true');
+                    submenu.setAttribute('aria-expanded', 'true');
+                }
+            };
+
+            const mouseLeaveListener = () => {
+                isExpanded = submenu.dataset.isExpanded === 'true' ? true : false;
+                if (isExpanded) return;
+                if (window.innerWidth >= breakPointDesktop && activeSubmenu === submenu) {
+                    animateHeight(header, header.scrollHeight, originalHeight);
+                    submenu.classList.remove('active');
+                    header.classList.remove('hovered');
+                    button?.setAttribute('aria-expanded', 'false');
+                    activeSubmenu = null;
+                    submenu.dataset.isExpanded = 'false';
+                    submenu.setAttribute('aria-expanded', 'false');
+                }
+            };
+
+            const clickListener = () => {
+                console.log("clickListener");
+                submenu.dataset.isExpanded === 'true' ? submenu.dataset.isExpanded = 'false' : submenu.dataset.isExpanded = 'true';
+                isExpanded = submenu.dataset.isExpanded === 'true' ? true : false;
+                button.setAttribute('aria-expanded', isExpanded.toString());
+                submenu.setAttribute('aria-expanded', isExpanded.toString());
+                event.stopPropagation();
+                activeSubmenu = submenu;
+                closeAllSubmenus(submenu);
+                console.log(submenu.dataset.isExpanded, isExpanded);
+
+                if (window.innerWidth <= breakPointDesktop) {
+                    animateHeight(submenu, button.scrollHeight, isExpanded ? contentHeight + 20 : button.offsetHeight + buttomPadding);
+                    animateWidth(submenu, submenu.offsetWidth, isExpanded ? content.offsetWidth : button.offsetWidth + buttomPadding + 20);
+                } else {
+                    const targetHeight: number = !isExpanded ? originalHeight : originalHeight + contentHeight - 25;
+                    animateHeight(header, header.scrollHeight, targetHeight);
+                }
+            
+                if (isExpanded) {
+                    submenu.classList.add('active');
+                } else {
+                    submenu.classList.remove('active');
+                }
+            };
+
+            eventListenersMap.set(submenu, {
+                mouseEnter: mouseEnterListener,
+                mouseLeave: mouseLeaveListener,
+                click: clickListener,
+            });
+
+            eventListenersMap.set(document, {
+                mouseEnter: () => {}, // No-op function for mouseEnter
+                mouseLeave: () => {}, // No-op function for mouseLeave
+                click: outsideClickListener,
+            });
+
+            submenu.addEventListener('mouseenter', mouseEnterListener);
+            submenu.addEventListener('mouseleave', mouseLeaveListener);
+            button?.addEventListener('click', clickListener);
+            document.addEventListener('click', outsideClickListener);
+        });
+
+        if (window.innerWidth <= breakPointDesktop) {
+            let OriginalHeight = header.offsetHeight;
+
+            function openMenu() {
+                if (menuButton.checked) {
+                    animateHeight(header, originalHeight, "100%");
+                    header.classList.add('scrolled');
+                } else {
+                    animateHeight(header, header.offsetHeight, OriginalHeight);
+                }
+            }
+
+            menuButton.addEventListener('change', openMenu);
+        }
+    };
+
+    let lastScroll = 0;
+    let isHidden = false;
+
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header') as HTMLElement;
+        const menuButton = document.querySelector('#menu') as HTMLInputElement;
+        const currentScroll = window.scrollY;
+        const scrollThreshold = header.offsetHeight;
+        if (menuButton.checked) return
+
+        const scrollingDown = currentScroll > lastScroll;
+        lastScroll = currentScroll;
+
+        if (currentScroll > scrollThreshold) {
+            if (scrollingDown && !isHidden) {
+                header.style.transform = 'translateY(-100%)';
+                isHidden = true;
+            } else if (!scrollingDown && isHidden) {
+                header.style.transform = 'translateY(0)';
+                isHidden = false;
+            }
+        } else {
+            header.style.transform = 'translateY(0)';
+            isHidden = false;
+        }
+
+        header.classList.toggle('scrolled', currentScroll > scrollThreshold);
+    });
+
+    let lastWidth = window.innerWidth;
+
+    function handleResize() {
+        const currentWidth = window.innerWidth;
+
+        if ((currentWidth <= 1040 && lastWidth > 1040) || (currentWidth > 1040 && lastWidth <= 1040)) {
+            setUpNav(); 
+            console.log('setUpNav');
+        }
+
+        lastWidth = currentWidth;
+    }
+
+    document.addEventListener('astro:page-load', setUpNav);
+
+    window.addEventListener('resize', debounce(handleResize, 200));
+
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func(...args), wait);
+        };
+    }
+</script>

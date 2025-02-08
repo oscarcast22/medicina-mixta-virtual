@@ -8,6 +8,7 @@ import { getCollection } from "astro:content";
 import DesktopView from "../../sections/medicina/DesktopView.astro";
 import MobileView from "../../sections/medicina/MobileView.astro";
 import WhatsAppWidget from "../../components/WhatsAppWidget.astro";
+import Nav2 from "../../sections/Nav2.astro";
 
 const licenciaturas = await getCollection('licenciaturas');
 
@@ -18,7 +19,8 @@ if (!medicinaData) {
 }
 ---
 <BaseLayout title="Medicina Mixta-Virtual" description="Sitio principal de Medicina Mixta Virtual UAD">
-    <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina-mixta-virtual"}/>
+    <!-- <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina-mixta-virtual"}/> -->
+    <Nav2 LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina-mixta-virtual"}/>
     <LicenciaturaHero 
         image={medicinaData.data.portada}
         title={medicinaData.data.titulo}
