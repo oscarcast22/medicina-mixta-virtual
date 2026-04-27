@@ -423,7 +423,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
             }
 
             if (!menuCheckbox.checked) {
-                const scrollTop = Math.max(0, window.pageYOffset || document.documentElement.scrollTop);
+                const scrollTop = Math.max(0, window.scrollY || document.documentElement.scrollTop);
 
                 if (scrollTop > lastScrollTop) {
                     nav.style.top = '-100px';

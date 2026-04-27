@@ -434,7 +434,6 @@ const submenuLinks = [
     }>();
 
     function setUpNav() {
-        const nav = document.querySelector('nav') as HTMLElement;
         const submenus = document.querySelectorAll('.submenu') as NodeListOf<HTMLElement>;
         const header = document.querySelector('header') as HTMLElement;
         const menuButton = document.querySelector('#menu') as HTMLInputElement;
@@ -510,15 +509,15 @@ const submenuLinks = [
             submenus.forEach(submenu => {
                 if (submenu !== current) {
                     if (submenu.dataset.isExpanded === 'false') return;
-                    const button = submenu.querySelector('button');
+                    const button = submenu.querySelector('button') as HTMLElement | null;
                     submenu.classList.remove('active');
                     submenu.dataset.isExpanded = 'false';
                     button?.setAttribute('aria-expanded', 'false');
                     if (window.innerWidth > breakPointDesktop) {
                         animateHeight(header, header.scrollHeight, originalHeight);
-                    } else {
-                        animateHeight(submenu, submenu.scrollHeight, button.offsetHeight + buttomPadding || 0);
-                        animateWidth(submenu, submenu.offsetWidth, button?.offsetWidth + buttomPadding + 20 || 0);
+                    } else if (button) {
+                        animateHeight(submenu, submenu.scrollHeight, button.offsetHeight + buttomPadding);
+                        animateWidth(submenu, submenu.offsetWidth, button.offsetWidth + buttomPadding + 20);
                     }
                 }
             });
@@ -558,7 +557,7 @@ const submenuLinks = [
                 }
             };
 
-            const clickListener = () => {
+            const clickListener = (event: MouseEvent) => {
                 console.log("clickListener");
                 submenu.dataset.isExpanded === 'true' ? submenu.dataset.isExpanded = 'false' : submenu.dataset.isExpanded = 'true';
                 isExpanded = submenu.dataset.isExpanded === 'true' ? true : false;
@@ -571,7 +570,7 @@ const submenuLinks = [
 
                 if (window.innerWidth <= breakPointDesktop) {
                     animateHeight(submenu, button.scrollHeight, isExpanded ? contentHeight + 20 : button.offsetHeight + buttomPadding);
-                    animateWidth(submenu, submenu.offsetWidth, isExpanded ? content.offsetWidth : button.offsetWidth + buttomPadding + 20);
+                    animateWidth(submenu, submenu.offsetWidth, isExpanded ? content.offsetWidth : (button.offsetWidth || 0) + buttomPadding + 20);
                 } else {
                     const targetHeight: number = !isExpanded ? originalHeight : originalHeight + contentHeight - 25;
                     animateHeight(header, header.scrollHeight, targetHeight);
@@ -587,19 +586,19 @@ const submenuLinks = [
             eventListenersMap.set(submenu, {
                 mouseEnter: mouseEnterListener,
                 mouseLeave: mouseLeaveListener,
-                click: clickListener,
+                click: clickListener as EventListener,
             });
 
             eventListenersMap.set(document, {
                 mouseEnter: () => {}, // No-op function for mouseEnter
                 mouseLeave: () => {}, // No-op function for mouseLeave
-                click: outsideClickListener,
+                click: outsideClickListener as EventListener,
             });
 
             submenu.addEventListener('mouseenter', mouseEnterListener);
             submenu.addEventListener('mouseleave', mouseLeaveListener);
-            button?.addEventListener('click', clickListener);
-            document.addEventListener('click', outsideClickListener);
+            button?.addEventListener('click', clickListener as EventListener);
+            document.addEventListener('click', outsideClickListener as EventListener);
         });
 
         if (window.innerWidth <= breakPointDesktop) {
@@ -664,11 +663,11 @@ const submenuLinks = [
 
     window.addEventListener('resize', debounce(handleResize, 200));
 
-    function debounce(func, wait) {
-        let timeout;
-        return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func(...args), wait);
+    function debounce(func: (...args: any[]) => void, wait: number) {
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+        return function(this: any, ...args: any[]) {
+            if (timeout) clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
         };
     }
 </script>
