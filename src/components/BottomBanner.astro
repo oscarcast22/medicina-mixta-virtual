@@ -1,13 +1,13 @@
 ---
 interface Props {
-    image: string
+    image: string;
 }
 
-const { image } = Astro.props
+const { image } = Astro.props;
 ---
 
 <div class="banner">
-    <div class="title" data-aos="zoom-in-up">
+    <div class="title">
         <div>
             <h1 class="light">La opción</h1>
             <h1>A la excelencia</h1>
@@ -15,7 +15,7 @@ const { image } = Astro.props
         <a href="/contacto">Recibe mas informacion</a>
     </div>
     <div class="image">
-        <img src={image} alt="" loading="lazy">
+        <img src={image} alt="" loading="lazy" />
     </div>
 </div>
 
@@ -37,9 +37,21 @@ const { image } = Astro.props
         position: absolute;
         background: #00000038;
         z-index: 0;
-        background: -moz-linear-gradient(180deg, rgba(0,0,0,0.08307072829131656) 0%, rgba(0,0,0,1) 97%);
-        background: -webkit-linear-gradient(180deg, rgba(0,0,0,0.08307072829131656) 0%, rgba(0,0,0,1) 97%);
-        background: linear-gradient(180deg, rgba(0,0,0,0.08307072829131656) 0%, rgba(0,0,0,1) 97%);
+        background: -moz-linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.08307072829131656) 0%,
+            rgba(0, 0, 0, 1) 97%
+        );
+        background: -webkit-linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.08307072829131656) 0%,
+            rgba(0, 0, 0, 1) 97%
+        );
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.08307072829131656) 0%,
+            rgba(0, 0, 0, 1) 97%
+        );
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
     }
 
@@ -81,7 +93,9 @@ const { image } = Astro.props
         padding: 10px;
         border-radius: 10px;
         margin: 10px 0 0;
-        transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+        transition:
+            color 0.3s ease-in-out,
+            background 0.3s ease-in-out;
     }
 
     .title a:hover {

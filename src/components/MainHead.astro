@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/normalice.css';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title?: string | undefined;
@@ -20,7 +20,7 @@ const {
 <meta name="generator" content={Astro.generator} />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>{title}</title>
-<ViewTransitions />
+<ClientRouter />
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script>
 	// @ts-ignore

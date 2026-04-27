@@ -14,7 +14,7 @@
     "@fontsource-variable/dm-sans": "^5.0.6",
     "animejs": "^3.2.2",
     "aos": "^2.3.4",
-    "astro": "^4.11.3",
+    "astro": "^6.1.9",
     "typescript": "^5.5.2"
   },
   "devDependencies": {
