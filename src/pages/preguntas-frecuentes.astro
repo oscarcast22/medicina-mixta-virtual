@@ -5,9 +5,20 @@ import Footer from "../sections/Footer.astro";
 import HeroPreguntasFrecuentes from "../sections/HeroPreguntasFrecuentes.astro";
 import QAs from '../utils/QAs';
 import WhatsAppWidget from "../components/WhatsAppWidget.astro";
+import { faqSchema, type FaqItem } from "../utils/seo";
+
+const faqItems = QAs as FaqItem[];
 ---
 
-<BaseLayout title="Preguntas Frecuentes" description="Pagina de preguntas frecuentes Escuela de Medicina UAD">
+<BaseLayout
+    title="Preguntas Frecuentes | Medicina Mixta-Virtual UAD"
+    description="Resuelve tus dudas sobre horarios, clases, prácticas clínicas, requisitos tecnológicos, admisión, titulación y validez de Medicina Mixta-Virtual UAD."
+    breadcrumbs={[
+        { name: "Inicio", path: "/" },
+        { name: "Preguntas Frecuentes", path: "/preguntas-frecuentes/" },
+    ]}
+    schema={faqSchema(faqItems)}
+>
     <Nav LicenciaturaTitle="Medicina" fastMotion />
     <HeroPreguntasFrecuentes />
     <main>
@@ -16,7 +27,7 @@ import WhatsAppWidget from "../components/WhatsAppWidget.astro";
                 <div></div><h5 class="light">Preguntas Frecuentes</h5>
             </div>
             <div class="questions">
-                {QAs.map(([question, answer]) => (
+                {faqItems.map(([question, answer]) => (
                     <div>
                         <h3>{question}</h3>
                         <p><Fragment set:html={answer} /></p>

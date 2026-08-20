@@ -5,7 +5,16 @@ import ContactForm from "../components/ContactForm.astro";
 import SocialMediaIcons from "../icons/SocialMediaIcons.astro"
 ---
 
-<BaseLayout title="Contacto" description="Pagina de contacto Escuela de Medicina UAD">
+<BaseLayout
+    title="Contacto | Medicina Mixta-Virtual UAD"
+    description="Solicita información sobre las licenciaturas de Medicina General y Enfermería en modalidad Mixta-Virtual de la UAD."
+    image="/images/background_contacto.webp"
+    pageType="ContactPage"
+    breadcrumbs={[
+        { name: "Inicio", path: "/" },
+        { name: "Contacto", path: "/contacto/" },
+    ]}
+>
     <main transition:animate="slide">
         <img class="background" src="/images/background_contacto.webp" alt="" loading="eager">
         <section class="contact-grid">
@@ -33,7 +42,7 @@ import SocialMediaIcons from "../icons/SocialMediaIcons.astro"
                                 Colonia Jardines de Durango. Durango, Durango, México.
                             </p>
                             <p>
-                                Teléfono(s): (618) 129 5901 Ext. 275 a 285
+                                Teléfono(s): (618) 110 2529
                             </p>
                         </div>
                     </div>

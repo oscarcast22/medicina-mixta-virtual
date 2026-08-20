@@ -8,6 +8,8 @@ import LargeView from "../../sections/enfermeria/DesktopView.astro";
 import MobileView from "../../sections/enfermeria/MobileView.astro";
 import Enfermeria from "../../icons/enfermeria.astro";
 import WhatsAppWidget from "../../components/WhatsAppWidget.astro";
+import { absoluteUrl } from "../../config/site";
+import { programSchema } from "../../utils/seo";
 
 const licenciaturas = await getCollection('licenciaturas');
 
@@ -17,7 +19,25 @@ if (!enfermeriaData) {
   throw new Error("Enfermeria data not found");
 }
 ---
-<BaseLayout title="Enfermeria Mixta-Virtual" description="Sitio principal de Enfermeria Mixta Virtual UAD">
+<BaseLayout
+    title="Licenciatura en Enfermería Mixta-Virtual | RVOE 1030/2016 | UAD"
+    description="Conoce la Licenciatura en Enfermería en modalidad Mixta-Virtual de la UAD: RVOE 1030/2016, plan de estudios, perfil de egreso y requisitos."
+    image={enfermeriaData.data.portada}
+    breadcrumbs={[
+        { name: "Inicio", path: "/" },
+        { name: "Oferta Educativa", path: "/" },
+        { name: "Enfermería", path: "/enfermeria-mixta-virtual/" },
+    ]}
+    schema={programSchema({
+        url: absoluteUrl("/enfermeria-mixta-virtual/"),
+        name: "Licenciatura en Enfermería Mixta-Virtual",
+        description: "Programa de Licenciatura en Enfermería de la Universidad Autónoma de Durango, impartido en modalidad Mixta-Virtual.",
+        image: absoluteUrl(enfermeriaData.data.portada),
+        rvoe: enfermeriaData.data.rvoe,
+        semesters: enfermeriaData.data.plan_estudios.length,
+        credential: "Licenciatura en Enfermería",
+    })}
+>
     <Nav LicenciaturaTitle="Enfermeria" fastMotion />
     <LicenciaturaHero 
         image={enfermeriaData.data.portada}

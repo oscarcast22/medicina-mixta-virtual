@@ -12,11 +12,11 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
 const licenciaturasLinks = [
     {
         label: "Medicina Mixta Virtual",
-        href: "/medicina-mixta-virtual",
+        href: "/medicina-mixta-virtual/",
     },
     {
         label: "Enfermería Mixta Virtual",
-        href: "/enfermeria-mixta-virtual",
+        href: "/enfermeria-mixta-virtual/",
     },
 ];
 
@@ -27,11 +27,11 @@ const submenuLinks = [
     },
     {
         label: "Misión y Visión",
-        href: "/mision-y-vision",
+        href: "/mision-y-vision/",
     },
     {
         label: "Preguntas Frecuentes",
-        href: "/preguntas-frecuentes",
+        href: "/preguntas-frecuentes/",
     },
 ];
 ---
@@ -57,7 +57,7 @@ const submenuLinks = [
                             <span></span>
                         </button>
                         <ul class="oferta-content licenciaturas">
-                            <li><a class="link oferta" href={`/${LicenciaturaSlug}/perfil-de-ingreso-y-egreso`}>Perfil de Ingreso y Egreso</a></li>
+                            <li><a class="link oferta" href={`/${LicenciaturaSlug}/perfil-de-ingreso-y-egreso/`}>Perfil de Ingreso y Egreso</a></li>
                             <li><a class="link oferta" href={`/${LicenciaturaSlug}/#plan_de_estudios`}>Plan de Estudios</a></li>
                         </ul>
                     </li>
@@ -99,12 +99,12 @@ const submenuLinks = [
                     </ul>
                 </li>
                 <li class="menu-item button">
-                    <a class="pv-button" href="https://medicinavirtual.uad.mx/" target="_blank">Plataforma Virtual</a>
+                    <a class="pv-button" href="https://medicinavirtual.uad.mx/" target="_blank" rel="noopener noreferrer">Plataforma Virtual</a>
                 </li>
                 <li class="menu-item">
                     <a 
                         class="email"
-                        href="/contacto"
+                        href="/contacto/"
                         style="display: flex; align-items: center;"
                     >
                         <EmailSend 

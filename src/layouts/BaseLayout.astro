@@ -1,18 +1,46 @@
 ---
 import MainHead from '../components/MainHead.astro';
 import '@fontsource-variable/dm-sans';
+import type { BreadcrumbItem, JsonLd } from '../utils/seo';
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	canonical?: string | undefined;
+	image?: string | undefined;
+	socialImage?: string | undefined;
+	pageType?: string | undefined;
+	robots?: string | undefined;
+	schema?: JsonLd | JsonLd[] | undefined;
+	breadcrumbs?: BreadcrumbItem[] | undefined;
 }
 
-const { title, description } = Astro.props;
+const {
+	title,
+	description,
+	canonical,
+	image,
+	socialImage,
+	pageType,
+	robots,
+	schema,
+	breadcrumbs,
+} = Astro.props;
 ---
 
-<html lang="es">
+<html lang="es-MX">
 	<head>
-		<MainHead title={title} description={description} />
+		<MainHead
+			title={title}
+			description={description}
+			canonical={canonical}
+			image={image}
+			socialImage={socialImage}
+			pageType={pageType}
+			robots={robots}
+			schema={schema}
+			breadcrumbs={breadcrumbs}
+		/>
 	</head>
 	<body>
 		<slot />

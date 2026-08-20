@@ -7,10 +7,18 @@ import Medico from "../icons/medico.astro"
 import WhatsAppWidget from "../components/WhatsAppWidget.astro";
 ---
 
-<BaseLayout title="Misión y Visión" description="Misión y Visión de la Escuela de Medicina UAD">
+<BaseLayout
+    title="Misión y Visión | Escuela de Medicina UAD"
+    description="Conoce la misión y visión de la Escuela de Medicina de la Universidad Autónoma de Durango y su enfoque en formación médica humanista."
+    image="/images/mision-vision-portada.webp"
+    breadcrumbs={[
+        { name: "Inicio", path: "/" },
+        { name: "Misión y Visión", path: "/mision-y-vision/" },
+    ]}
+>
     <Nav LicenciaturaTitle="Medicina" fastMotion />
     <section class="mision-hero" id="hero">
-        <img src="/images/mision-vision-portada.webp" alt="" loading="eager">
+        <img src="/images/mision-vision-portada.webp" alt="Campus y formación médica de la Escuela de Medicina UAD" loading="eager">
     </section>
     <main>
         <section class="content">
@@ -32,7 +40,7 @@ import WhatsAppWidget from "../components/WhatsAppWidget.astro";
             <div class="hr"></div>
         </section>
         <section class="medico">
-            <img src="/images/fondo-mision-y-vision.svg" alt="">
+            <img src="/images/fondo-mision-y-vision.svg" alt="Ilustración de la misión y visión de la Escuela de Medicina UAD">
             <div class="overlay"></div>
             <div class="animated-svg">
                 <Medico />

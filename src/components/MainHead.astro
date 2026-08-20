@@ -3,24 +3,109 @@ import '../styles/global.css';
 import '../styles/normalice.css';
 import 'aos/dist/aos.css';
 import { ClientRouter } from 'astro:transitions';
+import { absoluteUrl, normalizePath, site } from '../config/site';
+import {
+	organizationSchema,
+	websiteSchema,
+	webPageSchema,
+	type BreadcrumbItem,
+	type JsonLd,
+} from '../utils/seo';
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	canonical?: string | undefined;
+	image?: string | undefined;
+	socialImage?: string | undefined;
+	pageType?: string | undefined;
+	robots?: string | undefined;
+	schema?: JsonLd | JsonLd[] | undefined;
+	breadcrumbs?: BreadcrumbItem[] | undefined;
 }
 
 const {
-	title = 'Medicina Mixta Virual',
-	description = 'Sitio Principal de Escuela de Medicina Mixta Virtual',
+	title = site.defaultTitle,
+	description = site.defaultDescription,
+	canonical,
+	image = site.defaultImage,
+	socialImage = site.defaultImage,
+	pageType = 'WebPage',
+	robots = 'index, follow',
+	schema = [],
+	breadcrumbs = [],
 } = Astro.props;
+
+const canonicalPath = normalizePath(canonical ?? Astro.url.pathname);
+const canonicalUrl = canonical?.startsWith('http')
+	? canonical
+	: absoluteUrl(canonicalPath);
+const imageUrl = image.startsWith('http') ? image : absoluteUrl(image);
+const socialImageUrl = socialImage.startsWith('http') ? socialImage : absoluteUrl(socialImage);
+const schemaItems = Array.isArray(schema) ? schema : [schema];
+const graph = [
+	organizationSchema(),
+	websiteSchema(),
+	webPageSchema({
+		url: canonicalUrl,
+		name: title,
+		description,
+		image: imageUrl,
+		type: pageType,
+	}),
+	...schemaItems,
+	...(breadcrumbs.length > 0
+		? [{
+				'@type': 'BreadcrumbList',
+				itemListElement: breadcrumbs.map((item, index) => ({
+					'@type': 'ListItem',
+					position: index + 1,
+					name: item.name,
+					item: absoluteUrl(item.path),
+				})),
+			}]
+		: []),
+];
+const serializedSchema = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
+	.replace(/</g, '\\u003c');
 ---
 
 <meta charset="UTF-8" />
-<meta name="description" property="og:description" content={description} />
-<meta name="viewport" content="width=device-width" />
+<meta name="description" content={description} />
+<meta name="robots" content={robots} />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content={site.themeColor} />
+<meta name="application-name" content={site.shortName} />
+<meta name="apple-mobile-web-app-title" content={site.shortName} />
+<meta name="msapplication-TileColor" content={site.themeColor} />
+<meta name="msapplication-TileImage" content={absoluteUrl('/mstile-150x150.png')} />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="sitemap" href={absoluteUrl('/sitemap-index.xml')} />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color={site.themeColor} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content={site.locale} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={socialImageUrl} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageUrl} />
+<meta name="twitter:image:alt" content={title} />
 <title>{title}</title>
+<script is:inline type="application/ld+json" set:html={serializedSchema}></script>
 <ClientRouter />
 <script>
 	// @ts-ignore

@@ -29,7 +29,7 @@ const { LicenciaturaTitle, LicenciaturaSlug, fastMotion = false } = Astro.props
                     <li class="dropdown" id="dropdown-1" onmouseover="handleOfferHover(1, true)" onmouseleave="handleOfferHover(1, false)">
                         <button onclick="handleClick(1)">Estructura Académica</button>
                         <ul class="dropdown-content" id="content-1">
-                            <li><a href={`/${LicenciaturaSlug}/perfil-de-ingreso-y-egreso`}>Perfil de Ingreso y Egreso</a></li>
+                            <li><a href={`/${LicenciaturaSlug}/perfil-de-ingreso-y-egreso/`}>Perfil de Ingreso y Egreso</a></li>
                             <li><a href={`/${LicenciaturaSlug}/#plan_de_estudios`}>Plan de Estudios</a></li>
                         </ul>
                     </li>
@@ -37,25 +37,25 @@ const { LicenciaturaTitle, LicenciaturaSlug, fastMotion = false } = Astro.props
                 <li class="dropdown" id="dropdown-2" onmouseover="handleOfferHover(2, true)" onmouseleave="handleOfferHover(2, false)">
                     <button onclick="handleClick(2)">Oferta Educativa</button>
                     <ul class="dropdown-content" id="content-2">
-                        <li><a href="/medicina-mixta-virtual">Medicina Mixta Virtual</a></li>
-                        <li><a href="/enfermeria-mixta-virtual">Enfermería Mixta Virtual</a></li>
+                        <li><a href="/medicina-mixta-virtual/">Medicina Mixta Virtual</a></li>
+                        <li><a href="/enfermeria-mixta-virtual/">Enfermería Mixta Virtual</a></li>
                     </ul>
                 </li>
                 <li class="dropdown" id="dropdown-3" onmouseover="handleOfferHover(3, true)" onmouseleave="handleOfferHover(3, false)">
                     <button onclick="handleClick(3)">{LicenciaturaTitle} Mixta-Virtual</button>
                     <ul class="dropdown-content" id="content-3">
-                        <li><a href="https://medicinavirtual.uad.mx/" target="_blank">Simulacion</a></li>
-                        <li><a href="/mision-y-vision">Misión y Visión</a></li>
-                        <li><a href="/preguntas-frecuentes">Preguntas Frecuentes</a></li>
+                        <li><a href="https://medicinavirtual.uad.mx/" target="_blank" rel="noopener noreferrer">Simulacion</a></li>
+                        <li><a href="/mision-y-vision/">Misión y Visión</a></li>
+                        <li><a href="/preguntas-frecuentes/">Preguntas Frecuentes</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a class="pv-button" href="https://medicinavirtual.uad.mx/" target="_blank">Plataforma Virtual</a>
+                    <a class="pv-button" href="https://medicinavirtual.uad.mx/" target="_blank" rel="noopener noreferrer">Plataforma Virtual</a>
                 </li>
                 <li>
                     <a 
                         class="email"
-                        href="/contacto"
+                        href="/contacto/"
                         style="display: flex; align-items: center;"
                     >
                         <EmailSend 

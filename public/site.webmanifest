@@ -1,0 +1,24 @@
+{
+  "name": "Medicina Mixta Virtual UAD",
+  "short_name": "Medicina UAD",
+  "description": "Licenciaturas de Medicina General y Enfermería en modalidad Mixta-Virtual de la Universidad Autónoma de Durango.",
+  "lang": "es-MX",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "theme_color": "#29A9E0",
+  "background_color": "#161617",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

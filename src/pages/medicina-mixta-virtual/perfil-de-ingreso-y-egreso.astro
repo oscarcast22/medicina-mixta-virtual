@@ -6,10 +6,19 @@ import LogoEscuelaMedicinaAzul from "../../icons/logo_escuela_medicina_azul.astr
 import WhatsAppWidget from "../../components/WhatsAppWidget.astro";
 ---
 
-<BaseLayout title="Perfil de Ingreso y Egreso Medicina Mixta-Virtual" description="Sitio del perfil de ingreso y egreso para Medicina Mixta Virtual UAD">
+<BaseLayout
+    title="Perfil de Ingreso y Egreso | Medicina General UAD"
+    description="Consulta el perfil de ingreso, las competencias profesionales de egreso y las rotaciones internacionales de Medicina General Mixta-Virtual de la UAD."
+    image="/images/portada_perfil_egreso.webp"
+    breadcrumbs={[
+        { name: "Inicio", path: "/" },
+        { name: "Medicina General", path: "/medicina-mixta-virtual/" },
+        { name: "Perfil de Ingreso y Egreso", path: "/medicina-mixta-virtual/perfil-de-ingreso-y-egreso/" },
+    ]}
+>
     <Nav LicenciaturaTitle="Medicina" LicenciaturaSlug={"medicina-mixta-virtual"} fastMotion />
     <section class="perfil-hero" id="hero">
-        <img src="/images/portada_perfil_egreso.webp" alt="">
+        <img src="/images/portada_perfil_egreso.webp" alt="Perfil de ingreso y egreso de Medicina General UAD">
     </section>
     <main>
         <section class="content">
@@ -67,7 +76,7 @@ import WhatsAppWidget from "../../components/WhatsAppWidget.astro";
             </div>
         </section>
         <div class="img-container" data-aos="fade-right">
-            <img src="/images/medicina_banner_img.webp" alt="">
+            <img src="/images/medicina_banner_img.webp" alt="Formación médica y simulación en la UAD">
         </div>
         <section class="content">
             <div class="perfil">

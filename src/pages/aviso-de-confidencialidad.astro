@@ -4,7 +4,15 @@ import Nav from "../sections/Nav.astro";
 import Footer from "../sections/Footer.astro";
 ---
 
-<BaseLayout title="Aviso de Confidencialidad" description="Sitio Principal Medicina UAD Mixta-Virtual">
+<BaseLayout
+    title="Aviso de Confidencialidad | Medicina Mixta-Virtual UAD"
+    description="Consulta el aviso de confidencialidad y tratamiento de datos personales de la Universidad Autónoma de Durango."
+    image="/images/banner-contacto.webp"
+    breadcrumbs={[
+        { name: "Inicio", path: "/" },
+        { name: "Aviso de Confidencialidad", path: "/aviso-de-confidencialidad/" },
+    ]}
+>
     <Nav LicenciaturaTitle="Medicina" fastMotion />
     <section class="aviso-hero" id="hero">
         <div class="image-container">

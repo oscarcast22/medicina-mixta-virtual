@@ -9,7 +9,11 @@ import Footer from "../sections/Footer.astro"
 import WhatsAppWidget from "../components/WhatsAppWidget.astro"
 import Nav2 from "../sections/Nav2.astro"
 ---
-<BaseLayout>
+<BaseLayout
+	title="Medicina Mixta Virtual UAD | Licenciaturas en México"
+	description="Estudia Medicina General y Enfermería en modalidad Mixta-Virtual con la Universidad Autónoma de Durango. Conoce la oferta educativa, simulación, plan de estudios y contacto."
+	breadcrumbs={[{ name: 'Inicio', path: '/' }]}
+>
 	<!-- <Nav LicenciaturaTitle="Medicina"/> -->
 	<Nav2 LicenciaturaTitle="Medicina"/>
 	<div id="hero-delay" class="hidden">

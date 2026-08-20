@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /agradecimiento/
+
+Sitemap: https://www.medicinauadvirtual.mx/sitemap-index.xml
