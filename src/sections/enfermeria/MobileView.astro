@@ -250,7 +250,7 @@ const { data } = Astro.props;
         height: 0;
         overflow: hidden;
         opacity: 0;
-        transition: height 0.6s ease-out, opacity 0.7s ease-out, padding 0.2s ease-out;
+        transition: height var(--motion-panel) ease-out, opacity var(--motion-panel) ease-out, padding var(--motion-fast) ease-out;
     }
 
     .collapse.open .collapse-content {

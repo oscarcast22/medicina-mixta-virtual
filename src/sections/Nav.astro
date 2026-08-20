@@ -5,12 +5,13 @@ import EmailSend from "../icons/email_send.astro"
 interface Props {
     LicenciaturaTitle?: string | undefined;
     LicenciaturaSlug?: string | undefined;
+    fastMotion?: boolean;
 }
 
-const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
+const { LicenciaturaTitle, LicenciaturaSlug, fastMotion = false } = Astro.props
 ---
 <input type="checkbox" id="menu">
-<header>
+<header class:list={{ 'fast-motion': fastMotion }}>
     <div class="nav-menu">
         <a href="/" class="logo">
             <LogoMixtaVirtual
@@ -69,11 +70,12 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
 
 <style>
     header {
+        --nav-dropdown-delay: 0.2s;
         position: fixed;
         top: 0;
         z-index: 99;
         width: 100%;
-        transition: top 0.45s ease-in-out; 
+        transition: top var(--motion-base) ease-in-out;
     }
 
     header::before {
@@ -89,9 +91,14 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         background: -webkit-linear-gradient(180deg, rgba(0,0,0,0.700717787114846) 0%, rgba(0,0,0,0) 100%);
         background: linear-gradient(180deg, rgba(0,0,0,0.700717787114846) 0%, rgba(0,0,0,0) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
-        transition: height 0.5s ease, backdrop-filter 0.4s ease, background-color .4s ease, top 0.45s ease-in-out;
+        transition: height var(--motion-panel) ease, backdrop-filter var(--motion-base) ease, background-color var(--motion-base) ease, top var(--motion-base) ease-in-out;
         z-index: -1;
         overflow: hidden;
+    }
+
+    header.fast-motion {
+        --motion-panel: var(--motion-base);
+        --nav-dropdown-delay: 0s;
     }
 
     header.scrolled::before {
@@ -139,21 +146,21 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
     .dropdown-content.clicked-1, .dropdown-content.hover-1 {
         height: 75px;
         width: 260px;
-        transition: height .5s ease .2s;
+        transition: height var(--motion-panel) ease var(--nav-dropdown-delay);
 
     }
 
     .dropdown-content.clicked-2, .dropdown-content.hover-2 {
         height: 75px;
         width: 260px;
-        transition: height .5s ease .2s;
+        transition: height var(--motion-panel) ease var(--nav-dropdown-delay);
 
     }
 
     .dropdown-content.clicked-3, .dropdown-content.hover-3 {
         height: 115px;
         width: 260px;
-        transition: height .5s ease .2s;
+        transition: height var(--motion-panel) ease var(--nav-dropdown-delay);
 
     }
 
@@ -175,7 +182,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
     nav {
         margin: 0;
         padding: 0;
-        transition: height .4s;
+        transition: height var(--motion-base) ease;
         font-size: 16px;
     }
 
@@ -201,7 +208,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
       color: var(--white);
       padding: 7px 15px;
       display: block;
-      transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+      transition: color var(--motion-fast) ease-in-out, background-color var(--motion-fast) ease-in-out;
     }
 
     nav ul li a:hover {
@@ -215,7 +222,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         color: var(--white);
         margin: 0;
         padding: 7px 0;
-        transition: color 0.3s ease-in-out;
+        transition: color var(--motion-fast) ease-in-out;
     }
 
     .dropdown button:hover {
@@ -228,7 +235,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         position: absolute;
         z-index: 1;
         padding: 0;
-        transition: height .5s ease, width .4s ease;
+        transition: height var(--motion-panel) ease, width var(--motion-base) ease;
     }
 
     .dropdown-content li {
@@ -276,7 +283,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
             gap: 1.5rem;
             align-items: center;
             height: 0;
-            transition: height .5s ease;
+            transition: height var(--motion-panel) ease;
             overflow: hidden;
         }
 
@@ -299,7 +306,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
             position: absolute;
             transform: translateY(-50%);
             border-radius: 99px;
-            transition: 0.3s;
+            transition: transform var(--motion-fast) ease, opacity var(--motion-fast) ease;
             transform: scale(1);
         }
 
@@ -349,7 +356,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
             background: #00000015;
             backdrop-filter: blur(80px);
             border-radius: 10px;
-            transition: height .4s ease, width .4s ease;
+            transition: height var(--motion-base) ease, width var(--motion-base) ease;
         }
 
         #dropdown-1 {
@@ -393,7 +400,7 @@ const { LicenciaturaTitle, LicenciaturaSlug } = Astro.props
         .dropdown-content.clicked-1,
         .dropdown-content.clicked-2,
         .dropdown-content.clicked-3 {
-            transition: height .5s ;
+            transition: height var(--motion-panel) ease;
         }
 
     }

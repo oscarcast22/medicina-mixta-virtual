@@ -66,7 +66,7 @@ if (!medicinaData) {
         background-color: rgb(0,0,0);
         background-color: rgba(0,0,0,0.9);
         opacity: 0;
-        transition: opacity 0.5s ease;
+        transition: opacity var(--motion-panel) ease;
     }
 
     .modal.show {
@@ -79,14 +79,14 @@ if (!medicinaData) {
         display: block;
         width: 95%;
         max-width: 1080px;
-        animation: modalContentShow 0.5s ease;
+        animation: modalContentShow var(--motion-panel) ease;
     }
 
     .close {
         color: #fff;
         font-size: 40px;
         font-weight: bold;
-        transition: 0.3s;
+        transition: color var(--motion-fast) ease;
         cursor: pointer;
         margin: 0 3.5vw 0;
     }
@@ -117,19 +117,36 @@ if (!medicinaData) {
 </style>
 
 <script>
-    function initializeLargeView(): void {
+    type ViewMode = 'desktop' | 'mobile';
+
+    let activeMode: ViewMode | null = null;
+    let interactionController: AbortController | null = null;
+    let pageCleanup: (() => void) | null = null;
+    let resizeFrame: number | null = null;
+
+    const prefersReducedMotion = (): boolean =>
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function initializeLargeView(signal: AbortSignal): void {
         const buttons: NodeListOf<HTMLElement> = document.querySelectorAll('.menu-btn');
         const sections: NodeListOf<HTMLElement> = document.querySelectorAll('.content-section > div');
         const contentContainer: HTMLElement | null = document.querySelector('.content-section');
+        const reducedMotion = prefersReducedMotion();
 
         function animateHeight(element: HTMLElement, from: number, to: number): void {
+            if (reducedMotion) {
+                element.style.transition = 'none';
+                element.style.height = `${to}px`;
+                return;
+            }
+
             element.style.height = `${from}px`;
             element.offsetHeight;
-            element.style.transition = 'height 0.5s ease';
+            element.style.transition = 'height var(--motion-panel) ease';
             element.style.height = `${to}px`;
         }
 
-        let defaultSectionId: string = 'proposito-content';
+        let defaultSectionId = 'proposito-content';
         const hash = window.location.hash;
         const internalNavigation = sessionStorage.getItem('internalNavigation');
 
@@ -155,15 +172,14 @@ if (!medicinaData) {
             section.classList.add('hidden');
             section.classList.remove('fade-in');
         });
+        buttons.forEach((button: HTMLElement) => button.classList.remove('selected'));
 
         if (defaultSection) {
             defaultSection.classList.remove('hidden');
             defaultSection.classList.add('fade-in');
 
             const defaultButton: HTMLElement | null = document.querySelector(`[data-target="${defaultSectionId}"]`);
-            if (defaultButton) {
-                defaultButton.classList.add('selected');
-            }
+            defaultButton?.classList.add('selected');
         }
 
         if (contentContainer && defaultSection) {
@@ -195,88 +211,53 @@ if (!medicinaData) {
                     targetSection.classList.add('fade-in');
 
                     requestAnimationFrame(() => {
-                        animateHeight(contentContainer, currentHeight, targetSection.scrollHeight + 15);
+                        animateHeight(contentContainer, currentHeight, targetSection.scrollHeight);
                     });
                 }
-            });
+            }, { signal });
         });
     }
 
-    function setupCollapsibles(): void {
-        const collapses: NodeListOf<Element> = document.querySelectorAll('.collapse');
+    function setupCollapsibles(signal: AbortSignal): void {
+        const collapses: HTMLElement[] = Array.from(document.querySelectorAll<HTMLElement>('.collapse'));
 
-        collapses.forEach((collapse: Element) => {
+        collapses.forEach((collapse: HTMLElement) => {
             const button: HTMLElement | null = collapse.querySelector('.menu-btn-m');
             const content: HTMLElement | null = collapse.querySelector('.collapse-content');
-            const collapseId: string | null = content ? content.id : null;
 
-            if (button && content) {
-                // Remove existing event listeners to avoid duplication
-                const newButton: HTMLElement = button.cloneNode(true) as HTMLElement;
-                button.parentNode?.replaceChild(newButton, button);
+            if (!button || !content) {
+                return;
+            }
 
-                newButton.addEventListener('click', function () {
-                    const isOpen: boolean = collapse.classList.contains('open');
+            button.addEventListener('click', () => {
+                const isOpen = collapse.classList.contains('open');
 
-                    collapses.forEach((otherCollapse: Element) => {
-                        const otherButton: HTMLElement | null = otherCollapse.querySelector('.menu-btn-m');
-                        const otherContent: HTMLElement | null = otherCollapse.querySelector('.collapse-content');
-
-                        if (otherCollapse !== collapse) {
-                            otherCollapse.classList.remove('open');
-                            if (otherButton) {
-                                otherButton.classList.remove('selected');
-                            }
-                            if (otherContent) {
-                                otherContent.style.height = '0px';
-                            }
-                        }
-                    });
-
-                    let additionalHeight: number = 0;
-
-                    switch (collapseId) {
-                        case 'proposito-content':
-                            if (window.innerWidth <= 306) {
-                                additionalHeight = 135;
-                            } else if (window.innerWidth <= 314) {
-                                additionalHeight = 110;
-                            } else if (window.innerWidth <= 343) {
-                                additionalHeight = 90;
-                            } else if (window.innerWidth <= 350) {
-                                additionalHeight = 125;
-                            } else if (window.innerWidth <= 365) {
-                                additionalHeight = 115;
-                            } else if (window.innerWidth <= 455) {
-                                additionalHeight = 80;
-                            } else if (window.innerWidth <= 475) {
-                                additionalHeight = 100;
-                            } else {
-                                additionalHeight = 50;
-                            }
-                            break;
-                        case 'plan-content':
-                            additionalHeight = 25;
-                            break;
-                        case 'mapa-content':
-                            additionalHeight = 0;
-                            break;
-                        default:
-                            additionalHeight = 0;
-                            break;
+                collapses.forEach((otherCollapse: HTMLElement) => {
+                    if (otherCollapse === collapse) {
+                        return;
                     }
 
-                    if (isOpen) {
-                        collapse.classList.remove('open');
-                        newButton.classList.remove('selected');
-                        content.style.height = '0px';
-                    } else {
-                        collapse.classList.add('open');
-                        newButton.classList.add('selected');
-                        content.style.height = `${content.scrollHeight + additionalHeight}px`;
+                    otherCollapse.classList.remove('open');
+                    otherCollapse.querySelector<HTMLElement>('.menu-btn-m')?.classList.remove('selected');
+                    const otherContent = otherCollapse.querySelector<HTMLElement>('.collapse-content');
+                    if (otherContent) {
+                        otherContent.style.height = '0px';
                     }
                 });
-            }
+
+                if (isOpen) {
+                    collapse.classList.remove('open');
+                    button.classList.remove('selected');
+                    content.style.height = '0px';
+                    return;
+                }
+
+                collapse.classList.add('open');
+                button.classList.add('selected');
+                requestAnimationFrame(() => {
+                    content.style.height = `${content.scrollHeight}px`;
+                });
+            }, { signal });
         });
     }
 
@@ -284,105 +265,164 @@ if (!medicinaData) {
         const largeView: HTMLElement | null = document.getElementById('desktop-view');
         const mobileView: HTMLElement | null = document.getElementById('mobile-view');
 
-        const isSmallScreen: boolean = window.innerWidth <= 600;
+        if (!largeView || !mobileView) {
+            return;
+        }
 
-        if (isSmallScreen) {
-            if (largeView) {
-                largeView.style.display = 'none';
-            }
-            if (mobileView) {
-                mobileView.style.display = 'flex';
-                setupCollapsibles();
-            }
+        const nextMode: ViewMode = window.innerWidth <= 600 ? 'mobile' : 'desktop';
+        largeView.style.display = nextMode === 'desktop' ? 'grid' : 'none';
+        mobileView.style.display = nextMode === 'mobile' ? 'flex' : 'none';
+
+        if (activeMode === nextMode && nextMode === 'mobile') {
+            document.querySelectorAll<HTMLElement>('.collapse.open .collapse-content').forEach((content) => {
+                content.style.height = `${content.scrollHeight}px`;
+            });
+            return;
+        }
+
+        interactionController?.abort();
+        interactionController = new AbortController();
+        activeMode = nextMode;
+
+        if (nextMode === 'mobile') {
+            setupCollapsibles(interactionController.signal);
         } else {
-            if (mobileView) {
-                mobileView.style.display = 'none';
-            }
-            if (largeView) {
-                largeView.style.display = 'grid';
-                initializeLargeView();
-            }
+            initializeLargeView(interactionController.signal);
         }
     }
 
-    function showModal(): void {
-        const mapas: NodeListOf<Element> = document.querySelectorAll('.mapa');
+    function showModal(): () => void {
+        const controller = new AbortController();
+        const pendingTimers = new Set<number>();
+        const pendingFrames = new Set<number>();
+        const modals: HTMLDivElement[] = [];
+        const reducedMotion = prefersReducedMotion();
+        const motionPanel = Number.parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue('--motion-panel'),
+        );
+        const closeDelay = reducedMotion || !Number.isFinite(motionPanel) ? (reducedMotion ? 0 : 500) : motionPanel;
 
-        mapas.forEach((mapa: Element) => {
-            const images: NodeListOf<HTMLImageElement> = mapa.querySelectorAll('img');
+        const clearPending = (): void => {
+            pendingTimers.forEach((timer) => window.clearTimeout(timer));
+            pendingTimers.clear();
+            pendingFrames.forEach((frame) => window.cancelAnimationFrame(frame));
+            pendingFrames.clear();
+        };
 
-            images.forEach((img: HTMLImageElement) => {
-                const modal: HTMLDivElement = document.createElement('div');
-                modal.setAttribute('class', 'modal');
-                modal.setAttribute('id', 'modal');
+        const schedule = (callback: () => void, delay: number): void => {
+            const timer = window.setTimeout(() => {
+                pendingTimers.delete(timer);
+                callback();
+            }, delay);
+            pendingTimers.add(timer);
+        };
 
-                const closeModal: HTMLSpanElement = document.createElement('span');
-                closeModal.setAttribute('class', 'close');
-                closeModal.innerHTML = '&times;';
+        document.querySelectorAll<HTMLImageElement>('.mapa img').forEach((image) => {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
 
-                const modalContent: HTMLImageElement = document.createElement('img');
-                modalContent.setAttribute('class', 'modal-content');
-                modalContent.setAttribute('id', 'img-modal');
+            const closeButton = document.createElement('span');
+            closeButton.className = 'close';
+            closeButton.setAttribute('role', 'button');
+            closeButton.setAttribute('aria-label', 'Cerrar imagen');
+            closeButton.textContent = '×';
 
-                const caption: HTMLDivElement = document.createElement('div');
-                caption.setAttribute('id', 'caption');
+            const modalImage = document.createElement('img');
+            modalImage.className = 'modal-content';
+            modalImage.alt = image.alt;
 
-                modal.appendChild(closeModal);
-                modal.appendChild(modalContent);
-                modal.appendChild(caption);
-                document.body.appendChild(modal);
+            const caption = document.createElement('div');
+            caption.className = 'caption';
 
-                function updateModalImage(img: HTMLImageElement): void {
-                    if (modalContent && caption) {
-                        img.onclick = function(): void {
-                            modal.style.display = 'flex';
-                            setTimeout(() => {
-                                modal.classList.add('show');
-                            }, 10);
-                            modalContent.src = img.src;
-                            caption.innerHTML = img.alt;
-                        }
-                    }
-                }
+            modal.append(closeButton, modalImage, caption);
+            document.body.appendChild(modal);
+            modals.push(modal);
 
-                closeModal.onclick = function(): void {
-                    modal.classList.remove('show');
-                    setTimeout(() => {
+            const close = (): void => {
+                clearPending();
+                modal.classList.remove('show');
+                if (closeDelay === 0) {
+                    modal.style.display = 'none';
+                } else {
+                    schedule(() => {
                         modal.style.display = 'none';
-                    }, 500);
+                    }, closeDelay);
                 }
+            };
 
-                document.addEventListener('click', function(event: MouseEvent) {
-                    if (event.target === modal) {
-                        modal.classList.remove('show');
-                        setTimeout(() => {
-                            modal.style.display = 'none';
-                        }, 500);
+            image.addEventListener('click', () => {
+                clearPending();
+                modals.forEach((otherModal) => {
+                    if (otherModal !== modal) {
+                        otherModal.classList.remove('show');
+                        otherModal.style.display = 'none';
                     }
                 });
+                modalImage.src = image.currentSrc || image.src;
+                caption.textContent = image.alt;
+                modal.style.display = 'flex';
+                if (reducedMotion) {
+                    modal.classList.add('show');
+                    return;
+                }
 
-                updateModalImage(img);
-            });
+                const frame = window.requestAnimationFrame(() => {
+                    pendingFrames.delete(frame);
+                    modal.classList.add('show');
+                });
+                pendingFrames.add(frame);
+            }, { signal: controller.signal });
+
+            closeButton.addEventListener('click', close, { signal: controller.signal });
+            modal.addEventListener('click', (event: MouseEvent) => {
+                if (event.target === modal) {
+                    close();
+                }
+            }, { signal: controller.signal });
+        });
+
+        return () => {
+            clearPending();
+            controller.abort();
+            modals.forEach((modal) => modal.remove());
+        };
+    }
+
+    function initializePage(): void {
+        pageCleanup?.();
+        interactionController?.abort();
+        activeMode = null;
+
+        const modalCleanup = showModal();
+        checkWindowSize();
+        sessionStorage.setItem('internalNavigation', 'false');
+
+        const cleanup = (): void => {
+            if (resizeFrame !== null) {
+                window.cancelAnimationFrame(resizeFrame);
+                resizeFrame = null;
+            }
+            interactionController?.abort();
+            interactionController = null;
+            activeMode = null;
+            modalCleanup();
+            document.removeEventListener('astro:before-swap', cleanup);
+        };
+
+        document.addEventListener('astro:before-swap', cleanup, { once: true });
+        pageCleanup = cleanup;
+    }
+
+    function handleResize(): void {
+        if (resizeFrame !== null) {
+            window.cancelAnimationFrame(resizeFrame);
+        }
+        resizeFrame = window.requestAnimationFrame(() => {
+            resizeFrame = null;
+            checkWindowSize();
         });
     }
 
-    document.addEventListener('DOMContentLoaded', checkWindowSize);
-    document.addEventListener('astro:page-load', function (): void {
-        showModal();
-        checkWindowSize();
-    });
-    document.addEventListener('astro:after-swap', checkWindowSize);
-    window.addEventListener('resize', checkWindowSize);
-    document.addEventListener('DOMContentLoaded', () => {
-        sessionStorage.setItem('internalNavigation', 'false');
-        checkWindowSize();
-    });
-    document.addEventListener('astro:after-swap', () => {
-        sessionStorage.setItem('internalNavigation', 'false');
-        checkWindowSize();
-    });
-    document.addEventListener('astro:page-load', () => {
-        sessionStorage.setItem('internalNavigation', 'false');
-        checkWindowSize();
-    });
+    document.addEventListener('astro:page-load', initializePage);
+    window.addEventListener('resize', handleResize, { passive: true });
 </script>

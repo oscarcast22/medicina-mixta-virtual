@@ -22,17 +22,17 @@ const { opacity = 1 } = Astro.props
         bottom: 50px;
         right: 45px;
         z-index: 98;
-        transition: transform 0.5s, opacity 0.5s;
+        transition: transform var(--motion-panel), opacity var(--motion-panel);
     }
 
     .widget.show {
-        animation: slideUp 0.5s forwards;
+        animation: slideUp var(--motion-panel) forwards;
         transform: translateY(0);
         opacity: 1 !important;
     }
 
     .widget.hide {
-        animation: slideDown 0.5s forwards;
+        animation: slideDown var(--motion-panel) forwards;
     }
 
 
@@ -84,11 +84,15 @@ const { opacity = 1 } = Astro.props
 </style>
 
 <script>
+    let cleanupWidget: (() => void) | null = null;
+
     document.addEventListener('astro:page-load', function(): void {
+        cleanupWidget?.();
+
         const widget = document.querySelector('.widget') as HTMLElement;
         const isHomePage: boolean = window.location.pathname === '/' || window.location.pathname === '/index.html';
 
-        if (isHomePage && widget) {
+        if (isHomePage && widget && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             const scrollPercentage: number = 0.14;
             let hasShown: boolean = false;
 
@@ -106,12 +110,22 @@ const { opacity = 1 } = Astro.props
                 }
             }
 
-            window.addEventListener('scroll', checkScroll);
+            window.addEventListener('scroll', checkScroll, { passive: true });
             checkScroll();
+
+            const cleanup = (): void => {
+                window.removeEventListener('scroll', checkScroll);
+                document.removeEventListener('astro:before-swap', cleanup);
+            };
+
+            document.addEventListener('astro:before-swap', cleanup, { once: true });
+            cleanupWidget = cleanup;
         } else if (widget) {
             widget.classList.remove('hide');
+            cleanupWidget = null;
+        } else {
+            cleanupWidget = null;
         }
     });
 </script>
-
 

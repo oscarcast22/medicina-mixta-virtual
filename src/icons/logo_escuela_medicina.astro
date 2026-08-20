@@ -192,18 +192,36 @@ const { color = "#FFFFFF", width = "400px" } = Astro.props
 </style>
 
 <script>
+	let cleanupLogo: (() => void) | null = null;
+
 	document.addEventListener('astro:page-load', function() {
+		cleanupLogo?.();
+
 		const logo = document.getElementById("logo") as HTMLElement | null;
 
-		if (logo) {
-			if (!localStorage.getItem('firstLoadDone')) {
-				setTimeout(function() {
-					logo.style.animation = 'dash 1.5s ease-in forwards';
-					localStorage.setItem('firstLoadDone', 'true');
-				}, 1000);
-			} else {
-				logo.style.animation = 'dash 1.5s ease-in forwards';
-			}
+		if (!logo) {
+			cleanupLogo = null;
+			return;
+		}
+
+		const animateLogo = (): void => {
+			logo.style.animation = 'dash 1.5s ease-in forwards';
+			localStorage.setItem('firstLoadDone', 'true');
+		};
+
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || localStorage.getItem('firstLoadDone')) {
+			animateLogo();
+			cleanupLogo = null;
+		} else {
+			const timeoutId: number = window.setTimeout(animateLogo, 1000);
+
+			const cleanup = (): void => {
+				window.clearTimeout(timeoutId);
+				document.removeEventListener('astro:before-swap', cleanup);
+			};
+
+			document.addEventListener('astro:before-swap', cleanup, { once: true });
+			cleanupLogo = cleanup;
 		}
 	});
 </script>

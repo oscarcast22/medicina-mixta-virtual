@@ -307,7 +307,7 @@ const { data } = Astro.props;
 
     .content-section {
         overflow: hidden;
-        transition: height 0.5s ease;
+        transition: height var(--motion-panel) ease;
     }
 
     .hidden {
@@ -315,11 +315,11 @@ const { data } = Astro.props;
     }
 
     .fade-in {
-        animation: fadeIn 0.5s forwards;
+        animation: fadeIn var(--motion-panel) forwards;
     }
 
     .fade-out {
-        animation: fadeOut 0.5s forwards;
+        animation: fadeOut var(--motion-panel) forwards;
     }
 
     @keyframes fadeIn {

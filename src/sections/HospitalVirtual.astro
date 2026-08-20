@@ -186,7 +186,7 @@ const once = "true";
         height: 100%;
         object-fit: cover;
         object-position: 50% 10%;
-        transition: object-position 0.4s ease-in-out;
+        transition: object-position var(--motion-base) ease-in-out;
         cursor: pointer;
     }
 
@@ -227,7 +227,7 @@ const once = "true";
         justify-content: center;
         align-items: center;
         opacity: 0;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity var(--motion-base) ease-in-out;
     }
 
     .modal.show {
@@ -257,7 +257,7 @@ const once = "true";
         width: 90%;
         max-width: 1440px;
         opacity: 0;
-        transition: opacity 0.4s ease-in-out;
+        transition: opacity var(--motion-base) ease-in-out;
     }
 
     #modal-img.show {
@@ -272,7 +272,7 @@ const once = "true";
         color: #fff;
         font-size: 40px;
         font-weight: bold;
-        transition: 0.3s;
+        transition: color var(--motion-fast) ease;
         align-self: flex-end;
         margin: 0 40px 10px 0;
     }
@@ -290,7 +290,7 @@ const once = "true";
         color: #fff;
         font-size: 30px;
         font-weight: bold;
-        transition: 0.3s;
+        transition: color var(--motion-fast) ease;
         user-select: none;
         align-self: center;
     }
@@ -302,94 +302,133 @@ const once = "true";
 </style>
 
 <script>
+    let cleanupHospitalGallery: (() => void) | null = null;
+
     document.addEventListener("astro:page-load", function () {
-        const modal = document.getElementById("modal") as HTMLElement;
+        cleanupHospitalGallery?.();
 
-        if (modal) {
-            const modalImg = document.getElementById(
-                "modal-img",
-            ) as HTMLImageElement;
-            const images = document.querySelectorAll(
-                ".img-container img",
-            ) as NodeListOf<HTMLImageElement>;
-            const closeBtn = document.getElementById(
-                "modal-close",
-            ) as HTMLElement;
-            const prevBtn = document.getElementById(
-                "modal-prev",
-            ) as HTMLElement;
-            const nextBtn = document.getElementById(
-                "modal-next",
-            ) as HTMLElement;
-            modal.addEventListener("click", handleClickOutside);
-            let currentIndex = 0;
+        const modal = document.getElementById("modal") as HTMLElement | null;
+        const modalImg = document.getElementById("modal-img") as HTMLImageElement | null;
+        const closeBtn = document.getElementById("modal-close") as HTMLElement | null;
+        const prevBtn = document.getElementById("modal-prev") as HTMLElement | null;
+        const nextBtn = document.getElementById("modal-next") as HTMLElement | null;
 
-            images.forEach((img, index) => {
-                img.addEventListener("click", () => {
-                    currentIndex = index;
-                    openModal();
-                });
-            });
-
-            function openModal() {
-                modal.classList.add("show");
-                modal.style.display = "flex";
-                setTimeout(() => {
-                    modal.style.opacity = "1";
-                }, 100);
-
-                setTimeout(() => {
-                    modalImg.classList.add("show");
-                    modalImg.src = images[currentIndex].src;
-                }, 100);
-            }
-
-            function closeModal() {
-                modalImg.classList.remove("show");
-                modal.style.opacity = "0";
-
-                setTimeout(() => {
-                    modal.classList.remove("show");
-                    modal.style.display = "none";
-                }, 300);
-            }
-
-            function changeImage(newIndex: number) {
-                modalImg.classList.remove("show");
-                modalImg.classList.add("transition-out");
-                setTimeout(() => {
-                    modalImg.src = images[newIndex].src;
-                    modalImg.classList.remove("transition-out");
-                    modalImg.classList.add("show");
-                    currentIndex = newIndex;
-                }, 250);
-            }
-
-            function showPrev() {
-                const newIndex =
-                    currentIndex > 0 ? currentIndex - 1 : images.length - 1;
-                changeImage(newIndex);
-            }
-
-            function showNext() {
-                const newIndex =
-                    currentIndex < images.length - 1 ? currentIndex + 1 : 0;
-                changeImage(newIndex);
-            }
-
-            function handleClickOutside(event: MouseEvent): void {
-                const isInImage = event.target === modalImg;
-                const isInNavButtons =
-                    (event.target as HTMLElement).closest(".nav-btns") !== null;
-
-                if (!isInImage && !isInNavButtons) {
-                    closeModal();
-                }
-            }
-
-            closeBtn.addEventListener("click", closeModal);
-            prevBtn.addEventListener("click", showPrev);
-            nextBtn.addEventListener("click", showNext);
+        if (!modal || !modalImg || !closeBtn || !prevBtn || !nextBtn) {
+            cleanupHospitalGallery = null;
+            return;
         }
+
+        const images = document.querySelectorAll(
+            ".img-container img",
+        ) as NodeListOf<HTMLImageElement>;
+        if (images.length === 0) {
+            cleanupHospitalGallery = null;
+            return;
+        }
+
+        const controller = new AbortController();
+        const pendingTimers = new Set<number>();
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const motionBase = Number.parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue("--motion-base"),
+        );
+        const transitionDelay = reducedMotion || !Number.isFinite(motionBase)
+            ? (reducedMotion ? 0 : 300)
+            : motionBase;
+        let currentIndex = 0;
+
+        const clearPendingTimers = (): void => {
+            pendingTimers.forEach(timerId => window.clearTimeout(timerId));
+            pendingTimers.clear();
+        };
+
+        const schedule = (callback: () => void, delay: number): void => {
+            const timerId = window.setTimeout(() => {
+                pendingTimers.delete(timerId);
+                callback();
+            }, delay);
+            pendingTimers.add(timerId);
+        };
+
+        const openModal = (): void => {
+            clearPendingTimers();
+            modal.style.display = "flex";
+            modalImg.src = images[currentIndex]?.currentSrc || images[currentIndex]?.src || "";
+
+            if (reducedMotion) {
+                modal.classList.add("show");
+                modalImg.classList.add("show");
+                return;
+            }
+
+            window.requestAnimationFrame(() => {
+                modal.classList.add("show");
+                modalImg.classList.add("show");
+            });
+        };
+
+        const closeModal = (): void => {
+            clearPendingTimers();
+            modalImg.classList.remove("show");
+            modal.classList.remove("show");
+            schedule(() => {
+                modal.style.display = "none";
+            }, transitionDelay);
+        };
+
+        const changeImage = (newIndex: number): void => {
+            clearPendingTimers();
+            currentIndex = newIndex;
+            modalImg.classList.remove("show");
+            modalImg.classList.add("transition-out");
+            schedule(() => {
+                modalImg.src = images[currentIndex]?.currentSrc || images[currentIndex]?.src || "";
+                modalImg.classList.remove("transition-out");
+                modalImg.classList.add("show");
+            }, transitionDelay);
+        };
+
+        const showPrev = (): void => {
+            const newIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
+            changeImage(newIndex);
+        };
+
+        const showNext = (): void => {
+            const newIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
+            changeImage(newIndex);
+        };
+
+        const handleClickOutside = (event: MouseEvent): void => {
+            const target = event.target as HTMLElement | null;
+            const isInImage = target === modalImg;
+            const isInNavButtons = target?.closest(".nav-btns") !== null;
+
+            if (!isInImage && !isInNavButtons) {
+                closeModal();
+            }
+        };
+
+        modal.addEventListener("click", handleClickOutside, { signal: controller.signal });
+        images.forEach((img, index) => {
+            img.addEventListener("click", () => {
+                currentIndex = index;
+                openModal();
+            }, { signal: controller.signal });
+        });
+        closeBtn.addEventListener("click", closeModal, { signal: controller.signal });
+        prevBtn.addEventListener("click", showPrev, { signal: controller.signal });
+        nextBtn.addEventListener("click", showNext, { signal: controller.signal });
+
+        const cleanup = (): void => {
+            clearPendingTimers();
+            controller.abort();
+            modal.classList.remove("show");
+            modalImg.classList.remove("show", "transition-out");
+            modal.style.display = "none";
+            document.removeEventListener("astro:before-swap", cleanup);
+        };
+
+        document.addEventListener("astro:before-swap", cleanup, { once: true });
+        cleanupHospitalGallery = cleanup;
     });
 </script>

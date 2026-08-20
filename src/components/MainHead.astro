@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/normalice.css';
+import 'aos/dist/aos.css';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -21,10 +22,34 @@ const {
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>{title}</title>
 <ClientRouter />
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script>
 	// @ts-ignore
 	import AOS from 'aos/dist/aos.js';
-	document.addEventListener('astro:page-load', () => AOS.init());
-</script>
 
+	const prefersReducedMotion = (): boolean =>
+		window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	document.addEventListener('astro:page-load', () => {
+		const isHomePage = window.location.pathname === '/'
+			|| window.location.pathname === '/index.html';
+		const aosOptions = isHomePage
+			? {
+				duration: 400,
+				easing: 'ease',
+				offset: 120,
+				once: false,
+			}
+			: {
+				duration: 500,
+				easing: 'ease-out',
+				offset: 85,
+				once: true,
+			};
+
+		AOS.init({
+			...aosOptions,
+			disable: prefersReducedMotion,
+		});
+		AOS.refreshHard();
+	});
+</script>

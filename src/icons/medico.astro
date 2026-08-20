@@ -184,8 +184,16 @@
 </style>
 
 <script>
+	let cleanupMedico: (() => void) | null = null;
+
 	document.addEventListener('astro:page-load', function() {
+		cleanupMedico?.();
+
 	    const paths: NodeListOf<Element> = document.querySelectorAll('.medico-path');
+		if (paths.length === 0) {
+			cleanupMedico = null;
+			return;
+		}
 		
 	    function isElementInViewport(el: Element): boolean {
 	        const rect: DOMRect = el.getBoundingClientRect();
@@ -205,8 +213,23 @@
 	        });
 	    }
 	
-	    window.addEventListener('scroll', checkPaths);
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			paths.forEach(path => path.classList.add('animate'));
+			cleanupMedico = null;
+			return;
+		}
+
+	    window.addEventListener('scroll', checkPaths, { passive: true });
 	    window.addEventListener('resize', checkPaths);
-	    checkPaths(); 
+	    checkPaths();
+
+		const cleanup = (): void => {
+			window.removeEventListener('scroll', checkPaths);
+			window.removeEventListener('resize', checkPaths);
+			document.removeEventListener('astro:before-swap', cleanup);
+		};
+
+		document.addEventListener('astro:before-swap', cleanup, { once: true });
+		cleanupMedico = cleanup;
 	});
 </script>

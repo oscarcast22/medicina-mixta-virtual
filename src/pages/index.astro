@@ -97,17 +97,32 @@ import Nav2 from "../sections/Nav2.astro"
 </style>
 
 <script>
+	let cleanupHeroDelay: (() => void) | null = null;
+
 	document.addEventListener('astro:page-load', function() {
+		cleanupHeroDelay?.();
+		cleanupHeroDelay = null;
+
 		const heroD = document.getElementById("hero-delay") as HTMLElement | null;
 
 		if (heroD) {
-			if (!localStorage.getItem('firstLoadDone')) {
-			  setTimeout(function() {
+			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (!localStorage.getItem('firstLoadDone') && !reducedMotion) {
+			  const timeoutId = window.setTimeout(function() {
 			    heroD.classList.remove("hidden");
 			    localStorage.setItem('firstLoadDone', 'true');
 			  }, 500);
+
+			  const cleanup = (): void => {
+				window.clearTimeout(timeoutId);
+				document.removeEventListener('astro:before-swap', cleanup);
+			  };
+
+			  document.addEventListener('astro:before-swap', cleanup, { once: true });
+			  cleanupHeroDelay = cleanup;
 			} else {
 			  heroD.classList.remove("hidden");
+			  localStorage.setItem('firstLoadDone', 'true');
 			}
 		}
 	});

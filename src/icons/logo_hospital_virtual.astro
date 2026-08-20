@@ -127,10 +127,22 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 
 <script>
 	import anime from 'animejs/lib/anime.es.js';
-	
+
+	let cleanupHospitalLogo: (() => void) | null = null;
+
 	document.addEventListener('astro:page-load', function() {
+		cleanupHospitalLogo?.();
+
 	    const logo: HTMLElement | null = document.getElementById('logo-h');
 	    const pulsePath: SVGPathElement | null = document.getElementById('line') as SVGPathElement | null;
+		if (!logo) {
+			cleanupHospitalLogo = null;
+			return;
+		}
+		const logoElement: HTMLElement = logo;
+
+		let pulseAnimation: { pause: () => void } | null = null;
+		const reducedMotion: boolean = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	
 	    const observerOptions: IntersectionObserverInit = {
 	        root: null,
@@ -140,14 +152,25 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 	
 	    function handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
 	        entries.forEach(entry => {
-	            if (entry.isIntersecting && logo) {
-	                logo.style.animation = 'dash 1.2s ease-in forwards';
+	            if (entry.isIntersecting) {
+				if (reducedMotion) {
+					logoElement.style.animation = 'none';
+					logoElement.style.fillOpacity = '1';
+					logoElement.style.strokeDashoffset = '0';
+				} else {
+					logoElement.style.animation = 'dash 1.2s ease-in forwards';
+				}
+
 	                if (pulsePath) {
 	                    const pathLength: number = pulsePath.getTotalLength();
 	                    pulsePath.setAttribute('stroke-dasharray', pathLength.toString());
 	                    pulsePath.setAttribute('stroke-dashoffset', pathLength.toString());
-					
-	                    anime({
+
+					if (reducedMotion) {
+						pulsePath.style.opacity = '1';
+						pulsePath.setAttribute('stroke-dashoffset', '0');
+					} else {
+					pulseAnimation = anime({
 	                        targets: '#line',
 	                        strokeDashoffset: [
 	                            { value: pathLength },
@@ -159,12 +182,13 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 	                            { value: 0, duration: 750 }
 	                        ],
 	                        easing: 'linear',
-	                        duration: 1500,
+	                        duration: 2000,
 	                        loop: true
 	                    });
+					}
 	                }
 				
-	                observer.unobserve(logo);
+				observer.unobserve(logoElement);
 	            }
 	        });
 	    }
@@ -172,7 +196,16 @@ const { color = "var(--white)", width = "100px"} = Astro.props
 	    const observer: IntersectionObserver = new IntersectionObserver(handleIntersection, observerOptions);
 	
 	    if (logo) {
-	        observer.observe(logo);
+			observer.observe(logoElement);
 	    }
+
+		const cleanup = (): void => {
+			observer.disconnect();
+			pulseAnimation?.pause();
+			document.removeEventListener('astro:before-swap', cleanup);
+		};
+
+		document.addEventListener('astro:before-swap', cleanup, { once: true });
+		cleanupHospitalLogo = cleanup;
 	});
 </script>

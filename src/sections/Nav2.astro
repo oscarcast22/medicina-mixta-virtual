@@ -126,14 +126,13 @@ const submenuLinks = [
         z-index: 99;
         padding: 15px 20px;
         background: linear-gradient(180deg, rgba(22,22,23,0.9) 0%, rgba(22,22,23,0.5) 63%, rgba(22,22,23,0.042) 100%);
-        transition: height 0.4s ease;
         overflow: hidden;
         z-index: 95;
         font-size: var(--text-md);
         color: var(--white);
         -webkit-backdrop-filter: blur(0px);
         backdrop-filter: blur(0px);
-        transition: width 0.4s ease, height 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s ease;
+        transition: width var(--motion-base) ease, height var(--motion-base) ease, transform var(--motion-base) cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter var(--motion-base) ease;
         align-items: center;
     }
 
@@ -180,7 +179,7 @@ const submenuLinks = [
     .link {
         font-weight: 500;
         text-decoration: none;
-        transition: color 0.4s;
+        transition: color var(--motion-base) ease;
         text-wrap: nowrap;
     }
 
@@ -209,7 +208,7 @@ const submenuLinks = [
         width: 0;
         height: 2px;
         background: var(--primary);
-        transition: transform 0.3s ease;
+        transition: transform var(--motion-fast) ease;
         width: 100%;
         transform: scale(0);
         transform-origin: left;
@@ -246,7 +245,7 @@ const submenuLinks = [
         border: none;
         display: inline-flex;
         align-items: center;
-        transition: color 0.4s;
+        transition: color var(--motion-base) ease;
     }
 
     .submenu.active button {
@@ -261,7 +260,7 @@ const submenuLinks = [
         left: 0;
         opacity: 0;
         transform: translateY(-10px);
-        transition: opacity 0.4s ease, transform 0.4s ease;
+        transition: opacity var(--motion-base) ease, transform var(--motion-base) ease;
         pointer-events: none;
     }
 
@@ -273,7 +272,7 @@ const submenuLinks = [
     .link.oferta {
         font-size: var(--text-base);
         text-wrap: wrap;
-        transition: color 0.3s;
+        transition: color var(--motion-fast) ease;
     }
 
     .link.oferta:hover {
@@ -327,10 +326,9 @@ const submenuLinks = [
             width: 100%;
             gap: 1.5rem;
             align-items: center;
-            transition: height .5s ease;
             overflow: hidden;
             opacity: 0;
-            transition: opacity .5s ease;
+            transition: height var(--motion-panel) ease, opacity var(--motion-panel) ease;
         }
 
         nav .menu-links {
@@ -389,7 +387,7 @@ const submenuLinks = [
             position: absolute;
             transform: translateY(-50%);
             border-radius: 99px;
-            transition: 0.3s;
+            transition: transform var(--motion-fast) ease, opacity var(--motion-fast) ease;
             transform: scale(1);
         }
 
@@ -432,14 +430,24 @@ const submenuLinks = [
         mouseLeave: EventListener, 
         click: EventListener 
     }>();
+    let cleanupCurrentNav: (() => void) | null = null;
 
     function setUpNav() {
+        cleanupCurrentNav?.();
+        cleanupCurrentNav = null;
+
         const submenus = document.querySelectorAll('.submenu') as NodeListOf<HTMLElement>;
         const header = document.querySelector('header') as HTMLElement;
         const menuButton = document.querySelector('#menu') as HTMLInputElement;
         const breakPointDesktop: number = 1040;
+
+        if (!header || !menuButton) {
+            return;
+        }
+
+        const controller = new AbortController();
         let activeSubmenu: HTMLElement | null = null;
-        const buttomPadding = 14;
+        const bottomPadding = 14;
         menuButton.checked = false;
             
         submenus.forEach(submenu => {
@@ -447,13 +455,12 @@ const submenuLinks = [
 
             submenu.dataset.isExpanded = 'false';
             submenu.classList.remove('active');
-            console.log(submenu.dataset.isExpanded);
             submenu.setAttribute('aria-expanded', 'false');
             button?.setAttribute('aria-expanded', 'false');
             
             if (window.innerWidth <= breakPointDesktop) {
-                submenu.style.width = button.scrollWidth + buttomPadding + 20 + 'px';
-                submenu.style.height = button.offsetHeight + buttomPadding + 'px';
+                submenu.style.width = (button?.scrollWidth ?? 0) + bottomPadding + 20 + 'px';
+                submenu.style.height = (button?.offsetHeight ?? 0) + bottomPadding + 'px';
             } else {
                 submenu.style.height = 'auto';
                 submenu.style.width = 'auto';
@@ -464,7 +471,6 @@ const submenuLinks = [
                 submenu.removeEventListener('mouseenter', mouseEnter);
                 submenu.removeEventListener('mouseleave', mouseLeave);
                 button?.removeEventListener('click', click);
-                console.log('removed');
             }
 
             if (eventListenersMap.has(document)) {
@@ -480,7 +486,6 @@ const submenuLinks = [
         const outsideClickListener = () => {
                 if (window.innerWidth <= breakPointDesktop) return;
                 submenus.forEach(submenu => {
-                    console.log('outsideClickListener');
                     if (submenu.dataset.isExpanded === 'false') return;
                     const button = submenu.querySelector('button');
                     submenu.classList.remove('active');
@@ -494,14 +499,14 @@ const submenuLinks = [
         function animateHeight(element: HTMLElement, from: number, to: number | string): void {
             element.style.height = `${from}px`;
             element.offsetHeight;
-            element.style.transition = 'width 0.4s ease, height 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s ease';
+            element.style.transition = 'width var(--motion-base) ease, height var(--motion-base) ease, transform var(--motion-base) cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter var(--motion-base) ease';
             element.style.height = `${to === '100%' ? to : to + 'px'}`;
         }
 
         function animateWidth(element: HTMLElement, from: number, to: number | string): void {
             element.style.width = `${from}px`;
             element.offsetWidth;
-            element.style.transition = 'width 0.4s ease, height 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s ease';
+            element.style.transition = 'width var(--motion-base) ease, height var(--motion-base) ease, transform var(--motion-base) cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter var(--motion-base) ease';
             element.style.width = `${to === '100%' ? to : to + 'px'}`;
         }
 
@@ -516,8 +521,8 @@ const submenuLinks = [
                     if (window.innerWidth > breakPointDesktop) {
                         animateHeight(header, header.scrollHeight, originalHeight);
                     } else if (button) {
-                        animateHeight(submenu, submenu.scrollHeight, button.offsetHeight + buttomPadding);
-                        animateWidth(submenu, submenu.offsetWidth, button.offsetWidth + buttomPadding + 20);
+                        animateHeight(submenu, submenu.scrollHeight, button.offsetHeight + bottomPadding);
+                        animateWidth(submenu, submenu.offsetWidth, button.offsetWidth + bottomPadding + 20);
                     }
                 }
             });
@@ -558,7 +563,6 @@ const submenuLinks = [
             };
 
             const clickListener = (event: MouseEvent) => {
-                console.log("clickListener");
                 submenu.dataset.isExpanded === 'true' ? submenu.dataset.isExpanded = 'false' : submenu.dataset.isExpanded = 'true';
                 isExpanded = submenu.dataset.isExpanded === 'true' ? true : false;
                 button.setAttribute('aria-expanded', isExpanded.toString());
@@ -566,11 +570,9 @@ const submenuLinks = [
                 event.stopPropagation();
                 activeSubmenu = submenu;
                 closeAllSubmenus(submenu);
-                console.log(submenu.dataset.isExpanded, isExpanded);
-
                 if (window.innerWidth <= breakPointDesktop) {
-                    animateHeight(submenu, button.scrollHeight, isExpanded ? contentHeight + 20 : button.offsetHeight + buttomPadding);
-                    animateWidth(submenu, submenu.offsetWidth, isExpanded ? content.offsetWidth : (button.offsetWidth || 0) + buttomPadding + 20);
+                    animateHeight(submenu, button.scrollHeight, isExpanded ? contentHeight + 20 : button.offsetHeight + bottomPadding);
+                    animateWidth(submenu, submenu.offsetWidth, isExpanded ? content.offsetWidth : (button.offsetWidth || 0) + bottomPadding + 20);
                 } else {
                     const targetHeight: number = !isExpanded ? originalHeight : originalHeight + contentHeight - 25;
                     animateHeight(header, header.scrollHeight, targetHeight);
@@ -595,10 +597,10 @@ const submenuLinks = [
                 click: outsideClickListener as EventListener,
             });
 
-            submenu.addEventListener('mouseenter', mouseEnterListener);
-            submenu.addEventListener('mouseleave', mouseLeaveListener);
-            button?.addEventListener('click', clickListener as EventListener);
-            document.addEventListener('click', outsideClickListener as EventListener);
+            submenu.addEventListener('mouseenter', mouseEnterListener, { signal: controller.signal });
+            submenu.addEventListener('mouseleave', mouseLeaveListener, { signal: controller.signal });
+            button?.addEventListener('click', clickListener as EventListener, { signal: controller.signal });
+            document.addEventListener('click', outsideClickListener as EventListener, { signal: controller.signal });
         });
 
         if (window.innerWidth <= breakPointDesktop) {
@@ -613,16 +615,29 @@ const submenuLinks = [
                 }
             }
 
-            menuButton.addEventListener('change', openMenu);
+            menuButton.addEventListener('change', openMenu, { signal: controller.signal });
         }
+
+        const cleanup = (): void => {
+            controller.abort();
+            document.removeEventListener('astro:before-swap', cleanup);
+        };
+
+        document.addEventListener('astro:before-swap', cleanup, { once: true });
+        cleanupCurrentNav = cleanup;
     };
 
     let lastScroll = 0;
     let isHidden = false;
 
     window.addEventListener('scroll', () => {
-        const header = document.querySelector('header') as HTMLElement;
-        const menuButton = document.querySelector('#menu') as HTMLInputElement;
+        const header = document.querySelector('header') as HTMLElement | null;
+        const menuButton = document.querySelector('#menu') as HTMLInputElement | null;
+        if (!header || !menuButton) {
+            isHidden = false;
+            return;
+        }
+
         const currentScroll = window.scrollY;
         const scrollThreshold = header.offsetHeight;
         if (menuButton.checked) return
@@ -653,7 +668,6 @@ const submenuLinks = [
 
         if ((currentWidth <= 1040 && lastWidth > 1040) || (currentWidth > 1040 && lastWidth <= 1040)) {
             setUpNav(); 
-            console.log('setUpNav');
         }
 
         lastWidth = currentWidth;
